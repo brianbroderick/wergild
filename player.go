@@ -1,70 +1,56 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"strings"
-)
+import "fmt"
 
-type player struct {
-	connection  *connection
-	currentRoom int
-	name        string
+type Player struct {
+	Name        string
+	CurrentRoom int
+	connection  *Connection
+	//inventory    []*Item
+	//race         *Race
+	hitPoints    int
+	hitPointsMax int
 }
 
-const (
-	posProne    = 2
-	posSitting  = 1
-	posStanding = 0
-)
-
-func (player *player) setConnection(conn *connection) {
-	player.connection = conn
+func (player *Player) setConnection(connection *Connection) {
+	player.connection = connection
 }
 
-func (player *player) getCurrentRoom() int {
-	return player.currentRoom
+func (player *Player) getCurrentRoom() int {
+	return player.CurrentRoom
 }
 
-func (player *player) sendPrompt() {
-	str := "Prompt:"
-	player.connection.write(str)
+// func (player *Player) do(verb string, arguments []string) {
+// 	command, err := getCommand(verb)
+// 	if err != nil {
+// 		player.connection.Write(fmt.Sprint(err))
+// 		return
+// 	}
+
+// 	command.closure(player, arguments)
+// }
+
+func (player *Player) sendPrompt() {
+	// str := fmt.Sprintf("\n%s%s< %dh/%dH %s%s >\n<>%s\n",
+	// 	FG_GREEN,
+	// 	MOD_FAINT,
+	// 	player.hitPoints,
+	// 	player.hitPointsMax,
+	// 	FG_GREEN,
+	// 	MOD_FAINT,
+	// 	MOD_CLEAR,
+	// )
+
+	str := fmt.Sprintf("\n %d:%d> ",
+		player.hitPoints,
+		player.hitPointsMax)
+	player.connection.Write(str)
 }
 
-func (connection *connection) sendMOTD() {
-	connection.write(serverInstance.motd)
-	connection.write("What is your name, mortal? ")
-}
-
-func (connection *connection) sendMenu() {
-	connection.write(serverInstance.menu)
-}
-
-func (connection *connection) listen() {
-	reader := bufio.NewReader(connection.conn)
-
-	for {
-		message, err := reader.ReadString('\n')
-
-		if err != nil {
-			connection.conn.Close()
-			serverInstance.onClientConnectionClosed(connection, err)
-			return
-		}
-
-		message = strings.TrimSpace(message)
-
-		serverInstance.onMessageReceived(connection, message)
-	}
-
-}
-
-func (player *player) do(verb string, arguments []string) {
-	command, err := getCommand(verb)
-	if err != nil {
-		player.connection.write(fmt.Sprint(err))
-		return
-	}
-
-	command.closure(player, arguments)
+func (player *Player) pulseUpdate() {
+	// fmt.Printf("This is for player %s\n", player.Name)
+	//if player.hitPoints < player.hitPointsMax {
+	//player.hitPoints = min(player.hitPoints+player.regenHP(), player.hitPointsMax)
+	// player.sendPrompt()
+	//}
 }

@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net"
 	"os"
-
-	"github.com/brianbroderick/golang-mud/src/saevenx"
 )
 
+var ServerInstance *Server
+
 func main() {
-	service := ":23"
+	service := ":2222"
 
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	checkError(err)
@@ -18,7 +18,7 @@ func main() {
 	checkError(err)
 	defer listener.Close()
 
-	saevenx.GetServer().Start()
+	GetServer().Start()
 	listenForConnections(listener)
 }
 
@@ -37,8 +37,4 @@ func checkError(err error) {
 		fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
 		os.Exit(1)
 	}
-}
-
-func newDescriptor(connection net.Conn) {
-	saevenx.ServerInstance.AddConnection(connection)
 }
