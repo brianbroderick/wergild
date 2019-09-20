@@ -20,16 +20,6 @@ func (player *Player) getCurrentRoom() int {
 	return player.CurrentRoom
 }
 
-// func (player *Player) do(verb string, arguments []string) {
-// 	command, err := getCommand(verb)
-// 	if err != nil {
-// 		player.connection.Write(fmt.Sprint(err))
-// 		return
-// 	}
-
-// 	command.closure(player, arguments)
-// }
-
 func (player *Player) sendPrompt() {
 	// str := fmt.Sprintf("\n%s%s< %dh/%dH %s%s >\n<>%s\n",
 	// 	FG_GREEN,
@@ -41,7 +31,7 @@ func (player *Player) sendPrompt() {
 	// 	MOD_CLEAR,
 	// )
 
-	str := fmt.Sprintf("\n %d:%d> ",
+	str := fmt.Sprintf("%d:%d> ",
 		player.hitPoints,
 		player.hitPointsMax)
 	player.connection.Write(str)
@@ -53,4 +43,14 @@ func (player *Player) pulseUpdate() {
 	//player.hitPoints = min(player.hitPoints+player.regenHP(), player.hitPointsMax)
 	// player.sendPrompt()
 	//}
+}
+
+func (player *Player) do(verb string, arguments []string) {
+	command, err := getCommand(verb)
+	if err != nil {
+		player.connection.Write(fmt.Sprint(err))
+		return
+	}
+
+	command.closure(player, arguments)
 }

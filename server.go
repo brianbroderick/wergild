@@ -15,6 +15,7 @@ type Server struct {
 	ticker         *time.Ticker
 	Motd           string
 	Menu           string
+	roomList       map[int]*Room
 }
 
 func newDescriptor(connection net.Conn) {
@@ -44,6 +45,14 @@ func GetServer() *Server {
 		fmt.Println("[CONFIG] Pulling MOTD")
 		motdBytes, _ := ioutil.ReadFile(pwd + "/resources/MOTD")
 		ServerInstance.Motd = string(motdBytes)
+
+		// 2. Prepare the command hashes
+		fmt.Println("[CONFIG] Preparing commands")
+		prepareCommands()
+
+		// 3. Load in the rooms
+		fmt.Println("[CONFIG] Loading rooms")
+		ServerInstance.roomList = loadRooms()
 	}
 
 	return ServerInstance
@@ -148,4 +157,8 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 
 	connection.state = STATE_PLAYING
 	connection.Write("Welcome. Death Awaits.\n")
+}
+
+func (server *Server) getRoom(roomId int) *Room {
+	return server.roomList[roomId]
 }

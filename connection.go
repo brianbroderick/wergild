@@ -33,13 +33,13 @@ func (connection *Connection) Write(message string) {
 
 func (connection *Connection) sendMOTD() {
 	connection.Write(ServerInstance.Motd)
-	connection.Write("What is your name, mortal? ")
 }
 
 func (connection *Connection) listen() {
 	reader := bufio.NewReader(connection.conn)
 
 	connection.sendMOTD()
+	connection.Write("What is your name, mortal? ")
 	connection.state = STATE_LOGIN_USERNAME
 
 	for {
@@ -72,6 +72,8 @@ func (connection *Connection) listen() {
 					player.setConnection(connection)
 
 					ServerInstance.onPlayerAuthenticated(connection)
+					connection.Write("The world darkens...\n")
+					// connection.Player.do("look", []string{})
 				} else {
 					// auth fails, try again
 					connection.Write("Sorry, that wasn't right. Try again: ")
@@ -85,17 +87,11 @@ func (connection *Connection) listen() {
 				}
 			} else {
 				connection.state = STATE_CHARACTER_CREATION
+				connection.Write("STATE_CHARACTER_CREATION\n")
 			}
 
-		case STATE_LOGIN_MENU:
-			switch message {
-
-			case MENU_START_GAME:
-				connection.state = STATE_PLAYING
-				connection.Write("The world darkens...\n")
-				// connection.Player.do("look", []string{})
-
-			}
+		case STATE_PLAYING:
+			ServerInstance.onMessageReceived(connection, message)
 
 		default:
 			ServerInstance.onMessageReceived(connection, message)
