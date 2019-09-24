@@ -22,14 +22,6 @@ func newDescriptor(connection net.Conn) {
 	ServerInstance.AddConnection(connection)
 }
 
-func (server *Server) AddConnection(connection net.Conn) *Connection {
-	newConnection := Connection{conn: connection, timeConnected: time.Now()}
-	server.connectionList = append(server.connectionList, &newConnection)
-	go newConnection.listen()
-	fmt.Printf("[CONN] There are %d connected users.\n", server.ConnectionCount())
-	return &newConnection
-}
-
 func GetServer() *Server {
 	if ServerInstance == nil {
 		ServerInstance = &Server{
@@ -38,8 +30,6 @@ func GetServer() *Server {
 		}
 
 		pwd, _ := os.Getwd()
-
-		// fmt.Printf("[CONFIG] Current working directory set to %s\n", pwd)
 
 		// 1. Pull in the welcome screen
 		fmt.Println("[CONFIG] Pulling MOTD")
@@ -58,21 +48,6 @@ func GetServer() *Server {
 	return ServerInstance
 }
 
-func (server *Server) onClientConnectionClosed(connection *Connection, err error) {
-	// delete the connection
-
-	for i, conn := range server.connectionList {
-		if conn == connection {
-			server.connectionList[i] = server.connectionList[len(server.connectionList)-1]
-			server.connectionList[len(server.connectionList)-1] = nil
-			server.connectionList = server.connectionList[:len(server.connectionList)-1]
-			break
-		}
-	}
-
-	fmt.Printf("[DISC] There are %d connected users.\n", server.ConnectionCount())
-}
-
 func (server *Server) onMessageReceived(connection *Connection, message string) {
 
 	if len(message) == 0 {
@@ -84,7 +59,7 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 
 	fmt.Printf("%v %v\n", input, arguments)
 
-	// connection.Player.do(input, arguments)
+	connection.Player.do(input, arguments)
 	connection.Player.sendPrompt()
 }
 
@@ -153,12 +128,64 @@ func authenticate(username string, password string) *Player {
  */
 func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	fmt.Printf("[AUTH] Player authenticated (%s)\n", connection.Player.Name)
-	server.playerList = append(server.playerList, connection)
 
+	found := false
+	for i, conn := range server.playerList {
+		if conn.Player.Name == connection.Player.Name {
+			found = true
+			server.playerList[i] = connection
+			break
+		}
+	}
+	if !found {
+		server.playerList = append(server.playerList, connection)
+	}
 	connection.state = STATE_PLAYING
-	connection.Write("Welcome. Death Awaits.\n")
+
+	connection.Write("The world darkens...\n")
+	connection.Player.do("look", []string{})
+	connection.Player.sendPrompt()
 }
 
 func (server *Server) getRoom(roomId int) *Room {
 	return server.roomList[roomId]
+}
+
+func (server *Server) AddConnection(connection net.Conn) *Connection {
+	newConnection := Connection{conn: connection, timeConnected: time.Now()}
+	server.connectionList = append(server.connectionList, &newConnection)
+	go newConnection.listen()
+	fmt.Printf("[CONN] There are %d connectioned sessions.\n", server.ConnectionCount())
+	return &newConnection
+}
+
+func (server *Server) onClientConnectionClosed(connection *Connection, err error) {
+	// delete the connection
+
+	for i, conn := range server.connectionList {
+		if conn == connection {
+			server.connectionList[i] = server.connectionList[len(server.connectionList)-1]
+			server.connectionList[len(server.connectionList)-1] = nil
+			server.connectionList = server.connectionList[:len(server.connectionList)-1]
+			break
+		}
+	}
+
+	fmt.Printf("[DISC] There are %d connected sessions.\n", server.ConnectionCount())
+}
+
+func (server *Server) playerExited(connection *Connection, err error) {
+	// delete the connection
+	player := connection.username
+
+	for i, conn := range server.playerList {
+		if conn == connection {
+			server.playerList[i] = server.playerList[len(server.playerList)-1]
+			server.playerList[len(server.playerList)-1] = nil
+			server.playerList = server.playerList[:len(server.playerList)-1]
+			break
+		}
+	}
+
+	fmt.Printf("[LOGOUT] %s logged out.\n", player)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"net"
 	"strings"
 	"time"
@@ -15,6 +16,7 @@ const STATE_LOGIN_USERNAME = 1
 const STATE_LOGIN_PASSWORD = 2
 const STATE_CHARACTER_CREATION = 3
 const STATE_PLAYING = 20
+const STATE_STATUE = 21
 
 const MAX_PASSWORD_FAILURES = 3
 
@@ -39,13 +41,17 @@ func (connection *Connection) listen() {
 	reader := bufio.NewReader(connection.conn)
 
 	connection.sendMOTD()
-	connection.Write("What is your name, mortal? ")
+	connection.Write("What is your name: ")
 	connection.state = STATE_LOGIN_USERNAME
 
 	for {
 		message, err := reader.ReadString('\n')
 
 		if err != nil {
+			fmt.Printf("Connection error: %s\n", connection.username)
+
+			connection.state = STATE_STATUE
+
 			connection.conn.Close()
 			ServerInstance.onClientConnectionClosed(connection, err)
 			return
@@ -59,7 +65,7 @@ func (connection *Connection) listen() {
 		case STATE_LOGIN_USERNAME:
 			connection.state = STATE_LOGIN_PASSWORD
 			connection.username = message
-			connection.Write("Your password? ")
+			connection.Write("Password: ")
 
 		// Player is being asked to authenticate
 		case STATE_LOGIN_PASSWORD:
@@ -70,10 +76,7 @@ func (connection *Connection) listen() {
 					// auth succeeded, do a bit of housekeeping
 					connection.Player = player
 					player.setConnection(connection)
-
 					ServerInstance.onPlayerAuthenticated(connection)
-					connection.Write("The world darkens...\n")
-					// connection.Player.do("look", []string{})
 				} else {
 					// auth fails, try again
 					connection.Write("Sorry, that wasn't right. Try again: ")

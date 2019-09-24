@@ -35,7 +35,7 @@ func getCommand(userInput string) (*Command, error) {
 
 	}
 
-	return nil, errors.New("I'm not sure what you mean.  Try again?")
+	return nil, errors.New("what?")
 }
 
 /**
@@ -43,26 +43,25 @@ func getCommand(userInput string) (*Command, error) {
  */
 var commandList = map[string]*Command{
 
-	/**
-	 * Look, listing room and inhabitants
-	 */
+	// Look, listing room and inhabitants
+	"l": {
+		closure: func(player *Player, arguments []string) {
+			look(player, arguments)
+		},
+		executionTimeInSeconds: 0,
+	},
 	"look": {
 		closure: func(player *Player, arguments []string) {
-			currentRoom := ServerInstance.getRoom(player.CurrentRoom)
-
-			if len(arguments) == 0 {
-				currentRoom.showTo(player)
-				player.connection.Write("\n")
-			} else {
-				// find something or someone in the room that matches the keyword
-				// for _, item := range currentRoom.Inventory {
-				// 	if containsString(item.Keys, arguments[0]) {
-				// 		player.connection.Write(item.Description)
-				// 		return
-				// 	}
-				// }
-			}
-
+			look(player, arguments)
+		},
+		executionTimeInSeconds: 0,
+	},
+	"exit": {
+		closure: func(player *Player, arguments []string) {
+			player.connection.Write("You slowly fade away.\n")
+			player.connection.conn.Close()
+			ServerInstance.playerExited(player.connection, nil)
+			ServerInstance.onClientConnectionClosed(player.connection, nil)
 		},
 		executionTimeInSeconds: 0,
 	},

@@ -48,7 +48,7 @@ func (player *Player) pulseUpdate() {
 func (player *Player) do(verb string, arguments []string) {
 	command, err := getCommand(verb)
 	if err != nil {
-		player.connection.Write(fmt.Sprint(err))
+		player.connection.Write(fmt.Sprint(err) + "\n")
 		return
 	}
 

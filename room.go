@@ -1,5 +1,9 @@
 package main
 
+import (
+	"strings"
+)
+
 type Room struct {
 	id          int
 	title       string
@@ -15,42 +19,59 @@ type Room struct {
 func loadRooms() map[int]*Room {
 	rooms := make(map[int]*Room, 5)
 	rooms[1] = &Room{
-		id:    1,
-		title: Colorize("{LThe center of the world"),
-		description: Colorize(`{L   Shadows dance throughout this deadened ward of the towering coniferous{n
-{Lforest. Dark and grey, the sun's pallid light filters through in translucent{n
-{Lrays that stream down to the needle-laden soil - the sole reminder of life{n
-{Lin this dream-like stasis where at this level, in every chosen view, line but{n
-{Lthousands of massive aged trunks for miles here on outwards - save for a dark{n
-{Lcitadel shaped structure that lay northwards in the fray of this hallucinatory{n
-{Lsetting.  As though protected by some illusory ward, it seems barely visible{n
-{Lalthough its structure is still discernible - an obvious measure of the power{n
-{Lthat lay therein.{n
-{L   A large, {nstr{congl{n{Cy cle{n{cft cir{ncle{L lay before what seems to be the entrance to{n
-{Lthe edifice, and through the low resonant wing; one could swear that is it{n
-{Lactually humming.{n`),
+		id:          1,
+		title:       "Ancient Inn common room",
+		description: "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
 		Inventory: []*Item{
 			{
-				Keys:             []string{"moss", "laden", "skull"},
-				Name:             Colorize("{WA {Gmoss-{gladen {wskull"),
-				ShortDescription: "a moss-laden skull peeks out from under some leaves",
-				Description:      "upon closer inspection...",
+				Keys:             []string{"chair", "chairs"},
+				Name:             "chairs",
+				ShortDescription: "Oak Chairs",
+				Description:      "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
 			},
 		},
+		exits: map[string]*Room{"north": rooms[2]},
+	}
+
+	rooms[2] = &Room{
+		id:          2,
+		title:       "Ancient Inn north room",
+		description: "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+		Inventory: []*Item{
+			{
+				Keys:             []string{"firepit"},
+				Name:             "firepit",
+				ShortDescription: "a warm firepit",
+				Description:      "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
+			},
+		},
+		exits: map[string]*Room{"south": rooms[1]},
 	}
 
 	return rooms
 }
 
 func (room *Room) showTo(player *Player) {
-	str := room.title + "\n\n" + room.description + room.listContents()
+	//room.title + "\n\n" +
+	str := room.description + room.listExits() + room.listContents()
 	player.connection.Write(str)
 }
 
 func (room *Room) listContents() string {
-	str := "\n"
+	str := ""
 	for _, item := range room.Inventory {
 		str += item.ShortDescription + "\n"
 	}
 	return str
+}
+
+func (room *Room) listExits() string {
+	keys := make([]string, len(room.exits))
+
+	i := 0
+	for k := range room.exits {
+		keys[i] = k
+		i++
+	}
+	return "\n Obvious directions are:\n  " + strings.Join(keys, ", ") + "\n"
 }
