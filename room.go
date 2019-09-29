@@ -8,8 +8,13 @@ type Room struct {
 	id          int
 	title       string
 	description string
-	exits       map[string]*Room
+	exits       map[string]*Exit
 	Inventory   []*Item
+}
+
+type Exit struct {
+	source      int
+	destination int
 }
 
 /**
@@ -30,7 +35,7 @@ func loadRooms() map[int]*Room {
 				Description:      "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
 			},
 		},
-		exits: map[string]*Room{"north": rooms[2]},
+		exits: map[string]*Exit{"north": &Exit{1, 2}},
 	}
 
 	rooms[2] = &Room{
@@ -45,7 +50,7 @@ func loadRooms() map[int]*Room {
 				Description:      "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
 			},
 		},
-		exits: map[string]*Room{"south": rooms[1]},
+		exits: map[string]*Exit{"south": &Exit{2, 1}},
 	}
 
 	return rooms

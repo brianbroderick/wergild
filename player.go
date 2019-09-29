@@ -21,16 +21,6 @@ func (player *Player) getCurrentRoom() int {
 }
 
 func (player *Player) sendPrompt() {
-	// str := fmt.Sprintf("\n%s%s< %dh/%dH %s%s >\n<>%s\n",
-	// 	FG_GREEN,
-	// 	MOD_FAINT,
-	// 	player.hitPoints,
-	// 	player.hitPointsMax,
-	// 	FG_GREEN,
-	// 	MOD_FAINT,
-	// 	MOD_CLEAR,
-	// )
-
 	str := fmt.Sprintf("%d:%d> ",
 		player.hitPoints,
 		player.hitPointsMax)
@@ -52,5 +42,5 @@ func (player *Player) do(verb string, arguments []string) {
 		return
 	}
 
-	command.closure(player, arguments)
+	command.closure(player, verb, arguments)
 }

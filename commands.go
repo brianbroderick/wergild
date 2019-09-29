@@ -7,7 +7,8 @@ import (
 )
 
 type Command struct {
-	closure                func(player *Player, arguments []string)
+	closure                func(player *Player, verb string, arguments []string)
+	verb                   string
 	executionTimeInSeconds int
 }
 
@@ -32,7 +33,6 @@ func getCommand(userInput string) (*Command, error) {
 		if strings.HasPrefix(k, userInput) {
 			return commandList[k], nil
 		}
-
 	}
 
 	return nil, errors.New("what?")
@@ -40,24 +40,11 @@ func getCommand(userInput string) (*Command, error) {
 
 /**
  * Without further ado, the command list
+ * TODO: Figure out good way to "nick" or alias commands
  */
 var commandList = map[string]*Command{
-
-	// Look, listing room and inhabitants
-	"l": {
-		closure: func(player *Player, arguments []string) {
-			look(player, arguments)
-		},
-		executionTimeInSeconds: 0,
-	},
-	"look": {
-		closure: func(player *Player, arguments []string) {
-			look(player, arguments)
-		},
-		executionTimeInSeconds: 0,
-	},
 	"exit": {
-		closure: func(player *Player, arguments []string) {
+		closure: func(player *Player, verb string, arguments []string) {
 			player.connection.Write("You slowly fade away.\n")
 			player.connection.conn.Close()
 			ServerInstance.playerExited(player.connection, nil)
@@ -65,4 +52,43 @@ var commandList = map[string]*Command{
 		},
 		executionTimeInSeconds: 0,
 	},
+	// Senses:
+	// Look, listing room and inhabitants
+	"look": {
+		closure: func(player *Player, verb string, arguments []string) {
+			look(player, arguments)
+		},
+		executionTimeInSeconds: 0,
+	},
+	// Travel Commands
+	"travel": {
+		closure: func(player *Player, verb string, arguments []string) {
+			moveTo(player, arguments)
+		},
+		executionTimeInSeconds: 0,
+	},
+	// "north": {
+	// 	closure: func(player *Player, verb string, arguments []string) {
+	// 		moveTo(player, verb, arguments)
+	// 	},
+	// 	executionTimeInSeconds: 0,
+	// },
+	// "south": {
+	// 	closure: func(player *Player, verb string, arguments []string) {
+	// 		moveTo(player, verb, arguments)
+	// 	},
+	// 	executionTimeInSeconds: 0,
+	// },
+	// "east": {
+	// 	closure: func(player *Player, verb string, arguments []string) {
+	// 		moveTo(player, verb, arguments)
+	// 	},
+	// 	executionTimeInSeconds: 0,
+	// },
+	// "west": {
+	// 	closure: func(player *Player, verb string, arguments []string) {
+	// 		moveTo(player, verb, arguments)
+	// 	},
+	// 	executionTimeInSeconds: 0,
+	// },
 }

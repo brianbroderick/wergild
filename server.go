@@ -54,6 +54,7 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 		connection.Player.sendPrompt()
 		return
 	}
+	message = applyNick(message)
 	words := strings.Fields(message)
 	input, arguments := words[0], words[1:]
 
@@ -64,7 +65,7 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 }
 
 func (server *Server) Start() {
-	server.ticker = time.NewTicker(time.Millisecond * 3000)
+	server.ticker = time.NewTicker(time.Millisecond * 15000)
 
 	go func() {
 		for range server.ticker.C {
