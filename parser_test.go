@@ -20,10 +20,10 @@ func TestParser_ParseStatement(t *testing.T) {
 			obj: &LookStatement{room: 0, object: "chair"},
 		},
 
-		// {
-		// 	s:   `look`,
-		// 	obj: "",
-		// },
+		{
+			s:   `look`,
+			obj: &LookStatement{room: 0, object: ""},
+		},
 
 		// // Errors
 		// {s: `foo`, err: `found "foo", expected SELECT`},
