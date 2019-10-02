@@ -11,13 +11,13 @@ import (
 func TestParser_ParseStatement(t *testing.T) {
 	var tests = []struct {
 		s   string
-		obj string
+		obj Statement
 		err string
 	}{
 		// Single field statement
 		{
 			s:   `look at chair`,
-			obj: "chair",
+			obj: &LookStatement{room: 0, object: "chair"},
 		},
 
 		// {
@@ -35,6 +35,6 @@ func TestParser_ParseStatement(t *testing.T) {
 	for _, tt := range tests {
 		obj, err := NewParser(strings.NewReader(tt.s)).ParseStatement()
 		assert.NoError(t, err)
-		assert.Equal(t, obj, tt.obj)
+		assert.Equal(t, tt.obj, obj)
 	}
 }
