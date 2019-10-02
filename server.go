@@ -54,7 +54,7 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 		connection.Player.sendPrompt()
 		return
 	}
-	message = applyNick(message)
+	// message = applyNick(message)
 	words := strings.Fields(message)
 	input, arguments := words[0], words[1:]
 

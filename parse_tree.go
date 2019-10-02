@@ -99,5 +99,7 @@ func (t *ParseTree) Clone() *ParseTree {
 
 // This is where the handlers are set up
 func init() {
-
+	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
+		return p.parseLookStatement()
+	})
 }

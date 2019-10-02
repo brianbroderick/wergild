@@ -241,3 +241,36 @@ func (e *ParseError) Error() string {
 	}
 	return fmt.Sprintf("found %s, expected %s at line %d, char %d", e.Found, strings.Join(e.Expected, ", "), e.Pos.Line+1, e.Pos.Char+1)
 }
+
+// parseLookStatement parses a look command and returns a Statement AST object.
+// This function assumes the LOOK token has already been consumed.
+func (p *Parser) parseLookStatement() (*LookStatement, error) {
+	stmt := &LookStatement{}
+	var err error
+
+	// Parse condition: "WHERE EXPR".
+	if stmt.object, err = p.parseObject(); err != nil {
+		return nil, err
+	}
+
+	return stmt, nil
+}
+
+// parseObject parses the object, if it exists.
+func (p *Parser) parseObject() (string, error) {
+	// Check if the AT token exists.
+	if tok, _, _ := p.ScanIgnoreWhitespace(); tok != AT {
+		p.Unscan()
+		return "", nil
+	}
+
+	// tok, pos, lit := p.ScanIgnoreWhitespace()
+
+	// Parse sort field name.
+	ident, err := p.ParseIdent()
+	if err != nil {
+		return "", err
+	}
+
+	return ident, nil
+}
