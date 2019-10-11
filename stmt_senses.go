@@ -30,12 +30,17 @@ func (p *Parser) parseLookStatement() (*LookStatement, error) {
 		}
 	}
 
+	fmt.Printf("TOK: %s \n", tokens[tok])
+
 	switch tok {
-	case AT:
+	case AT, IN:
 		stmt.token = tok
-	case IN:
-		stmt.token = tok
+	case EOF:
+		stmt.token = EOF
+		p.Unscan()
+		return stmt, nil
 	default:
+		stmt.token = NIL
 		p.Unscan()
 		return stmt, nil
 	}
@@ -63,12 +68,9 @@ func (s *LookStatement) String() string {
 	case AT, ON, IN:
 		_, _ = buf.WriteString(" " + tokens[s.token] + " ")
 		_, _ = buf.WriteString(s.ident)
+	case NIL:
+		_, _ = buf.WriteString(s.ident)
 	}
-
-	// if s.ident != "" {
-	// 	_, _ = buf.WriteString(" AT ")
-	// 	_, _ = buf.WriteString(s.ident)
-	// }
 
 	return buf.String()
 }
@@ -82,32 +84,58 @@ func (s *LookStatement) execute() {
 
 	fmt.Printf("TOK: %s -- %s \n", s.token, s.ident)
 
-	if s.token == ILLEGAL && s.ident == "" {
+	switch s.token {
+	case EOF:
 		currentRoom.showTo(s.player)
 		s.player.connection.Write("\n")
-	} else if s.token != ILLEGAL && s.ident == "" {
+		return
+	case NORTH, SOUTH, EAST, WEST, UP, DOWN:
 		directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 		for _, direction := range directions {
 			if s.token == direction {
 				s.player.connection.Write(fmt.Sprintf("You look %s.\n", strings.ToLower(tokens[s.token])))
+				return
 			}
 		}
-	} else if s.ident != "" {
+	case NIL:
+		s.player.connection.Write("Look AT or IN something, or what?\n")
+		return
+	default:
 		for _, item := range currentRoom.Inventory {
 			if containsString(item.Keys, s.ident) {
 				s.player.connection.Write(item.Description + "\n")
 				return
 			}
-
-			// if len(arguments) > 2 && containsString(item.Keys, arguments[2]) {
-			// 	player.connection.Write(item.Description + "\n")
-			// 	return
-			// }
 		}
-		s.player.connection.Write("You didn't see anything unusual about " + s.ident + ".\n")
-	} else {
-		s.player.connection.Write("Look AT or IN something, or what?\n")
+		s.player.connection.Write(s.ident + " wasn't found.\n")
+		return
 	}
+
+	s.player.connection.Write("Please try looking a different way.\n")
+
+	// if s.token == ILLEGAL && s.ident == "" {
+	// 	currentRoom.showTo(s.player)
+	// 	s.player.connection.Write("\n")
+	// } else if s.token != ILLEGAL && s.ident == "" {
+	// 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
+	// 	for _, direction := range directions {
+	// 		if s.token == direction {
+	// 			s.player.connection.Write(fmt.Sprintf("You look %s.\n", strings.ToLower(tokens[s.token])))
+	// 		}
+	// 	}
+	// } else if s.token != AT && s.token != IN {
+	// 	s.player.connection.Write("Look AT or IN something, or what?\n")
+	// } else if s.ident != "" {
+	// 	for _, item := range currentRoom.Inventory {
+	// 		if containsString(item.Keys, s.ident) {
+	// 			s.player.connection.Write(item.Description + "\n")
+	// 			return
+	// 		}
+	// 	}
+	// 	s.player.connection.Write(s.ident + " wasn't found.\n")
+	// } else {
+	// 	s.player.connection.Write("Please try looking a different way.\n")
+	// }
 }
 
 // func look(player *Player, arguments []string) {

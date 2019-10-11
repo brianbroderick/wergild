@@ -10,6 +10,7 @@ const (
 	ILLEGAL Token = iota
 	EOF
 	WS
+	NIL
 	COMMENT
 
 	literalBeg
@@ -97,6 +98,7 @@ var tokens = [...]string{
 	ILLEGAL: "ILLEGAL",
 	EOF:     "EOF",
 	WS:      "WS",
+	NIL:     "NIL",
 
 	IDENT:       "IDENT",
 	NUMBER:      "NUMBER",
