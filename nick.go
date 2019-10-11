@@ -1,9 +1,9 @@
 package main
 
-type Nick struct {
-	source    string
-	convertTo string
-}
+// type Nick struct {
+// 	source    string
+// 	convertTo string
+// }
 
 // var globalNicks = map[string]*Nick{
 // 	"quit": {source: "quit", convertTo: "exit"},

@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -37,8 +36,8 @@ func GetServer() *Server {
 		ServerInstance.Motd = string(motdBytes)
 
 		// 2. Prepare the command hashes
-		fmt.Println("[CONFIG] Preparing commands")
-		prepareCommands()
+		// fmt.Println("[CONFIG] Preparing commands")
+		// prepareCommands()
 
 		// 3. Load in the rooms
 		fmt.Println("[CONFIG] Loading rooms")
@@ -54,14 +53,18 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 		connection.Player.sendPrompt()
 		return
 	}
-	// message = applyNick(message)
-	words := strings.Fields(message)
-	input, arguments := words[0], words[1:]
 
-	fmt.Printf("%v %v\n", input, arguments)
+	fmt.Printf("%s\n", message)
 
-	connection.Player.do(input, arguments)
+	// // message = applyNick(message)
+	// words := strings.Fields(message)
+	// input, arguments := words[0], words[1:]
+
+	// fmt.Printf("%v %v\n", input, arguments)
+
+	connection.Player.do(message)
 	connection.Player.sendPrompt()
+
 }
 
 func (server *Server) Start() {
@@ -144,7 +147,7 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	connection.state = STATE_PLAYING
 
 	connection.Write("The world darkens...\n")
-	connection.Player.do("look", []string{})
+	connection.Player.do("look")
 	connection.Player.sendPrompt()
 }
 

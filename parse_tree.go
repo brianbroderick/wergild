@@ -65,10 +65,8 @@ func (t *ParseTree) Handle(tok Token, fn func(*Parser) (Statement, error)) {
 func (t *ParseTree) Parse(p *Parser) (Statement, error) {
 	for {
 		tok, pos, lit := p.ScanIgnoreWhitespace()
-		if subtree := t.Tokens[tok]; subtree != nil {
-			t = subtree
-			continue
-		}
+
+		// fmt.Printf("%v\n", t.Handlers[tok])
 
 		if stmt := t.Handlers[tok]; stmt != nil {
 			return stmt(p)
@@ -102,4 +100,17 @@ func init() {
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
 	})
+
+	Language.Handle(L, func(p *Parser) (Statement, error) {
+		return p.parseLookStatement()
+	})
+
+	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
+		return p.parseFeelingStatement()
+	})
+
+	Language.Handle(INTEGER, func(p *Parser) (Statement, error) {
+		return p.parseLoopStatement()
+	})
+
 }

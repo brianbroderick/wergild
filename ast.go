@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"errors"
 	"math"
 	"strings"
@@ -10,10 +9,9 @@ import (
 
 // Statement represents a single command
 type Statement interface {
-	Node
-	// stmt is unexported to ensure implementations of Statement
-	// can only originate in this package.
-	stmt()
+	String() string
+	execute()
+	setPlayer(*Player)
 	// RequiredPrivileges() (ExecutionPrivileges, error)
 }
 
@@ -197,16 +195,6 @@ func (d DataType) String() string {
 	return "unknown"
 }
 
-// Node represents a node in the InfluxDB abstract syntax tree.
-type Node interface {
-	// node is unexported to ensure implementations of Node
-	// can only originate in this package.
-	node()
-	String() string
-}
-
-func (Statements) node() {}
-
 // Statements represents a list of statements.
 type Statements []Statement
 
@@ -217,25 +205,4 @@ func (a Statements) String() string {
 		str = append(str, stmt.String())
 	}
 	return strings.Join(str, ";\n")
-}
-
-// LookStatement represents a command for looking at a room or object.
-type LookStatement struct {
-	room   int
-	object string
-}
-
-func (*LookStatement) node() {}
-func (*LookStatement) stmt() {}
-
-func (s *LookStatement) String() string {
-	var buf bytes.Buffer
-	_, _ = buf.WriteString("LOOK")
-
-	if s.object != "" {
-		_, _ = buf.WriteString(" AT ")
-		_, _ = buf.WriteString(s.object)
-	}
-
-	return buf.String()
 }

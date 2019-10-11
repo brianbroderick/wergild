@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"regexp"
@@ -242,35 +243,62 @@ func (e *ParseError) Error() string {
 	return fmt.Sprintf("found %s, expected %s at line %d, char %d", e.Found, strings.Join(e.Expected, ", "), e.Pos.Line+1, e.Pos.Char+1)
 }
 
-// parseLookStatement parses a look command and returns a Statement AST object.
-// This function assumes the LOOK token has already been consumed.
-func (p *Parser) parseLookStatement() (*LookStatement, error) {
-	stmt := &LookStatement{}
+// parseLoopStatement parses an integer to be looped on and returns a Statement AST object.
+// This function assumes the INTEGER token has already been consumed.
+// TODO actually loop
+func (p *Parser) parseLoopStatement() (*LoopStatement, error) {
+	p.Unscan()
+	stmt := &LoopStatement{}
 	var err error
 
-	// Parse condition: "WHERE EXPR".
-	if stmt.object, err = p.parseObject(); err != nil {
+	stmt.i, err = p.ParseInt(1, 50) // max of 50
+	if err != nil {
 		return nil, err
 	}
 
 	return stmt, nil
 }
 
-// parseObject parses the object, if it exists.
-func (p *Parser) parseObject() (string, error) {
-	// Check if the AT token exists.
-	if tok, _, _ := p.ScanIgnoreWhitespace(); tok != AT {
-		p.Unscan()
-		return "", nil
+func (s *LoopStatement) String() string {
+	var buf bytes.Buffer
+
+	if s.i != 0 {
+		_, _ = buf.WriteString(strconv.Itoa(s.i))
 	}
 
-	// tok, pos, lit := p.ScanIgnoreWhitespace()
+	return buf.String()
+}
 
-	// Parse sort field name.
-	ident, err := p.ParseIdent()
+func (s *LoopStatement) setPlayer(player *Player) {
+	s.player = player
+}
+
+// parseFeelingStatement parses a feeling command and returns a Statement AST object.
+// This function assumes the IDENT token has already been consumed.
+// TODO add target for feelings
+func (p *Parser) parseFeelingStatement() (*FeelingStatement, error) {
+	p.Unscan()
+	stmt := &FeelingStatement{}
+	var err error
+
+	stmt.ident, err = p.ParseIdent()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return ident, nil
+	return stmt, nil
+}
+
+func (s *FeelingStatement) String() string {
+	var buf bytes.Buffer
+
+	if s.ident != "" {
+		_, _ = buf.WriteString(s.ident)
+	}
+
+	return buf.String()
+}
+
+func (s *FeelingStatement) setPlayer(player *Player) {
+	s.player = player
 }

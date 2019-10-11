@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Player struct {
 	Name        string
@@ -35,12 +38,13 @@ func (player *Player) pulseUpdate() {
 	//}
 }
 
-func (player *Player) do(verb string, arguments []string) {
-	command, err := getCommand(verb)
+func (player *Player) do(message string) {
+	stmt, err := NewParser(strings.NewReader(message)).ParseStatement()
 	if err != nil {
 		player.connection.Write(fmt.Sprint(err) + "\n")
 		return
 	}
 
-	command.closure(player, verb, arguments)
+	stmt.setPlayer(player)
+	stmt.execute()
 }

@@ -61,9 +61,20 @@ const (
 	SEMICOLON   // ;
 	DOT         // .
 
+	aliasBeg
+	L // LOOK
+	N // NORTH
+	S // SOUTH
+	E // EAST
+	W // WEST
+	U // UP
+	D // DOWN
+	aliasEnd
+
 	keywordBeg
 	// Sense Keywords
 	LOOK
+
 	AT
 	ON
 	IN
@@ -81,6 +92,7 @@ const (
 	keywordEnd
 )
 
+// These are how a string is mapped to the token
 var tokens = [...]string{
 	ILLEGAL: "ILLEGAL",
 	EOF:     "EOF",
@@ -140,9 +152,30 @@ var tokens = [...]string{
 
 	// Admin Keywords
 	NICK: "NICK",
+
+	// Aliases
+	N: "N",
+	S: "S",
+	E: "E",
+	W: "W",
+	U: "U",
+	D: "D",
+	L: "L",
+}
+
+// These are how globalAlias tokens are resolved
+var convertToTokens = [...]Token{
+	N: NORTH,
+	S: SOUTH,
+	E: EAST,
+	W: WEST,
+	U: UP,
+	D: DOWN,
+	L: LOOK,
 }
 
 var keywords map[string]Token
+var globalAliases map[string]Token
 
 func init() {
 	keywords = make(map[string]Token)
@@ -154,6 +187,11 @@ func init() {
 	}
 	keywords["true"] = TRUE
 	keywords["false"] = FALSE
+
+	globalAliases = make(map[string]Token)
+	for tok := aliasBeg + 1; tok < aliasEnd; tok++ {
+		globalAliases[strings.ToLower(tokens[tok])] = tok
+	}
 }
 
 // String returns the string representation of the token.
@@ -197,6 +235,11 @@ func Lookup(ident string) Token {
 	if tok, ok := keywords[strings.ToLower(ident)]; ok {
 		return tok
 	}
+
+	if tok, ok := globalAliases[strings.ToLower(ident)]; ok {
+		return convertToTokens[tok]
+	}
+
 	return IDENT
 }
 

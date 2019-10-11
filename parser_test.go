@@ -18,14 +18,26 @@ func TestParser_ParseStatement(t *testing.T) {
 		// Single field statement
 		{
 			s:   `look at chair`,
-			obj: &LookStatement{room: 0, object: "chair"},
+			obj: &LookStatement{room: 0, token: AT, ident: "chair"},
 			p:   `LOOK AT chair`,
 		},
 
 		{
 			s:   `look`,
-			obj: &LookStatement{room: 0, object: ""},
+			obj: &LookStatement{room: 0, ident: ""},
 			p:   `LOOK`,
+		},
+
+		{
+			s:   `look north`,
+			obj: &LookStatement{room: 0, token: NORTH, ident: ""},
+			p:   `LOOK NORTH`,
+		},
+
+		{
+			s:   `look up`,
+			obj: &LookStatement{room: 0, token: UP, ident: ""},
+			p:   `LOOK UP`,
 		},
 
 		// // Errors
