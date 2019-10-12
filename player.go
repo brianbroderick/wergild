@@ -11,8 +11,10 @@ type Player struct {
 	connection  *Connection
 	//inventory    []*Item
 	//race         *Race
-	hitPoints    int
-	hitPointsMax int
+	hitPoints       int
+	hitPointsMax    int
+	actionPoints    int
+	actionPointsMax int
 }
 
 func (player *Player) setConnection(connection *Connection) {
@@ -26,7 +28,7 @@ func (player *Player) getCurrentRoom() int {
 func (player *Player) sendPrompt() {
 	str := fmt.Sprintf("%d:%d> ",
 		player.hitPoints,
-		player.hitPointsMax)
+		player.actionPoints)
 	player.connection.Write(str)
 }
 

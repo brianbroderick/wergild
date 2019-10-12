@@ -17,6 +17,8 @@ type LookStatement struct {
 // parseLookStatement parses a look command and returns a Statement AST object.
 // This function assumes the LOOK token has already been consumed.
 func (p *Parser) parseLookStatement() (*LookStatement, error) {
+	fmt.Println("IN parseLookStatement")
+
 	stmt := &LookStatement{}
 	var err error
 
@@ -29,8 +31,6 @@ func (p *Parser) parseLookStatement() (*LookStatement, error) {
 			return stmt, nil
 		}
 	}
-
-	fmt.Printf("TOK: %s \n", tokens[tok])
 
 	switch tok {
 	case AT, IN:
@@ -80,9 +80,11 @@ func (s *LookStatement) setPlayer(player *Player) {
 }
 
 func (s *LookStatement) execute() {
+	fmt.Printf("TOK: %s -- %v \n", s.token, s.player)
+
 	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
 
-	fmt.Printf("TOK: %s -- %s \n", s.token, s.ident)
+	// fmt.Printf("TOK: %s -- %s \n", s.token, s.ident)
 
 	switch s.token {
 	case EOF:
@@ -112,59 +114,4 @@ func (s *LookStatement) execute() {
 	}
 
 	s.player.connection.Write("Please try looking a different way.\n")
-
-	// if s.token == ILLEGAL && s.ident == "" {
-	// 	currentRoom.showTo(s.player)
-	// 	s.player.connection.Write("\n")
-	// } else if s.token != ILLEGAL && s.ident == "" {
-	// 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
-	// 	for _, direction := range directions {
-	// 		if s.token == direction {
-	// 			s.player.connection.Write(fmt.Sprintf("You look %s.\n", strings.ToLower(tokens[s.token])))
-	// 		}
-	// 	}
-	// } else if s.token != AT && s.token != IN {
-	// 	s.player.connection.Write("Look AT or IN something, or what?\n")
-	// } else if s.ident != "" {
-	// 	for _, item := range currentRoom.Inventory {
-	// 		if containsString(item.Keys, s.ident) {
-	// 			s.player.connection.Write(item.Description + "\n")
-	// 			return
-	// 		}
-	// 	}
-	// 	s.player.connection.Write(s.ident + " wasn't found.\n")
-	// } else {
-	// 	s.player.connection.Write("Please try looking a different way.\n")
-	// }
 }
-
-// func look(player *Player, arguments []string) {
-// 	currentRoom := ServerInstance.getRoom(player.CurrentRoom)
-
-// 	if len(arguments) == 0 {
-// 		currentRoom.showTo(player)
-// 		player.connection.Write("\n")
-// 	} else if containsString([]string{"at", "in"}, arguments[0]) {
-// 		for _, item := range currentRoom.Inventory {
-// 			if containsString(item.Keys, arguments[1]) {
-// 				player.connection.Write(item.Description + "\n")
-// 				return
-// 			}
-
-// 			if len(arguments) > 2 && containsString(item.Keys, arguments[2]) {
-// 				player.connection.Write(item.Description + "\n")
-// 				return
-// 			}
-// 		}
-// 		player.connection.Write("You didn't see anything unusual about " + arguments[1] + ".\n")
-// 	} else if arguments[0] == "travel" && arguments[1] == "up" {
-// 		player.connection.Write("You look up towards the sky.\n")
-// 	} else if arguments[0] == "travel" && arguments[1] == "down" {
-// 		player.connection.Write("You look down towards the ground.\n")
-// 	} else if arguments[0] == "travel" {
-// 		player.connection.Write(fmt.Sprintf("You look towards the %s.\n", arguments[1]))
-// 	} else {
-// 		player.connection.Write("Look AT or IN something, or what?\n")
-// 	}
-
-// }

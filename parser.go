@@ -243,36 +243,6 @@ func (e *ParseError) Error() string {
 	return fmt.Sprintf("found %s, expected %s at line %d, char %d", e.Found, strings.Join(e.Expected, ", "), e.Pos.Line+1, e.Pos.Char+1)
 }
 
-// parseLoopStatement parses an integer to be looped on and returns a Statement AST object.
-// This function assumes the INTEGER token has already been consumed.
-// TODO actually loop
-func (p *Parser) parseLoopStatement() (*LoopStatement, error) {
-	p.Unscan()
-	stmt := &LoopStatement{}
-	var err error
-
-	stmt.i, err = p.ParseInt(1, 50) // max of 50
-	if err != nil {
-		return nil, err
-	}
-
-	return stmt, nil
-}
-
-func (s *LoopStatement) String() string {
-	var buf bytes.Buffer
-
-	if s.i != 0 {
-		_, _ = buf.WriteString(strconv.Itoa(s.i))
-	}
-
-	return buf.String()
-}
-
-func (s *LoopStatement) setPlayer(player *Player) {
-	s.player = player
-}
-
 // parseFeelingStatement parses a feeling command and returns a Statement AST object.
 // This function assumes the IDENT token has already been consumed.
 // TODO add target for feelings

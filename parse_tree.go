@@ -101,10 +101,6 @@ func init() {
 		return p.parseLookStatement()
 	})
 
-	Language.Handle(L, func(p *Parser) (Statement, error) {
-		return p.parseLookStatement()
-	})
-
 	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
 		return p.parseFeelingStatement()
 	})

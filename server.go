@@ -68,7 +68,7 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 }
 
 func (server *Server) Start() {
-	server.ticker = time.NewTicker(time.Millisecond * 15000)
+	server.ticker = time.NewTicker(time.Millisecond * 30000)
 
 	go func() {
 		for range server.ticker.C {
@@ -116,7 +116,7 @@ func userExists(username string) bool {
  */
 func authenticate(username string, password string) *Player {
 	if username == "azkul" && password == "123" {
-		player := &Player{Name: username, CurrentRoom: 1, hitPointsMax: 100, hitPoints: 50}
+		player := &Player{Name: username, CurrentRoom: 1, hitPointsMax: 58, hitPoints: 50, actionPoints: 50, actionPointsMax: 58}
 		// player.inventory = []*Item{
 		// 	{Name: "A Dark Sword", Description: "A test object to test object loading"},
 		// }
