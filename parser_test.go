@@ -24,7 +24,7 @@ func TestParser_ParseStatement(t *testing.T) {
 
 		{
 			s:   `look`,
-			obj: &LookStatement{room: 0, ident: ""},
+			obj: &LookStatement{room: 0, token: EOF, ident: ""},
 			p:   `LOOK`,
 		},
 
@@ -38,6 +38,31 @@ func TestParser_ParseStatement(t *testing.T) {
 			s:   `look up`,
 			obj: &LookStatement{room: 0, token: UP, ident: ""},
 			p:   `LOOK UP`,
+		},
+
+		// check alias
+		{
+			s:   `l n`,
+			obj: &LookStatement{room: 0, token: NORTH, ident: ""},
+			p:   `LOOK NORTH`,
+		},
+
+		{
+			s:   `quit`,
+			obj: &QuitStatement{},
+			p:   `QUIT`,
+		},
+
+		{
+			s:   `north`,
+			obj: &DirectionStatement{token: NORTH},
+			p:   `NORTH`,
+		},
+
+		{
+			s:   `south`,
+			obj: &DirectionStatement{token: SOUTH},
+			p:   `SOUTH`,
 		},
 
 		// // Errors

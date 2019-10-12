@@ -14,10 +14,6 @@ func (s *QuitStatement) String() string {
 	return buf.String()
 }
 
-func (s *QuitStatement) setPlayer(player *Player) {
-	s.player = player
-}
-
 // parseQuitStatement parses a look command and returns a Statement AST object.
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseQuitStatement() (*QuitStatement, error) {
@@ -29,4 +25,8 @@ func (s *QuitStatement) execute() {
 	s.player.connection.conn.Close()
 	ServerInstance.playerExited(s.player.connection, nil)
 	ServerInstance.onClientConnectionClosed(s.player.connection, nil)
+}
+
+func (s *QuitStatement) setPlayer(player *Player) {
+	s.player = player
 }
