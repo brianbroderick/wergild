@@ -97,16 +97,50 @@ func (t *ParseTree) Clone() *ParseTree {
 
 // This is where the handlers are set up
 func init() {
+	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
 	})
 
+	// Disconnect from the server.
+	Language.Handle(QUIT, func(p *Parser) (Statement, error) {
+		return p.parseQuitStatement()
+	})
+
+	// Catch all - usually represents feelings
 	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
 		return p.parseFeelingStatement()
 	})
 
+	// Iterate INTEGER times over rest of the command
 	Language.Handle(INTEGER, func(p *Parser) (Statement, error) {
 		return p.parseLoopStatement()
+	})
+
+	// Directions
+
+	Language.Handle(NORTH, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(SOUTH, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(EAST, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(WEST, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(UP, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(DOWN, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
 	})
 
 }

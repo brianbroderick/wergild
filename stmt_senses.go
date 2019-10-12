@@ -17,8 +17,6 @@ type LookStatement struct {
 // parseLookStatement parses a look command and returns a Statement AST object.
 // This function assumes the LOOK token has already been consumed.
 func (p *Parser) parseLookStatement() (*LookStatement, error) {
-	fmt.Println("IN parseLookStatement")
-
 	stmt := &LookStatement{}
 	var err error
 
@@ -80,11 +78,7 @@ func (s *LookStatement) setPlayer(player *Player) {
 }
 
 func (s *LookStatement) execute() {
-	fmt.Printf("TOK: %s -- %v \n", s.token, s.player)
-
 	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
-
-	// fmt.Printf("TOK: %s -- %s \n", s.token, s.ident)
 
 	switch s.token {
 	case EOF:

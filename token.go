@@ -63,19 +63,19 @@ const (
 	DOT         // .
 
 	aliasBeg
-	L // LOOK
-	N // NORTH
-	S // SOUTH
-	E // EAST
-	W // WEST
-	U // UP
-	D // DOWN
+	L    // LOOK
+	N    // NORTH
+	S    // SOUTH
+	E    // EAST
+	W    // WEST
+	U    // UP
+	D    // DOWN
+	EXIT // QUIT
 	aliasEnd
 
 	keywordBeg
 	// Sense Keywords
 	LOOK
-
 	AT
 	ON
 	IN
@@ -90,6 +90,7 @@ const (
 
 	// Admin Keywords
 	NICK // nickname i.e. alias mapping
+	QUIT
 	keywordEnd
 )
 
@@ -154,26 +155,29 @@ var tokens = [...]string{
 
 	// Admin Keywords
 	NICK: "NICK",
+	QUIT: "QUIT",
 
 	// Aliases
-	N: "N",
-	S: "S",
-	E: "E",
-	W: "W",
-	U: "U",
-	D: "D",
-	L: "L",
+	N:    "N",
+	S:    "S",
+	E:    "E",
+	W:    "W",
+	U:    "U",
+	D:    "D",
+	L:    "L",
+	EXIT: "EXIT",
 }
 
 // These are how globalAlias tokens are resolved
 var convertToTokens = [...]Token{
-	N: NORTH,
-	S: SOUTH,
-	E: EAST,
-	W: WEST,
-	U: UP,
-	D: DOWN,
-	L: LOOK,
+	N:    NORTH,
+	S:    SOUTH,
+	E:    EAST,
+	W:    WEST,
+	U:    UP,
+	D:    DOWN,
+	L:    LOOK,
+	EXIT: QUIT,
 }
 
 var keywords map[string]Token

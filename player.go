@@ -11,10 +11,10 @@ type Player struct {
 	connection  *Connection
 	//inventory    []*Item
 	//race         *Race
-	hitPoints       int
-	hitPointsMax    int
-	actionPoints    int
-	actionPointsMax int
+	hp    int // hit points - hitting zero means death
+	hpMax int // max hit points
+	fp    int // fatigue points. - hitting zero means you are too fatigued to do the action
+	fpMax int // max fatigue points
 }
 
 func (player *Player) setConnection(connection *Connection) {
@@ -27,8 +27,8 @@ func (player *Player) getCurrentRoom() int {
 
 func (player *Player) sendPrompt() {
 	str := fmt.Sprintf("%d:%d> ",
-		player.hitPoints,
-		player.actionPoints)
+		player.hp,
+		player.fp)
 	player.connection.Write(str)
 }
 
