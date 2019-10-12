@@ -9,7 +9,7 @@ import (
 
 // Statement represents a single command
 type Statement interface {
-	String() string
+	String() string // mostly used for testing
 	execute()
 	setPlayer(*Player)
 	// RequiredPrivileges() (ExecutionPrivileges, error)

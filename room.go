@@ -35,7 +35,7 @@ func loadRooms() map[int]*Room {
 				Description:      "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
 			},
 		},
-		exits: map[string]*Exit{"north": &Exit{1, 2}},
+		exits: map[string]*Exit{"NORTH": &Exit{1, 2}},
 	}
 
 	rooms[2] = &Room{
@@ -50,7 +50,7 @@ func loadRooms() map[int]*Room {
 				Description:      "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
 			},
 		},
-		exits: map[string]*Exit{"south": &Exit{2, 1}},
+		exits: map[string]*Exit{"SOUTH": &Exit{2, 1}},
 	}
 
 	return rooms
