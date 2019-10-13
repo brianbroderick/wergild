@@ -104,6 +104,7 @@ func schemaString() string {
 		itemName: string
 		itemDesc: string 
 		coinValue: int
+		weight: int
 		items: [Item]
 	}
 
