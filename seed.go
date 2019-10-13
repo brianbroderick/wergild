@@ -1,9 +1,20 @@
 package main
 
+import (
+	"github.com/brianbroderick/agora"
+)
+
 func schemaString() string {
 	return `
+	type Region {
+		regionName: string
+		rooms: [Room]
+	}
+
+	regionName: string @index(exact) . # world, building, dungeon, etc
+	rooms: [uid] @reverse .
+
 	type Room {
-		region: string
 		coorX: int
 		coorY: int
 		coorZ: int
@@ -16,9 +27,9 @@ func schemaString() string {
 		pointsOfInterest: [PointOfInterest]
 		exits: [Room]
 		terrain: Terrain
+		items: [Item]
 	}
 
-	region: string @index(exact) .
 	coorX: int @index(int) .
 	coorY: int @index(int) .
 	coorZ: int @index(int) .
@@ -26,15 +37,17 @@ func schemaString() string {
 	locationHash: string @index(exact) @upsert . 
 	exits: [uid] . # no reverse - can have one way exits
 	pointsOfInterest: [uid] .
-	terrain: [uid] .
+	terrain: uid .
+	items: [uid] .
 	direction: string .
 		
 	type PointOfInterest {
-		keywords: [string]
+		keywords: [string] # full text?
 		poiName: string
 		poiDesc: string
 		poiListen: string
 		poiSmell: string
+		search: [Item]
 	}	
 
 	keywords: string @index(exact) .
@@ -77,6 +90,7 @@ func schemaString() string {
 		tghMod: int
 		perMod: int
 		insertedCreatureAt: dateTime 
+		items: [Item]
 	}
 		
 	age: int @index(int) .
@@ -86,10 +100,50 @@ func schemaString() string {
 	bankCoins: int @index(int) .
 	insertedCreatureAt: dateTime @index(hour) .
 
-	# item: uid @reverse @count .
-	# class: uid @reverse @count .
-	# guild: uid @reverse @count .
-	# race: uid @reverse @count .
+	type Item {
+		itemName: string
+		itemDesc: string 
+		coinValue: int
+		items: [Item]
+	}
+
+	itemName: string @index(exact) .
+
+	type CreatureClass {
+		className: string
+	}
+
+	className: string @index(exact) @count .
+
+	type CreatureRace {
+		race: string
+	}
+
+	race: string @index(exact) @count .
+
+	type Guild {
+		guildName: string
+	}
+
+	guildName: string @index(exact) @count .
 
 	`
 }
+
+func reloadData() {
+	agora.DropAll()
+	agora.SetSchema(schemaString())
+	// loadSeed()
+}
+
+// func loadSeed() {
+// 	// getSampleLens has a string arg because it can also
+// 	// be used in a test resolver
+// 	for _, p := range getSampleLens("test") {
+// 		j, err := json.Marshal(p)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		agora.MutateDgraph(j)
+// 	}
+// }
