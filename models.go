@@ -10,6 +10,7 @@ type Region struct {
 
 type Room struct {
 	UID              string            `json:"uid,omitempty"`
+	Type             string            `json:"dgraph.type,omitempty"`
 	CoorX            int               `json:"coorX,omitempty"`
 	CoorY            int               `json:"coorY,omitempty"`
 	CoorZ            int               `json:"coorZ,omitempty"`

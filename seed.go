@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
+
 	"github.com/brianbroderick/agora"
 )
 
@@ -134,17 +137,78 @@ func schemaString() string {
 func reloadData() {
 	agora.DropAll()
 	agora.SetSchema(schemaString())
-	// loadSeed()
+	loadSeed()
 }
 
-// func loadSeed() {
-// 	// getSampleLens has a string arg because it can also
-// 	// be used in a test resolver
-// 	for _, p := range getSampleLens("test") {
-// 		j, err := json.Marshal(p)
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 		agora.MutateDgraph(j)
+func loadSeed() {
+	// getSampleLens has a string arg because it can also
+	// be used in a test resolver
+	for _, p := range getSampleRooms() {
+		j, err := json.Marshal(p)
+		if err != nil {
+			log.Fatal(err)
+		}
+		agora.MutateDgraph(j)
+	}
+}
+
+func getSampleRooms() []Room {
+	var commonRoom = Room{
+		UID:  "_:common",
+		Type: "Room",
+		Name: "Ancient Inn common room",
+		Desc: "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
+		Items: []Item{
+			{
+				Name: "Oak Chairs",
+				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+			},
+		},
+	}
+
+	var northRoom = Room{
+		UID:  "_:northRoom",
+		Type: "Room",
+		Name: "Ancient Inn north room",
+		Desc: "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+		Items: []Item{
+			{
+				Name: "a warm firepit",
+				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
+			},
+		},
+	}
+
+	return []Room{commonRoom, northRoom}
+}
+
+// func loadRooms() map[int]*Room {
+// 	rooms := make(map[int]*Room, 5)
+// 	rooms[1] = &Room{
+// 		UID:  "1",
+// 		Name: "Ancient Inn common room",
+// 		Desc: "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
+// 		Items: []Item{
+// 			{
+// 				Name: "Oak Chairs",
+// 				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+// 			},
+// 		},
+// 		// Exits: map[string]*Exit{"NORTH": &Exit{1, 2}},
 // 	}
+
+// 	rooms[2] = &Room{
+// 		UID:  "2",
+// 		Name: "Ancient Inn north room",
+// 		Desc: "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+// 		Items: []Item{
+// 			{
+// 				Name: "a warm firepit",
+// 				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
+// 			},
+// 		},
+// 		// Exits: map[string]*Exit{"SOUTH": &Exit{2, 1}},
+// 	}
+
+// 	return rooms
 // }
