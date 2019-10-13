@@ -91,6 +91,9 @@ const (
 	// Admin Keywords
 	NICK // nickname i.e. alias mapping
 	QUIT
+
+	// Player Keywords
+	SCORE
 	keywordEnd
 )
 
@@ -166,6 +169,8 @@ var tokens = [...]string{
 	D:    "D",
 	L:    "L",
 	EXIT: "EXIT",
+
+	SCORE: "SCORE",
 }
 
 // These are how globalAlias tokens are resolved

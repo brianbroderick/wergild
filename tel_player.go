@@ -13,8 +13,8 @@ type Player struct {
 	//race         *Race
 	hp    int // hit points - hitting zero means death
 	hpMax int // max hit points
-	fp    int // fatigue points. - hitting zero means you are too fatigued to do the action
-	fpMax int // max fatigue points
+	ap    int // action points. - hitting zero means you are too fatigued to do the action
+	apMax int // max action points
 }
 
 func (player *Player) setConnection(connection *Connection) {
@@ -28,7 +28,7 @@ func (player *Player) getCurrentRoom() int {
 func (player *Player) sendPrompt() {
 	str := fmt.Sprintf("%d:%d> ",
 		player.hp,
-		player.fp)
+		player.ap)
 	player.connection.Write(str)
 }
 

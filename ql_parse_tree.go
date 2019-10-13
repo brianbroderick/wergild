@@ -97,14 +97,14 @@ func (t *ParseTree) Clone() *ParseTree {
 
 // This is where the handlers are set up
 func init() {
+	// Player commands
+	Language.Handle(SCORE, func(p *Parser) (Statement, error) {
+		return p.parseScoreStatement()
+	})
+
 	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
-	})
-
-	// Disconnect from the server.
-	Language.Handle(QUIT, func(p *Parser) (Statement, error) {
-		return p.parseQuitStatement()
 	})
 
 	// Catch all - usually represents feelings
@@ -141,6 +141,11 @@ func init() {
 
 	Language.Handle(DOWN, func(p *Parser) (Statement, error) {
 		return p.parseDirectionStatement()
+	})
+
+	// Disconnect from the server.
+	Language.Handle(QUIT, func(p *Parser) (Statement, error) {
+		return p.parseQuitStatement()
 	})
 
 }
