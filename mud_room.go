@@ -1,11 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
-
-	"github.com/brianbroderick/agora"
+	"strings"
 )
 
 /**
@@ -17,8 +14,9 @@ func loadRooms() map[string]*Room {
 	roomMap := make(map[string]*Room)
 
 	rooms := queryAllRooms()
-	for _, room := range rooms {
-		roomMap[room.UID] = &room
+
+	for i, room := range rooms {
+		roomMap[room.UID] = &rooms[i]
 	}
 
 	return roomMap
@@ -70,25 +68,44 @@ func (room *Room) listContents() string {
 }
 
 func (room *Room) listExits() string {
-	return "listExits"
-	// keys := make([]string, len(room.Exits))
+	keys := make([]string, len(room.Exits))
 
-	// i := 0
-	// for k := range room.Exits {
-	// 	keys[i] = k
-	// 	i++
-	// }
-	// return "\n Obvious directions are:\n  " + strings.Join(keys, ", ") + "\n"
+	i := 0
+	for _, k := range room.Exits {
+		keys[i] = strings.ToLower(k.Direction)
+		i++
+	}
+	return "\n Obvious directions are:\n  " + strings.Join(keys, ", ") + "\n"
 }
 
 func queryAllRooms() []Room {
-	query := `{room(func: type(Room)) {
-			uid roomName roomDesc items {
-				itemName itemDesc 
+	query := `{
+		room(func: type(Room)) {
+			uid
+			roomName 
+			roomDesc
+			exits {
+				direction
+				dest {
+					uid
+				}
 			}
-			}}`
+		}
+	}`
 
-	return resolveQuery(query).Rooms
+	rooms := resolveQuery(query).Rooms
+
+	// Populate ExitMap
+	for i, room := range rooms {
+		if rooms[i].ExitMap == nil {
+			rooms[i].ExitMap = make(map[string]string)
+		}
+
+		for _, e := range room.Exits {
+			rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
+		}
+	}
+	return rooms
 }
 
 func queryRoomUID(slug string) (string, error) {
@@ -144,28 +161,4 @@ func queryRoom(slug string) []Room {
 
 	r := resolveQueryWithVars(query, variables)
 	return r.Rooms
-}
-
-func resolveQuery(query string) DgraphResponse {
-	j := agora.QueryDgraph(query)
-
-	var r DgraphResponse
-	err := json.Unmarshal(j, &r)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return r
-}
-
-func resolveQueryWithVars(query string, variables map[string]string) DgraphResponse {
-	j := agora.QueryDgraphWithVars(query, variables)
-
-	var r DgraphResponse
-	err := json.Unmarshal(j, &r)
-	if err != nil {
-		r.Errors = append(r.Errors, err)
-	}
-
-	return r
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 )
 
 // DirectionStatement represents a command for looking at a room or object.
@@ -28,16 +29,16 @@ func (s *DirectionStatement) String() string {
 }
 
 func (s *DirectionStatement) execute() {
-	// room := ServerInstance.getRoom(s.player.CurrentRoom)
+	room := ServerInstance.getRoom(s.player.CurrentRoom)
 
-	// fmt.Printf("tok: %s \n", tokens[s.token])
+	fmt.Printf("tok: %s \n", tokens[s.token])
 
-	// if val, ok := room.Exits[tokens[s.token]]; ok {
-	// 	// fmt.Printf("%v", val.destination)
-	// 	s.player.CurrentRoom = val.destination
-	// 	newRoom := ServerInstance.getRoom(s.player.CurrentRoom)
-	// 	newRoom.showTo(s.player)
-	// }
+	if val, ok := room.ExitMap[tokens[s.token]]; ok {
+		// fmt.Printf("%v", val.destination)
+		s.player.CurrentRoom = val
+		newRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+		newRoom.showTo(s.player)
+	}
 }
 
 // func moveTo(player *Player, arguments []string) {

@@ -68,18 +68,18 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 }
 
 func (server *Server) Start() {
-	server.ticker = time.NewTicker(time.Millisecond * 30000)
+	// server.ticker = time.NewTicker(time.Millisecond * 30000)
 
-	go func() {
-		for range server.ticker.C {
-			for _, c := range server.playerList {
-				fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
-				if c.Player != nil {
-					c.Player.pulseUpdate()
-				}
-			}
-		}
-	}()
+	// go func() {
+	// 	for range server.ticker.C {
+	// 		for _, c := range server.playerList {
+	// 			fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
+	// 			if c.Player != nil {
+	// 				c.Player.pulseUpdate()
+	// 			}
+	// 		}
+	// 	}
+	// }()
 
 }
 

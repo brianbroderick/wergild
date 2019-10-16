@@ -26,13 +26,15 @@ type Room struct {
 	Exits            []Exit            `json:"exits,omitempty"`
 	Terrain          Terrain           `json:"terrain,omitempty"`
 	Items            []Item            `json:"items,omitempty"`
+	// Non-persistent fields
+	ExitMap map[string]string
 }
 
 // Room connects to an Exit. It's a one way exit, so there's no need for a source
 type Exit struct {
 	UID       string `json:"uid,omitempty"`
 	Type      string `json:"dgraph.type,omitempty"`
-	Dest      Room   `json:"dest,omitempty"`
+	Dest      []Room `json:"dest,omitempty"`
 	Direction string `json:"direction,omitempty"`
 	Portal    string `json:"portal,omitempty"` // exit type like open, door, etc
 }

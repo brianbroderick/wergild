@@ -1,8 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"math/rand"
 	"time"
+
+	"github.com/brianbroderick/agora"
 )
 
 /**
@@ -30,3 +34,26 @@ func random_int(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
+func resolveQuery(query string) DgraphResponse {
+	j := agora.QueryDgraph(query)
+
+	var r DgraphResponse
+	err := json.Unmarshal(j, &r)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return r
+}
+
+func resolveQueryWithVars(query string, variables map[string]string) DgraphResponse {
+	j := agora.QueryDgraphWithVars(query, variables)
+
+	var r DgraphResponse
+	err := json.Unmarshal(j, &r)
+	if err != nil {
+		r.Errors = append(r.Errors, err)
+	}
+
+	return r
+}

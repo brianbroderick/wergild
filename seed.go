@@ -183,7 +183,7 @@ func getSampleRooms() []Room {
 		},
 		Exits: []Exit{
 			Exit{
-				Dest:      Room{UID: "_:common"},
+				Dest:      []Room{Room{UID: "_:common"}},
 				Direction: "SOUTH",
 				Portal:    "OPEN",
 			}},
@@ -204,7 +204,7 @@ func getSampleRooms() []Room {
 		},
 		Exits: []Exit{
 			Exit{
-				Dest:      northRoom,
+				Dest:      []Room{northRoom},
 				Direction: "NORTH",
 				Portal:    "OPEN",
 			}},
