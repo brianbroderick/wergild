@@ -11,38 +11,47 @@ func schemaString() string {
 	return `
 	type Region {
 		regionName: string
-		rooms: [Room]
 	}
 
 	regionName: string @index(exact) . # world, building, dungeon, etc
-	rooms: [uid] @reverse .
 
 	type Room {
+		region: Region
 		coorX: int
 		coorY: int
 		coorZ: int
 		locationHash: string
 		roomName: string
+		roomSlug: string
 		roomDesc: string
 		listen: string
 		smell: string
 		lightLevel: int
 		pointsOfInterest: [PointOfInterest]
-		exits: [Room]
+		exits: [Exit]
 		terrain: Terrain
 		items: [Item]
 	}
 
+	region: uid @reverse .
 	coorX: int @index(int) .
 	coorY: int @index(int) .
 	coorZ: int @index(int) .
 	# locationHash: hash of region and coordinates
 	locationHash: string @index(exact) @upsert . 
+	roomSlug: string @index(exact) @upsert . 
 	exits: [uid] . # no reverse - can have one way exits
 	pointsOfInterest: [uid] .
 	terrain: uid .
 	items: [uid] .
-	direction: string .
+
+	type Exit {
+		dest:      Room   
+		direction: string 
+		portal:    string # is there a door?
+	}
+
+	direction: string @index(exact) .
 		
 	type PointOfInterest {
 		keywords: [string] # full text?
@@ -111,7 +120,7 @@ func schemaString() string {
 		items: [Item]
 	}
 
-	itemName: string @index(exact) .
+	itemName: string @index(fulltext) .
 
 	type CreatureClass {
 		className: string
@@ -153,33 +162,55 @@ func loadSeed() {
 }
 
 func getSampleRooms() []Room {
-	var commonRoom = Room{
-		UID:  "_:common",
-		Type: "Room",
-		Name: "Ancient Inn common room",
-		Desc: "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
-		Items: []Item{
-			{
-				Name: "Oak Chairs",
-				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
-			},
-		},
+	var region = Region{
+		UID:        "_:region",
+		RegionName: "Ancient Inn",
+		Type:       "Region",
 	}
 
 	var northRoom = Room{
-		UID:  "_:northRoom",
-		Type: "Room",
-		Name: "Ancient Inn north room",
-		Desc: "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+		UID:    "_:northRoom",
+		Type:   "Room",
+		Region: region,
+		Slug:   "ancient_inn_north_room",
+		Name:   "North Room",
+		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
 		Items: []Item{
 			{
 				Name: "a warm firepit",
 				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
 			},
 		},
+		Exits: []Exit{
+			Exit{
+				Dest:      Room{UID: "_:common"},
+				Direction: "SOUTH",
+				Portal:    "OPEN",
+			}},
 	}
 
-	return []Room{commonRoom, northRoom}
+	var commonRoom = Room{
+		UID:    "_:common",
+		Type:   "Room",
+		Region: region,
+		Slug:   "ancient_inn_common_room",
+		Name:   "Common Room",
+		Desc:   "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
+		Items: []Item{
+			{
+				Name: "oak chairs",
+				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+			},
+		},
+		Exits: []Exit{
+			Exit{
+				Dest:      northRoom,
+				Direction: "NORTH",
+				Portal:    "OPEN",
+			}},
+	}
+
+	return []Room{commonRoom}
 }
 
 // func loadRooms() map[int]*Room {

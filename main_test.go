@@ -17,3 +17,17 @@ func TestMain(m *testing.M) {
 	// myTeardownFunction()
 	os.Exit(retCode)
 }
+
+// Show
+// {
+// 	q(func: type(Room)) {
+// 		uid
+// 		roomName
+// 		exits {
+// 			dest {
+// 				uid
+// 				roomName
+// 			}
+// 		}
+// 	}
+// }

@@ -4,30 +4,42 @@ import "time"
 
 type Region struct {
 	UID        string `json:"uid,omitempty"`
+	Type       string `json:"dgraph.type,omitempty"`
 	RegionName string `json:"regionName,omitempty"`
-	Rooms      []Room `json:"rooms,omitempty"`
 }
 
 type Room struct {
 	UID              string            `json:"uid,omitempty"`
 	Type             string            `json:"dgraph.type,omitempty"`
+	Region           Region            `json:"region,omitempty"`
 	CoorX            int               `json:"coorX,omitempty"`
 	CoorY            int               `json:"coorY,omitempty"`
 	CoorZ            int               `json:"coorZ,omitempty"`
 	Hash             string            `json:"locationHash,omitempty"`
 	Name             string            `json:"roomName,omitempty"`
+	Slug             string            `json:"roomSlug,omitempty"`
 	Desc             string            `json:"roomDesc,omitempty"`
 	Listen           string            `json:"listen,omitempty"`
 	Smell            string            `json:"smell,omitempty"`
 	LightLevel       int               `json:"lightLevel,omitempty"`
 	PointsOfInterest []PointOfInterest `json:"pointsOfInterest,omitempty"`
-	Exits            []Room            `json:"exits,omitempty"`
+	Exits            []Exit            `json:"exits,omitempty"`
 	Terrain          Terrain           `json:"terrain,omitempty"`
 	Items            []Item            `json:"items,omitempty"`
 }
 
+// Room connects to an Exit. It's a one way exit, so there's no need for a source
+type Exit struct {
+	UID       string `json:"uid,omitempty"`
+	Type      string `json:"dgraph.type,omitempty"`
+	Dest      Room   `json:"dest,omitempty"`
+	Direction string `json:"direction,omitempty"`
+	Portal    string `json:"portal,omitempty"` // exit type like open, door, etc
+}
+
 type PointOfInterest struct {
 	UID      string   `json:"uid,omitempty"`
+	Type     string   `json:"dgraph.type,omitempty"`
 	Keywords []string `json:"keywords,omitempty"`
 	Name     string   `json:"poiName,omitempty"`
 	Desc     string   `json:"poiDesc,omitempty"`
@@ -38,11 +50,13 @@ type PointOfInterest struct {
 
 type Terrain struct {
 	UID         string `json:"uid,omitempty"`
+	Type        string `json:"dgraph.type,omitempty"`
 	TerrainType string `json:"terrainType,omitempty"`
 }
 
 type Creature struct {
 	UID                string    `json:"uid,omitempty"`
+	Type               string    `json:"dgraph.type,omitempty"`
 	Name               string    `json:"creatureName,omitempty"`
 	Desc               string    `json:"creatureDesc,omitempty"`
 	Age                int       `json:"age,omitempty"`
@@ -81,6 +95,7 @@ type Creature struct {
 
 type Item struct {
 	UID       string `json:"uid,omitempty"`
+	Type      string `json:"dgraph.type,omitempty"`
 	Name      string `json:"itemName,omitempty"`
 	Desc      string `json:"itemDesc,omitempty"`
 	CoinValue int    `json:"coinValue,omitempty"`
@@ -90,15 +105,23 @@ type Item struct {
 
 type CreatureClass struct {
 	UID  string `json:"uid,omitempty"`
+	Type string `json:"dgraph.type,omitempty"`
 	Name string `json:"className,omitempty"`
 }
 
 type CreatureRace struct {
 	UID  string `json:"uid,omitempty"`
+	Type string `json:"dgraph.type,omitempty"`
 	Race string `json:"race,omitempty"`
 }
 
 type Guild struct {
 	UID  string `json:"uid,omitempty"`
+	Type string `json:"dgraph.type,omitempty"`
 	Name string `json:"guildName,omitempty"`
+}
+
+type DgraphResponse struct {
+	Rooms  []Room  `json:"room,omitempty"`
+	Errors []error `json:"errors,omitempty"`
 }

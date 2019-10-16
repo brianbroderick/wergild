@@ -7,7 +7,7 @@ import (
 
 type Player struct {
 	Name        string
-	CurrentRoom int
+	CurrentRoom string
 	connection  *Connection
 	//inventory    []*Item
 	//race         *Race
@@ -21,7 +21,7 @@ func (player *Player) setConnection(connection *Connection) {
 	player.connection = connection
 }
 
-func (player *Player) getCurrentRoom() int {
+func (player *Player) getCurrentRoom() string {
 	return player.CurrentRoom
 }
 

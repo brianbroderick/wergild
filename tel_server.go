@@ -14,7 +14,7 @@ type Server struct {
 	ticker         *time.Ticker
 	Motd           string
 	Menu           string
-	roomList       map[int]*Room
+	roomList       map[string]*Room
 }
 
 func newDescriptor(connection net.Conn) {
@@ -116,7 +116,12 @@ func userExists(username string) bool {
  */
 func authenticate(username string, password string) *Player {
 	if username == "azkul" && password == "123" {
-		player := &Player{Name: username, CurrentRoom: 1, hp: 58, hpMax: 50, ap: 50, apMax: 58}
+		roomUID, err := queryRoomUID("ancient_inn_common_room")
+		if err != nil {
+			return nil
+		}
+
+		player := &Player{Name: username, CurrentRoom: roomUID, hp: 58, hpMax: 50, ap: 50, apMax: 58}
 		// player.inventory = []*Item{
 		// 	{Name: "A Dark Sword", Description: "A test object to test object loading"},
 		// }
@@ -151,7 +156,7 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	connection.Player.sendPrompt()
 }
 
-func (server *Server) getRoom(roomId int) *Room {
+func (server *Server) getRoom(roomId string) *Room {
 	return server.roomList[roomId]
 }
 
