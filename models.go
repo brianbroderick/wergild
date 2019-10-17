@@ -40,14 +40,13 @@ type Exit struct {
 }
 
 type PointOfInterest struct {
-	UID      string   `json:"uid,omitempty"`
-	Type     string   `json:"dgraph.type,omitempty"`
-	Keywords []string `json:"keywords,omitempty"`
-	Name     string   `json:"poiName,omitempty"`
-	Desc     string   `json:"poiDesc,omitempty"`
-	Listen   string   `json:"poiListen,omitempty"`
-	Smell    string   `json:"poiSmell,omitempty"`
-	Search   []Item   `json:"search,omitempty"`
+	UID    string `json:"uid,omitempty"`
+	Type   string `json:"dgraph.type,omitempty"`
+	Name   string `json:"poiName,omitempty"`
+	Desc   string `json:"poiDesc,omitempty"`
+	Listen string `json:"poiListen,omitempty"`
+	Smell  string `json:"poiSmell,omitempty"`
+	Search []Item `json:"search,omitempty"`
 }
 
 type Terrain struct {
@@ -124,6 +123,7 @@ type Guild struct {
 }
 
 type DgraphResponse struct {
-	Rooms  []Room  `json:"room,omitempty"`
-	Errors []error `json:"errors,omitempty"`
+	Rooms            []Room            `json:"room,omitempty"`
+	PointsOfInterest []PointOfInterest `json:"pointsOfInterest,omitempty"`
+	Errors           []error           `json:"errors,omitempty"`
 }

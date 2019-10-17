@@ -41,7 +41,7 @@ func schemaString() string {
 	locationHash: string @index(exact) @upsert . 
 	roomSlug: string @index(exact) @upsert . 
 	exits: [uid] . # no reverse - can have one way exits
-	pointsOfInterest: [uid] .
+	pointsOfInterest: [uid] @reverse .
 	terrain: uid .
 	items: [uid] .
 
@@ -54,7 +54,6 @@ func schemaString() string {
 	direction: string @index(exact) .
 		
 	type PointOfInterest {
-		keywords: [string] # full text?
 		poiName: string
 		poiDesc: string
 		poiListen: string
@@ -62,7 +61,7 @@ func schemaString() string {
 		search: [Item]
 	}	
 
-	keywords: string @index(exact) .
+	poiName: string @index(fulltext) .
 
 	type Terrain {
 		terrainType: string
@@ -175,10 +174,16 @@ func getSampleRooms() []Room {
 		Slug:   "ancient_inn_north_room",
 		Name:   "North Room",
 		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
-		Items: []Item{
+		PointsOfInterest: []PointOfInterest{
 			{
 				Name: "a warm firepit",
 				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "walnut chairs",
+				Desc: "The chairs are sturdy, and made from walnut. They complement the other furnishings nicely.",
+				Type: "PointOfInterest",
 			},
 		},
 		Exits: []Exit{
@@ -195,11 +200,12 @@ func getSampleRooms() []Room {
 		Region: region,
 		Slug:   "ancient_inn_common_room",
 		Name:   "Common Room",
-		Desc:   "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
-		Items: []Item{
+		Desc:   "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
+		PointsOfInterest: []PointOfInterest{
 			{
 				Name: "oak chairs",
 				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+				Type: "PointOfInterest",
 			},
 		},
 		Exits: []Exit{
@@ -212,34 +218,3 @@ func getSampleRooms() []Room {
 
 	return []Room{commonRoom}
 }
-
-// func loadRooms() map[int]*Room {
-// 	rooms := make(map[int]*Room, 5)
-// 	rooms[1] = &Room{
-// 		UID:  "1",
-// 		Name: "Ancient Inn common room",
-// 		Desc: "You stand in the common room of the Ancient Inn of Tantallon. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Ancient Anguish and the adventure it has to offer.",
-// 		Items: []Item{
-// 			{
-// 				Name: "Oak Chairs",
-// 				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
-// 			},
-// 		},
-// 		// Exits: map[string]*Exit{"NORTH": &Exit{1, 2}},
-// 	}
-
-// 	rooms[2] = &Room{
-// 		UID:  "2",
-// 		Name: "Ancient Inn north room",
-// 		Desc: "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
-// 		Items: []Item{
-// 			{
-// 				Name: "a warm firepit",
-// 				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
-// 			},
-// 		},
-// 		// Exits: map[string]*Exit{"SOUTH": &Exit{2, 1}},
-// 	}
-
-// 	return rooms
-// }

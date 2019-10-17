@@ -97,13 +97,19 @@ func (s *LookStatement) execute() {
 		s.player.connection.Write("Look AT or IN something, or what?\n")
 		return
 	default:
-		// for _, item := range currentRoom.Inventory {
-		// 	if containsString(item.Keys, s.ident) {
-		// 		s.player.connection.Write(item.Description + "\n")
-		// 		return
-		// 	}
-		// }
-		// s.player.connection.Write(s.ident + " wasn't found.\n")
+		points, err := queryPointOfInterest(s.player.CurrentRoom, s.ident)
+		if err != nil {
+			s.player.connection.Write("There's nothing interesting about that.\n")
+		}
+
+		if len(points) == 0 {
+			s.player.connection.Write(s.ident + " wasn't found.\n")
+			return
+		}
+
+		for _, point := range points {
+			s.player.connection.Write(point.Desc + "\n")
+		}
 		return
 	}
 

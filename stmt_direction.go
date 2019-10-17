@@ -34,23 +34,11 @@ func (s *DirectionStatement) execute() {
 	fmt.Printf("tok: %s \n", tokens[s.token])
 
 	if val, ok := room.ExitMap[tokens[s.token]]; ok {
-		// fmt.Printf("%v", val.destination)
 		s.player.CurrentRoom = val
 		newRoom := ServerInstance.getRoom(s.player.CurrentRoom)
 		newRoom.showTo(s.player)
 	}
 }
-
-// func moveTo(player *Player, arguments []string) {
-// 	room := ServerInstance.getRoom(player.CurrentRoom)
-
-// 	if val, ok := room.exits[arguments[0]]; ok {
-// 		// fmt.Printf("%v", val.destination)
-// 		player.CurrentRoom = val.destination
-// 		newRoom := ServerInstance.getRoom(player.CurrentRoom)
-// 		newRoom.showTo(player)
-// 	}
-// }
 
 func (s *DirectionStatement) setPlayer(player *Player) {
 	s.player = player
