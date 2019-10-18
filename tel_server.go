@@ -116,7 +116,7 @@ func userExists(username string) bool {
  */
 func authenticate(username string, password string) *Player {
 	if username == "azkul" && password == "123" {
-		roomUID, err := queryRoomUID("ancient_inn_common_room")
+		roomUID, err := queryRoomUID("forwell_inn_common_room")
 		if err != nil {
 			return nil
 		}

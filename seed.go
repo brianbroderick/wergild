@@ -163,7 +163,7 @@ func loadSeed() {
 func getSampleRooms() []Room {
 	var region = Region{
 		UID:        "_:region",
-		RegionName: "Ancient Inn",
+		RegionName: "Forwell Inn",
 		Type:       "Region",
 	}
 
@@ -171,18 +171,28 @@ func getSampleRooms() []Room {
 		UID:    "_:northRoom",
 		Type:   "Room",
 		Region: region,
-		Slug:   "ancient_inn_north_room",
+		Slug:   "forwell_inn_north_room",
 		Name:   "North Room",
 		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
 		PointsOfInterest: []PointOfInterest{
 			{
-				Name: "a warm firepit",
+				Name: "large firepit",
 				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
 				Type: "PointOfInterest",
 			},
 			{
 				Name: "walnut chairs",
-				Desc: "The chairs are sturdy, and made from walnut. They complement the other furnishings nicely.",
+				Desc: "The chairs are ornate, and made from walnut. They are neatly arranged with tables to give the room a tidy look.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "walnut tables",
+				Desc: "The walnut tables are well crafted with maple inlays.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "large northwest window",
+				Desc: "Peering through the window reveals a beautiful forest outside.",
 				Type: "PointOfInterest",
 			},
 		},
@@ -198,13 +208,38 @@ func getSampleRooms() []Room {
 		UID:    "_:common",
 		Type:   "Room",
 		Region: region,
-		Slug:   "ancient_inn_common_room",
+		Slug:   "forwell_inn_common_room",
 		Name:   "Common Room",
-		Desc:   "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room, and there are two booths where people can go for private conversation. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
+		Desc:   "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
 		PointsOfInterest: []PointOfInterest{
 			{
 				Name: "oak chairs",
 				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "antique oak tables",
+				Desc: "The antique oak tables are sturdy and well used. If they could talk, oh the stories they might tell.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "large desk",
+				Desc: "The desk is old, yet still maintains its luster. Various papers and writing implements can be seen.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "writing implements",
+				Desc: "On the desk are various pens used to maintain records of the Inn's activity.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "papers",
+				Desc: "The papers on the desk look to be a log of people currently staying at the Inn.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "log",
+				Desc: "The log indicates that someone by the name of Viktor recently stayed here.",
 				Type: "PointOfInterest",
 			},
 		},
