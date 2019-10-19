@@ -6,12 +6,15 @@ import (
 	"strings"
 )
 
+//*******
+// LOOK
+//*******
+
 // LookStatement represents a command for looking at a room or object.
 type LookStatement struct {
 	player *Player
 	ident  string // object that is being looked at, ex: `chair` in `look at chair`
-	room   int
-	token  Token // usually a direction. i.e. `north` in `look north`
+	token  Token  // usually a direction. i.e. `north` in `look north`
 }
 
 // parseLookStatement parses a look command and returns a Statement AST object.
@@ -114,4 +117,117 @@ func (s *LookStatement) execute() {
 	}
 
 	s.player.connection.Write("Please try looking a different way.\n")
+}
+
+//*******
+// SMELL
+//*******
+
+// SmellStatement represents a command for smelling a room or object.
+type SmellStatement struct {
+	player *Player
+	ident  string // object that is being smelled, ex: `chair` in `look at chair`
+	token  Token  // usually not used, but you might try to `smell north`
+}
+
+func (s *SmellStatement) String() string {
+	var buf bytes.Buffer
+	_, _ = buf.WriteString("SMELL")
+
+	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
+	for _, direction := range directions {
+		if s.token == direction {
+			_, _ = buf.WriteString(" " + tokens[s.token])
+		}
+	}
+
+	switch s.token {
+	case AT, ON, IN:
+		_, _ = buf.WriteString(" " + tokens[s.token] + " ")
+		_, _ = buf.WriteString(s.ident)
+	case NIL:
+		_, _ = buf.WriteString(s.ident)
+	}
+
+	return buf.String()
+}
+
+// parseSmellStatement parses a look command and returns a Statement AST object.
+// This function assumes the Smell token has already been consumed.
+func (p *Parser) parseSmellStatement() (*SmellStatement, error) {
+	stmt := &SmellStatement{}
+	var err error
+
+	tok, _, _ := p.ScanIgnoreWhitespace()
+
+	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
+	for _, direction := range directions {
+		if tok == direction {
+			stmt.token = tok
+			return stmt, nil
+		}
+	}
+
+	switch tok {
+	case IN:
+		stmt.token = tok
+	case EOF:
+		stmt.token = EOF
+		p.Unscan()
+		return stmt, nil
+	default:
+		stmt.token = NIL
+		p.Unscan()
+		return stmt, nil
+	}
+
+	stmt.ident, err = p.ParseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	return stmt, nil
+}
+
+func (s *SmellStatement) execute() {
+	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+
+	switch s.token {
+	case EOF:
+		currentRoom.showTo(s.player)
+		s.player.connection.Write("\n")
+		return
+	case NORTH, SOUTH, EAST, WEST, UP, DOWN:
+		directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
+		for _, direction := range directions {
+			if s.token == direction {
+				s.player.connection.Write(fmt.Sprintf("You smell %s. But what does that smell like?\n", strings.ToLower(tokens[s.token])))
+				return
+			}
+		}
+	case NIL:
+		s.player.connection.Write("Smell IN something or what?\n")
+		return
+	default:
+		points, err := queryPointOfInterest(s.player.CurrentRoom, s.ident)
+		if err != nil {
+			s.player.connection.Write("There's nothing interesting about that.\n")
+		}
+
+		if len(points) == 0 {
+			s.player.connection.Write(s.ident + " wasn't found.\n")
+			return
+		}
+
+		for _, point := range points {
+			s.player.connection.Write(point.Desc + "\n")
+		}
+		return
+	}
+
+	s.player.connection.Write("Please try looking a different way.\n")
+}
+
+func (s *SmellStatement) setPlayer(player *Player) {
+	s.player = player
 }

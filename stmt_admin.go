@@ -2,7 +2,7 @@ package main
 
 import "bytes"
 
-// QuitStatement represents a command for looking at a room or object.
+// QuitStatement represents a command for exiting the game.
 type QuitStatement struct {
 	player *Player
 }

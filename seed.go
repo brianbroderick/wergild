@@ -116,6 +116,8 @@ func schemaString() string {
 	type Item {
 		itemName: string
 		itemDesc: string 
+		itemListen: string
+		itemSmell: string
 		coinValue: int
 		weight: int
 		items: [Item]
@@ -177,6 +179,8 @@ func getSampleRooms() []Room {
 		Slug:   "forwell_inn_north_room",
 		Name:   "North Room",
 		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+		Smell:  "The smell of charcoal and wood permeate the room.",
+		Listen: "The sounds of people laughing and chatting can be heard.",
 		PointsOfInterest: []PointOfInterest{
 			{
 				Name: "large firepit",
@@ -214,6 +218,8 @@ func getSampleRooms() []Room {
 		Slug:   "forwell_inn_common_room",
 		Name:   "Common Room",
 		Desc:   "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
+		Smell:  "The smell of rustic wood enters your nose.",
+		Listen: "The sounds of people chatting and discussing their travels can be heard.",
 		PointsOfInterest: []PointOfInterest{
 			{
 				Name: "oak chairs",
@@ -231,14 +237,16 @@ func getSampleRooms() []Room {
 				Type: "PointOfInterest",
 			},
 			{
-				Name: "writing implements",
-				Desc: "On the desk are various pens used to maintain records of the Inn's activity.",
-				Type: "PointOfInterest",
+				Name:  "writing implements",
+				Desc:  "On the desk are various pens used to maintain records of the Inn's activity.",
+				Smell: "The ink has a sort of sweet smell. You wonder what it's made of.",
+				Type:  "PointOfInterest",
 			},
 			{
-				Name: "papers",
-				Desc: "The papers on the desk look to be a log of people currently staying at the Inn.",
-				Type: "PointOfInterest",
+				Name:  "papers",
+				Desc:  "The papers on the desk look to be a log of people currently staying at the Inn.",
+				Smell: "The papers have a distinct smell of old parchment.",
+				Type:  "PointOfInterest",
 			},
 			{
 				Name: "log",
@@ -246,9 +254,10 @@ func getSampleRooms() []Room {
 				Type: "PointOfInterest",
 			},
 			{
-				Name: "ornate clock",
-				Desc: "The clock is well crafted and reads 9:17 PM",
-				Type: "PointOfInterest",
+				Name:   "ornate clock",
+				Desc:   "The clock is well crafted and reads 9:17 PM",
+				Listen: "Constant ticking sounds can be heard from the clock",
+				Type:   "PointOfInterest",
 			},
 		},
 		Exits: []Exit{

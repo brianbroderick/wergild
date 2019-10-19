@@ -100,6 +100,8 @@ type Item struct {
 	Type      string `json:"dgraph.type,omitempty"`
 	Name      string `json:"itemName,omitempty"`
 	Desc      string `json:"itemDesc,omitempty"`
+	Listen    string `json:"itemListen,omitempty"`
+	Smell     string `json:"itemSmell,omitempty"`
 	CoinValue int    `json:"coinValue,omitempty"`
 	Weight    int    `json:"weight,omitempty"`
 	Items     []Item `json:"items,omitempty"`

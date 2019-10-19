@@ -107,6 +107,11 @@ func init() {
 		return p.parseLookStatement()
 	})
 
+	// Look at stuff.
+	Language.Handle(SMELL, func(p *Parser) (Statement, error) {
+		return p.parseSmellStatement()
+	})
+
 	// Catch all - usually represents feelings
 	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
 		return p.parseFeelingStatement()

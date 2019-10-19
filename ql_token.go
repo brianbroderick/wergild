@@ -79,6 +79,8 @@ const (
 	AT
 	ON
 	IN
+	SMELL
+	LISTEN
 
 	// Movement Keywords
 	NORTH
@@ -143,10 +145,12 @@ var tokens = [...]string{
 	SEMICOLON:   ";",
 	DOT:         ".",
 
-	LOOK: "LOOK",
-	AT:   "AT",
-	ON:   "ON",
-	IN:   "IN",
+	LOOK:   "LOOK",
+	AT:     "AT",
+	ON:     "ON",
+	IN:     "IN",
+	SMELL:  "SMELL",
+	LISTEN: "LISTEN",
 
 	// Movement Keywords:
 	NORTH: "NORTH",
