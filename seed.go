@@ -70,6 +70,7 @@ func schemaString() string {
 	type Creature {
 		creatureName: string
 		creatureDesc: string
+		creatureSlug: string
 		age: int 
 		lang: string
 		level: int 
@@ -103,7 +104,8 @@ func schemaString() string {
 		insertedCreatureAt: dateTime 
 		items: [Item]
 	}
-		
+	
+	creatureSlug: string @index(exact) @upsert . 
 	age: int @index(int) .
 	level: int @index(int) .
 	exp: int @index(int) .
@@ -156,6 +158,7 @@ func loadSeed() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		// fmt.Printf("%s \n", j)
 		agora.MutateDgraph(j)
 	}
 }
@@ -240,6 +243,11 @@ func getSampleRooms() []Room {
 			{
 				Name: "log",
 				Desc: "The log indicates that someone by the name of Viktor recently stayed here.",
+				Type: "PointOfInterest",
+			},
+			{
+				Name: "ornate clock",
+				Desc: "The clock is well crafted and reads 9:17 PM",
 				Type: "PointOfInterest",
 			},
 		},

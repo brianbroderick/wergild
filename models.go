@@ -60,6 +60,7 @@ type Creature struct {
 	Type               string    `json:"dgraph.type,omitempty"`
 	Name               string    `json:"creatureName,omitempty"`
 	Desc               string    `json:"creatureDesc,omitempty"`
+	Slug               string    `json:"creatureSlug,omitempty"`
 	Age                int       `json:"age,omitempty"`
 	Lang               string    `json:"lang,omitempty"`
 	Level              int       `json:"level,omitempty"`
