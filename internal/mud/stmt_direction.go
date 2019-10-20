@@ -11,7 +11,7 @@ type DirectionStatement struct {
 }
 
 // parseDirectionStatement parses a look command and returns a Statement AST object.
-// This function assumes the QUIT token has already been consumed.
+// This function assumes the direction token has already been consumed.
 func (p *Parser) parseDirectionStatement() (*DirectionStatement, error) {
 	p.Unscan()
 	stmt := &DirectionStatement{}
