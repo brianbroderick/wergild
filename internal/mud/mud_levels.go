@@ -1,29 +1,35 @@
-package main
+package mud
 
-// func help_levels() string {
-// 	return `
-// 	Level  Title                                      Experience points
+type Level struct {
+	lvl  int
+	name string
+	xp   int
+}
 
-// 	1      the utter novice                                           0
-// 	2      the curious wanderer                                     676
-// 	3      the knowledgeable wanderer                             1,014
-// 	4      the experienced wanderer                               1,522
-// 	5      the great wanderer                                     2,283
-// 	6      the simple seeker                                      3,425
-// 	7      the roaming seeker                                     5,138
-// 	8      the proficient seeker                                  7,707
-// 	9      the efficient seeker                                  11,561
-// 	10     the ambitious searcher                                17,341
-// 	11     the confident searcher                                26,012
-// 	12     the expert searcher                                   39,018
-// 	13     the veteran searcher                                  58,527
-// 	14     the rookie adventurer                                 87,791
-// 	15     the learning adventurer                              131,687
-// 	16     the proficient adventurer                            197,530
-// 	17     the seasoned adventurer                              296,296
-// 	18     the wise adventurer                                  444,444
-// 	19     the marvelous adventurer of Anguish                  666,666
-// 	20     the eager explorer                                 1,000,000
+// These are how a string is mapped to the token
+var levels = map[int]Level{
+	1:  Level{lvl: 1, name: "the utter novice", xp: 0},
+	2:  Level{lvl: 2, name: "the curious wanderer", xp: 676},
+	3:  Level{lvl: 3, name: "the knowledgeable wanderer", xp: 1014},
+	4:  Level{lvl: 4, name: "the experienced wanderer", xp: 1522},
+	5:  Level{lvl: 5, name: "the great wanderer", xp: 2283},
+	6:  Level{lvl: 6, name: "the simple seeker", xp: 3425},
+	7:  Level{lvl: 7, name: "the roaming seeker ", xp: 5138},
+	8:  Level{lvl: 8, name: "the proficient seeker", xp: 7707},
+	9:  Level{lvl: 9, name: "the efficient seeker", xp: 11561},
+	10: Level{lvl: 10, name: "the ambitious searcher", xp: 17341},
+	11: Level{lvl: 11, name: "the confident searcher", xp: 26012},
+	12: Level{lvl: 12, name: "the expert searcher", xp: 39018},
+	13: Level{lvl: 13, name: "the veteran searcher", xp: 58527},
+	14: Level{lvl: 14, name: "the rookie adventurer", xp: 87791},
+	15: Level{lvl: 15, name: "the learning adventurer", xp: 131687},
+	16: Level{lvl: 16, name: "the proficient adventurer", xp: 197530},
+	17: Level{lvl: 17, name: "the seasoned adventurer", xp: 296296},
+	18: Level{lvl: 18, name: "the wise adventurer ", xp: 444444},
+	19: Level{lvl: 19, name: "the marvelous adventurer", xp: 666666},
+	20: Level{lvl: 20, name: "the eager explorer", xp: 1000000},
+}
+
 // 	21     the insightful explorer                            2,000,000
 // 	22     the well-known explorer                            3,500,000
 // 	23     the professional explorer                          5,500,000
@@ -54,4 +60,3 @@ package main
 // 	48     the historic nomad of the lands of Anguish     1,750,000,000
 // 	49     the ancient nomad of the lands of Anguish      1,900,000,000
 // 	50     the all-knowing nomad of the lands of Anguish  2,050,000,000`
-// }

@@ -1,4 +1,4 @@
-package main
+package mud
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ type Server struct {
 	roomList       map[string]*Room
 }
 
-func newDescriptor(connection net.Conn) {
+func NewDescriptor(connection net.Conn) {
 	ServerInstance.AddConnection(connection)
 }
 

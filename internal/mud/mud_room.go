@@ -1,4 +1,4 @@
-package main
+package mud
 
 import (
 	"fmt"
@@ -39,9 +39,9 @@ func (room *Room) showEnv(player *Player) {
 		return
 	}
 
-	// Don't spam env messages. Make it happen 20% of the time for each pulse
+	// Don't spam env messages. Make it happen 25% of the time for each pulse
 	percent := rand.Intn(100)
-	if percent > 20 {
+	if percent > 25 {
 		return
 	}
 

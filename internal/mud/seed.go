@@ -1,4 +1,4 @@
-package main
+package mud
 
 import (
 	"encoding/json"
@@ -152,7 +152,7 @@ func schemaString() string {
 	`
 }
 
-func reloadData() {
+func ReloadData() {
 	agora.DropAll()
 	agora.SetSchema(schemaString())
 	loadSeed()
@@ -188,7 +188,9 @@ func getSampleRooms() []Room {
 		Smell:  "The smell of burning charcoal and wood permeate the room.",
 		Listen: "The sounds of people laughing and chatting can be heard.",
 		Env: []string{"The logs burn softly in the pit.",
-			"The fire crackles and sends up a few sparks."},
+			"The fire crackles and sends up a few sparks.",
+			"Warm embers glow in the firepit.",
+			"Orange and red flames flicker causing shadows to dance around the room."},
 		PointsOfInterest: []PointOfInterest{
 			{
 				Name:   "large firepit",
