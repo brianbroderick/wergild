@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"net"
 	"os"
+	"time"
 )
 
 var (
@@ -14,6 +16,8 @@ var (
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	service := ":2222"
 
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)

@@ -19,8 +19,9 @@ type Room struct {
 	Name             string            `json:"roomName,omitempty"`
 	Slug             string            `json:"roomSlug,omitempty"`
 	Desc             string            `json:"roomDesc,omitempty"`
-	Listen           string            `json:"listen,omitempty"`
-	Smell            string            `json:"smell,omitempty"`
+	Listen           string            `json:"roomListen,omitempty"`
+	Smell            string            `json:"roomSmell,omitempty"`
+	Env              []string          `json:"roomEnv,omitempty"`
 	LightLevel       int               `json:"lightLevel,omitempty"`
 	PointsOfInterest []PointOfInterest `json:"pointsOfInterest,omitempty"`
 	Exits            []Exit            `json:"exits,omitempty"`
@@ -46,6 +47,7 @@ type PointOfInterest struct {
 	Desc   string `json:"poiDesc,omitempty"`
 	Listen string `json:"poiListen,omitempty"`
 	Smell  string `json:"poiSmell,omitempty"`
+	Touch  string `json:"poiTouch,omitempty"`
 	Search []Item `json:"search,omitempty"`
 }
 
@@ -102,6 +104,7 @@ type Item struct {
 	Desc      string `json:"itemDesc,omitempty"`
 	Listen    string `json:"itemListen,omitempty"`
 	Smell     string `json:"itemSmell,omitempty"`
+	Touch     string `json:"itemTouch,omitempty"`
 	CoinValue int    `json:"coinValue,omitempty"`
 	Weight    int    `json:"weight,omitempty"`
 	Items     []Item `json:"items,omitempty"`

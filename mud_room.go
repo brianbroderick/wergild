@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 )
 
@@ -23,6 +24,28 @@ func loadRooms() map[string]*Room {
 func (room *Room) showTo(player *Player) {
 	str := room.Desc + room.listExits() + room.listContents()
 	player.connection.Write(str)
+}
+
+func (room *Room) showSmellTo(player *Player) {
+	player.connection.Write(room.Smell)
+}
+
+func (room *Room) showListenTo(player *Player) {
+	player.connection.Write(room.Listen)
+}
+
+func (room *Room) showEnv(player *Player) {
+	if len(room.Env) == 0 {
+		return
+	}
+
+	// Don't spam env messages. Make it happen 20% of the time for each pulse
+	percent := rand.Intn(100)
+	if percent > 20 {
+		return
+	}
+
+	player.connection.Write(room.Env[rand.Intn(len(room.Env))] + "\n")
 }
 
 func (room *Room) listContents() string {
@@ -50,6 +73,9 @@ func queryAllRooms() []Room {
 			uid
 			roomName 
 			roomDesc
+			roomSmell
+			roomListen
+			roomEnv
 			exits {
 				direction
 				dest {
@@ -103,6 +129,8 @@ func queryRoom(slug string) []Room {
 			uid
 			roomName 
 			roomDesc
+			roomSmell
+			roomListen
 			items {
 				itemName
 		        itemDesc 
@@ -125,6 +153,46 @@ func queryPointOfInterest(uid string, q string) ([]PointOfInterest, error) {
 				}
 			  }`
 
+	return poiQueries(query, uid, q)
+}
+
+func queryPointOfInterestListen(uid string, q string) ([]PointOfInterest, error) {
+	query := `query POI($uid: string, $q: string){
+				room(func: uid($uid)) {
+				  pointsOfInterest @filter(alloftext(poiName, $q)) {
+					poiListen
+				  }
+				}
+			  }`
+
+	return poiQueries(query, uid, q)
+}
+
+func queryPointOfInterestSmell(uid string, q string) ([]PointOfInterest, error) {
+	query := `query POI($uid: string, $q: string){
+				room(func: uid($uid)) {
+				  pointsOfInterest @filter(alloftext(poiName, $q)) {
+					poiSmell
+				  }
+				}
+			  }`
+
+	return poiQueries(query, uid, q)
+}
+
+func queryPointOfInterestTouch(uid string, q string) ([]PointOfInterest, error) {
+	query := `query POI($uid: string, $q: string){
+				room(func: uid($uid)) {
+				  pointsOfInterest @filter(alloftext(poiName, $q)) {
+					poiTouch
+				  }
+				}
+			  }`
+
+	return poiQueries(query, uid, q)
+}
+
+func poiQueries(query string, uid string, q string) ([]PointOfInterest, error) {
 	variables := make(map[string]string)
 	variables["$uid"] = uid
 	variables["$q"] = q

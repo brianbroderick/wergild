@@ -24,8 +24,9 @@ func schemaString() string {
 		roomName: string
 		roomSlug: string
 		roomDesc: string
-		listen: string
-		smell: string
+		roomEnv: string
+		roomListen: string
+		roomSmell: string
 		lightLevel: int
 		pointsOfInterest: [PointOfInterest]
 		exits: [Exit]
@@ -40,6 +41,7 @@ func schemaString() string {
 	# locationHash: hash of region and coordinates
 	locationHash: string @index(exact) @upsert . 
 	roomSlug: string @index(exact) @upsert . 
+	roomEnv: [string] .
 	exits: [uid] . # no reverse - can have one way exits
 	pointsOfInterest: [uid] @reverse .
 	terrain: uid .
@@ -58,6 +60,7 @@ func schemaString() string {
 		poiDesc: string
 		poiListen: string
 		poiSmell: string
+		poiTouch: string
 		search: [Item]
 	}	
 
@@ -114,16 +117,19 @@ func schemaString() string {
 	insertedCreatureAt: dateTime @index(hour) .
 
 	type Item {
+		itemHash: string
 		itemName: string
 		itemDesc: string 
 		itemListen: string
 		itemSmell: string
+		itemTouch: string
 		coinValue: int
 		weight: int
 		items: [Item]
 	}
 
 	itemName: string @index(fulltext) .
+	itemHash: string @index(exact) @upsert . 
 
 	type CreatureClass {
 		className: string
@@ -179,28 +185,37 @@ func getSampleRooms() []Room {
 		Slug:   "forwell_inn_north_room",
 		Name:   "North Room",
 		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
-		Smell:  "The smell of charcoal and wood permeate the room.",
+		Smell:  "The smell of burning charcoal and wood permeate the room.",
 		Listen: "The sounds of people laughing and chatting can be heard.",
+		Env: []string{"The logs burn softly in the pit.",
+			"The fire crackles and sends up a few sparks."},
 		PointsOfInterest: []PointOfInterest{
 			{
-				Name: "large firepit",
-				Desc: "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
-				Type: "PointOfInterest",
+				Name:   "large firepit",
+				Desc:   "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
+				Touch:  "The firepit is much too hot to touch.",
+				Listen: "The sounds of the crackling fire can be heard.",
+				Smell:  "The aroma of burning charcoal and wood drift to your nose.",
+				Type:   "PointOfInterest",
 			},
 			{
-				Name: "walnut chairs",
-				Desc: "The chairs are ornate, and made from walnut. They are neatly arranged with tables to give the room a tidy look.",
-				Type: "PointOfInterest",
+				Name:  "walnut chairs",
+				Desc:  "The chairs are ornate, and made from walnut. They are neatly arranged with tables to give the room a tidy look.",
+				Touch: "The chair is smooth and feels well made.",
+				Type:  "PointOfInterest",
 			},
 			{
-				Name: "walnut tables",
-				Desc: "The walnut tables are well crafted with maple inlays.",
-				Type: "PointOfInterest",
+				Name:  "walnut tables",
+				Desc:  "The walnut tables are well crafted with maple inlays.",
+				Touch: "The table is smooth and feels well made.",
+				Type:  "PointOfInterest",
 			},
 			{
-				Name: "large northwest window",
-				Desc: "Peering through the window reveals a beautiful forest outside.",
-				Type: "PointOfInterest",
+				Name:   "large northwest window",
+				Desc:   "Peering through the window reveals a beautiful forest outside.",
+				Listen: "Birds can be faintly heard out the window.",
+				Touch:  "The window is smooth. You better not let the innkeeper know you left prints on the window!",
+				Type:   "PointOfInterest",
 			},
 		},
 		Exits: []Exit{
@@ -222,30 +237,35 @@ func getSampleRooms() []Room {
 		Listen: "The sounds of people chatting and discussing their travels can be heard.",
 		PointsOfInterest: []PointOfInterest{
 			{
-				Name: "oak chairs",
-				Desc: "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
-				Type: "PointOfInterest",
+				Name:  "oak chairs",
+				Desc:  "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
+				Touch: "The chair is smooth to the touch.",
+				Type:  "PointOfInterest",
 			},
 			{
-				Name: "antique oak tables",
-				Desc: "The antique oak tables are sturdy and well used. If they could talk, oh the stories they might tell.",
-				Type: "PointOfInterest",
+				Name:  "antique oak tables",
+				Desc:  "The antique oak tables are sturdy and well used. If they could talk, oh the stories they might tell.",
+				Touch: "The table is smooth to the touch.",
+				Type:  "PointOfInterest",
 			},
 			{
-				Name: "large desk",
-				Desc: "The desk is old, yet still maintains its luster. Various papers and writing implements can be seen.",
-				Type: "PointOfInterest",
+				Name:  "large desk",
+				Desc:  "The desk is old, yet still maintains its luster. Various papers and writing implements can be seen.",
+				Touch: "The desk is rough from much use.",
+				Type:  "PointOfInterest",
 			},
 			{
 				Name:  "writing implements",
 				Desc:  "On the desk are various pens used to maintain records of the Inn's activity.",
 				Smell: "The ink has a sort of sweet smell. You wonder what it's made of.",
+				Touch: "The pen is smooth to the touch.",
 				Type:  "PointOfInterest",
 			},
 			{
 				Name:  "papers",
 				Desc:  "The papers on the desk look to be a log of people currently staying at the Inn.",
 				Smell: "The papers have a distinct smell of old parchment.",
+				Touch: "The papers are textured like parchment.",
 				Type:  "PointOfInterest",
 			},
 			{
@@ -256,7 +276,8 @@ func getSampleRooms() []Room {
 			{
 				Name:   "ornate clock",
 				Desc:   "The clock is well crafted and reads 9:17 PM",
-				Listen: "Constant ticking sounds can be heard from the clock",
+				Listen: "Constant ticking sounds can be heard from the clock.",
+				Touch:  "You probably shouldn't touch the clock. The innkeeper might get upset.",
 				Type:   "PointOfInterest",
 			},
 		},

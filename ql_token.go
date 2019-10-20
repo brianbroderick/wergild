@@ -81,6 +81,8 @@ const (
 	IN
 	SMELL
 	LISTEN
+	TO
+	TOUCH
 
 	// Movement Keywords
 	NORTH
@@ -151,6 +153,8 @@ var tokens = [...]string{
 	IN:     "IN",
 	SMELL:  "SMELL",
 	LISTEN: "LISTEN",
+	TO:     "TO",
+	TOUCH:  "TOUCH",
 
 	// Movement Keywords:
 	NORTH: "NORTH",

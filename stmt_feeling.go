@@ -5,7 +5,7 @@ import "bytes"
 // FeelingStatement represents a command for looking at a room or object.
 type FeelingStatement struct {
 	player *Player
-	ident  string // feeling. if not found, respond with something like "what?"
+	ident  string // feeling. If not found, respond with something like "what?"
 }
 
 func (s *FeelingStatement) execute() {

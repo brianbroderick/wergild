@@ -18,32 +18,32 @@ func TestParser_ParseStatement(t *testing.T) {
 		// Single field statement
 		{
 			s:   `look at chair`,
-			obj: &LookStatement{room: 0, token: AT, ident: "chair"},
+			obj: &LookStatement{token: AT, ident: "chair"},
 			p:   `LOOK AT chair`,
 		},
 
 		{
 			s:   `look`,
-			obj: &LookStatement{room: 0, token: EOF, ident: ""},
+			obj: &LookStatement{token: EOF, ident: ""},
 			p:   `LOOK`,
 		},
 
 		{
 			s:   `look north`,
-			obj: &LookStatement{room: 0, token: NORTH, ident: ""},
+			obj: &LookStatement{token: NORTH, ident: ""},
 			p:   `LOOK NORTH`,
 		},
 
 		{
 			s:   `look up`,
-			obj: &LookStatement{room: 0, token: UP, ident: ""},
+			obj: &LookStatement{token: UP, ident: ""},
 			p:   `LOOK UP`,
 		},
 
 		// check alias
 		{
 			s:   `l n`,
-			obj: &LookStatement{room: 0, token: NORTH, ident: ""},
+			obj: &LookStatement{token: NORTH, ident: ""},
 			p:   `LOOK NORTH`,
 		},
 

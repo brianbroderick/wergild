@@ -33,6 +33,9 @@ func (player *Player) sendPrompt() {
 }
 
 func (player *Player) pulseUpdate() {
+	currentRoom := ServerInstance.getRoom(player.CurrentRoom)
+	currentRoom.showEnv(player)
+
 	// fmt.Printf("This is for player %s\n", player.Name)
 	//if player.hitPoints < player.hitPointsMax {
 	//player.hitPoints = min(player.hitPoints+player.regenHP(), player.hitPointsMax)
