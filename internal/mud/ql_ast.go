@@ -15,7 +15,7 @@ type Statement interface {
 	// RequiredPrivileges() (ExecutionPrivileges, error)
 }
 
-// DataType represents the primitive data types available in InfluxQL.
+// DataType represents the primitive data types available.
 type DataType int
 
 const (

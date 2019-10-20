@@ -30,7 +30,7 @@ const (
 	literalEnd
 
 	operatorBeg
-	// ADD and the following are InfluxQL Operators
+	// ADD and the following are Operators
 	ADD         // +
 	SUB         // -
 	MUL         // *
