@@ -12,4 +12,4 @@
 *.out
 
 wergild-go
-wergild
+cmd/wergild/wergild
