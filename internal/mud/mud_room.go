@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
+
+	"github.com/brianbroderick/agora"
 )
 
 /**
@@ -85,8 +87,13 @@ func queryAllRooms() []Room {
 		}
 	}`
 
-	rooms := resolveQuery(query).Rooms
+	var r DgraphResponse
+	err := agora.ResolveQuery(&r, query)
+	if err != nil {
+		r.Errors = append(r.Errors, err)
+	}
 
+	rooms := r.Rooms
 	// Populate ExitMap
 	for i, room := range rooms {
 		if rooms[i].ExitMap == nil {
@@ -110,20 +117,20 @@ func queryRoomUID(slug string) (string, error) {
 	variables := make(map[string]string)
 	variables["$slug"] = slug
 
-	r := resolveQueryWithVars(query, variables)
-	if r.Errors != nil {
-		return "", r.Errors[0]
+	var r DgraphResponse
+	err := agora.ResolveQueryWithVars(&r, query, variables)
+	if err != nil {
+		return "", err
 	}
 
 	rooms := r.Rooms
 	if len(rooms) > 0 {
 		return rooms[0].UID, nil
 	}
-
 	return "", fmt.Errorf("Room not found")
 }
 
-func queryRoom(slug string) []Room {
+func queryRoom(slug string) ([]Room, error) {
 	query := `query Room($slug: string){
 		room(first:1, func: eq(roomSlug, $slug)) {
 			uid
@@ -140,8 +147,13 @@ func queryRoom(slug string) []Room {
 	variables := make(map[string]string)
 	variables["$slug"] = slug
 
-	r := resolveQueryWithVars(query, variables)
-	return r.Rooms
+	var r DgraphResponse
+	err := agora.ResolveQueryWithVars(&r, query, variables)
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Rooms, nil
 }
 
 func queryPointOfInterest(uid string, q string) ([]PointOfInterest, error) {
@@ -197,10 +209,12 @@ func poiQueries(query string, uid string, q string) ([]PointOfInterest, error) {
 	variables["$uid"] = uid
 	variables["$q"] = q
 
-	r := resolveQueryWithVars(query, variables)
-	if r.Errors != nil {
-		return nil, r.Errors[0]
+	var r DgraphResponse
+	err := agora.ResolveQueryWithVars(&r, query, variables)
+	if err != nil {
+		return nil, err
 	}
+
 	if len(r.Rooms) > 0 {
 		return r.Rooms[0].PointsOfInterest, nil
 	}

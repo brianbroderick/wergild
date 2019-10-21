@@ -117,7 +117,10 @@ func userExists(username string) bool {
 func authenticate(username string, password string) *Player {
 	if username == "azkul" && password == "123" {
 		roomUID, err := queryRoomUID("forwell_inn_common_room")
+
+		fmt.Printf("ROOMUID: %v \n", roomUID)
 		if err != nil {
+			fmt.Printf("ROOMUID err: %v \n", err)
 			return nil
 		}
 
