@@ -13,7 +13,7 @@ func init() {
 }
 
 func TestMain(m *testing.M) {
-	mud.ReloadData()
+	// mud.ReloadData()
 	mud.BcryptCost = 4 // set to minimum for testing
 	retCode := m.Run()
 	// myTeardownFunction()
