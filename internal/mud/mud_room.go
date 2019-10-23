@@ -66,7 +66,10 @@ func (room *Room) listExits() string {
 		keys[i] = strings.ToLower(k.Direction)
 		i++
 	}
-	return "\n Obvious directions are:\n  " + strings.Join(keys, ", ") + "\n"
+	if len(keys) > 0 {
+		return "\n Obvious directions are:\n  " + strings.Join(keys, ", ") + "\n"
+	}
+	return "\n"
 }
 
 func queryAllRooms() []Room {

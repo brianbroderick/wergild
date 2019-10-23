@@ -161,7 +161,7 @@ func ReloadData() {
 func loadSeed() {
 	// getSampleLens has a string arg because it can also
 	// be used in a test resolver
-	for _, p := range getSampleRooms() {
+	for _, p := range getWorld() {
 		j, err := json.Marshal(p)
 		if err != nil {
 			log.Fatal(err)
@@ -171,17 +171,72 @@ func loadSeed() {
 	}
 }
 
-func getSampleRooms() []Room {
-	var region = Region{
-		UID:        "_:region",
+func getWorld() []Room {
+	var forwell = Region{
+		UID:        "_:region_forwell",
+		RegionName: "Forwell",
+		Type:       "Region",
+	}
+
+	var inn = Region{
+		UID:        "_:region_inn",
 		RegionName: "Forwell Inn",
 		Type:       "Region",
+	}
+
+	var blacksmithRegion = Region{
+		UID:        "_:region_blacksmith",
+		RegionName: "Blacksmith",
+		Type:       "Region",
+	}
+
+	var blacksmith = Room{
+		UID:    "_:blacksmith",
+		Type:   "Room",
+		Region: blacksmithRegion,
+		Slug:   "blacksmith",
+		Name:   "Blacksmith",
+		Desc:   "You are in the main room of the blacksmith. Large iron tools line the walls. A forge and an anvil are the room's prominent features. There is a doorway to the north that leads to Main street.",
+		Env: []string{"Heat radiates from the forge.",
+			"Hot embers glow in the forge.",
+			"Orange and red flames flicker causing shadows to dance around the room."},
+		Exits: []Exit{
+			Exit{
+				Dest:      []Room{Room{UID: "_:mainStreet"}},
+				Direction: "NORTH",
+				Portal:    "OPEN",
+				Type:      "Exit",
+			},
+		},
+	}
+
+	var mainStreet = Room{
+		UID:    "_:mainStreet",
+		Type:   "Room",
+		Region: forwell,
+		Slug:   "forwell_main_street",
+		Name:   "Main Street",
+		Desc:   "You are standing on main street directly south of the Forwell Inn and directly north of the blacksmith.",
+		Exits: []Exit{
+			Exit{
+				Dest:      []Room{Room{UID: "_:common"}},
+				Direction: "NORTH",
+				Portal:    "OPEN",
+				Type:      "Exit",
+			},
+			Exit{
+				Dest:      []Room{blacksmith},
+				Direction: "SOUTH",
+				Portal:    "OPEN",
+				Type:      "Exit",
+			},
+		},
 	}
 
 	var northRoom = Room{
 		UID:    "_:northRoom",
 		Type:   "Room",
-		Region: region,
+		Region: inn,
 		Slug:   "forwell_inn_north_room",
 		Name:   "North Room",
 		Desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
@@ -225,13 +280,14 @@ func getSampleRooms() []Room {
 				Dest:      []Room{Room{UID: "_:common"}},
 				Direction: "SOUTH",
 				Portal:    "OPEN",
+				Type:      "Exit",
 			}},
 	}
 
 	var commonRoom = Room{
 		UID:    "_:common",
 		Type:   "Room",
-		Region: region,
+		Region: inn,
 		Slug:   "forwell_inn_common_room",
 		Name:   "Common Room",
 		Desc:   "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
@@ -288,7 +344,15 @@ func getSampleRooms() []Room {
 				Dest:      []Room{northRoom},
 				Direction: "NORTH",
 				Portal:    "OPEN",
-			}},
+				Type:      "Exit",
+			},
+			Exit{
+				Dest:      []Room{mainStreet},
+				Direction: "SOUTH",
+				Portal:    "OPEN",
+				Type:      "Exit",
+			},
+		},
 	}
 
 	return []Room{commonRoom}
