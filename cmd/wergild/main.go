@@ -22,6 +22,7 @@ func main() {
 	checkError(err)
 	defer listener.Close()
 
+	mud.BuildWorld()
 	mud.GetServer().Start()
 	listenForConnections(listener)
 }

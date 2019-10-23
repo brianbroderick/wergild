@@ -1,0 +1,88 @@
+<0x9ce1> <dest> <0x9ced> .
+<0x9ce2> <dest> <0x9cee> .
+<0x9ced> <exits> <0x9ce2> .
+<0x9cee> <exits> <0x9ce1> .
+<0x9ce1> <portal> "OPEN"^^<xs:string> .
+<0x9ce2> <portal> "OPEN"^^<xs:string> .
+<0x9ced> <region> <0x9cea> .
+<0x9cee> <region> <0x9cea> .
+<0x9ce3> <poiDesc> "The desk is old, yet still maintains its luster. Various papers and writing implements can be seen."^^<xs:string> .
+<0x9ce4> <poiDesc> "The papers on the desk look to be a log of people currently staying at the Inn."^^<xs:string> .
+<0x9ce5> <poiDesc> "The walnut tables are well crafted with maple inlays."^^<xs:string> .
+<0x9ce6> <poiDesc> "Peering through the window reveals a beautiful forest outside."^^<xs:string> .
+<0x9ce7> <poiDesc> "The antique oak tables are sturdy and well used. If they could talk, oh the stories they might tell."^^<xs:string> .
+<0x9ce8> <poiDesc> "The clock is well crafted and reads 9:17 PM"^^<xs:string> .
+<0x9ce9> <poiDesc> "The firepit is set halfway into the northern wall, spreading warmth throughout the inn."^^<xs:string> .
+<0x9ceb> <poiDesc> "On the desk are various pens used to maintain records of the Inn's activity."^^<xs:string> .
+<0x9cec> <poiDesc> "The log indicates that someone by the name of Viktor recently stayed here."^^<xs:string> .
+<0x9cef> <poiDesc> "The chairs are ornate, and made from walnut. They are neatly arranged with tables to give the room a tidy look."^^<xs:string> .
+<0x9cf0> <poiDesc> "The chairs are sturdy, and made from oak. They complement the other furnishings nicely."^^<xs:string> .
+<0x9ce3> <poiName> "large desk"^^<xs:string> .
+<0x9ce4> <poiName> "papers"^^<xs:string> .
+<0x9ce5> <poiName> "walnut tables"^^<xs:string> .
+<0x9ce6> <poiName> "large northwest window"^^<xs:string> .
+<0x9ce7> <poiName> "antique oak tables"^^<xs:string> .
+<0x9ce8> <poiName> "ornate clock"^^<xs:string> .
+<0x9ce9> <poiName> "large firepit"^^<xs:string> .
+<0x9ceb> <poiName> "writing implements"^^<xs:string> .
+<0x9cec> <poiName> "log"^^<xs:string> .
+<0x9cef> <poiName> "walnut chairs"^^<xs:string> .
+<0x9cf0> <poiName> "oak chairs"^^<xs:string> .
+<0x9cee> <roomEnv> "Warm embers glow in the firepit."^^<xs:string> .
+<0x9cee> <roomEnv> "The logs burn softly in the pit."^^<xs:string> .
+<0x9cee> <roomEnv> "Orange and red flames flicker causing shadows to dance around the room."^^<xs:string> .
+<0x9cee> <roomEnv> "The fire crackles and sends up a few sparks."^^<xs:string> .
+<0x9ce4> <poiSmell> "The papers have a distinct smell of old parchment."^^<xs:string> .
+<0x9ce9> <poiSmell> "The aroma of burning charcoal and wood drift to your nose."^^<xs:string> .
+<0x9ceb> <poiSmell> "The ink has a sort of sweet smell. You wonder what it's made of."^^<xs:string> .
+<0x9ce3> <poiTouch> "The desk is rough from much use."^^<xs:string> .
+<0x9ce4> <poiTouch> "The papers are textured like parchment."^^<xs:string> .
+<0x9ce5> <poiTouch> "The table is smooth and feels well made."^^<xs:string> .
+<0x9ce6> <poiTouch> "The window is smooth. You better not let the innkeeper know you left prints on the window!"^^<xs:string> .
+<0x9ce7> <poiTouch> "The table is smooth to the touch."^^<xs:string> .
+<0x9ce8> <poiTouch> "You probably shouldn't touch the clock. The innkeeper might get upset."^^<xs:string> .
+<0x9ce9> <poiTouch> "The firepit is much too hot to touch."^^<xs:string> .
+<0x9ceb> <poiTouch> "The pen is smooth to the touch."^^<xs:string> .
+<0x9cef> <poiTouch> "The chair is smooth and feels well made."^^<xs:string> .
+<0x9cf0> <poiTouch> "The chair is smooth to the touch."^^<xs:string> .
+<0x9ced> <roomDesc> "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer."^^<xs:string> .
+<0x9cee> <roomDesc> "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside."^^<xs:string> .
+<0x9ced> <roomName> "Common Room"^^<xs:string> .
+<0x9cee> <roomName> "North Room"^^<xs:string> .
+<0x9ced> <roomSlug> "forwell_inn_common_room"^^<xs:string> .
+<0x9cee> <roomSlug> "forwell_inn_north_room"^^<xs:string> .
+<0x9ce1> <direction> "SOUTH"^^<xs:string> .
+<0x9ce2> <direction> "NORTH"^^<xs:string> .
+<0x9ce6> <poiListen> "Birds can be faintly heard out the window."^^<xs:string> .
+<0x9ce8> <poiListen> "Constant ticking sounds can be heard from the clock."^^<xs:string> .
+<0x9ce9> <poiListen> "The sounds of the crackling fire can be heard."^^<xs:string> .
+<0x9ced> <roomSmell> "The smell of rustic wood enters your nose."^^<xs:string> .
+<0x9cee> <roomSmell> "The smell of burning charcoal and wood permeate the room."^^<xs:string> .
+<0x9cea> <regionName> "Forwell Inn"^^<xs:string> .
+<0x9ced> <roomListen> "The sounds of people chatting and discussing their travels can be heard."^^<xs:string> .
+<0x9cee> <roomListen> "The sounds of people laughing and chatting can be heard."^^<xs:string> .
+<0x9ce3> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce4> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce5> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce6> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce7> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce8> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ce9> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9cea> <dgraph.type> "Region"^^<xs:string> .
+<0x9ceb> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9cec> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ced> <dgraph.type> "Room"^^<xs:string> .
+<0x9cee> <dgraph.type> "Room"^^<xs:string> .
+<0x9cef> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9cf0> <dgraph.type> "PointOfInterest"^^<xs:string> .
+<0x9ced> <pointsOfInterest> <0x9ce3> .
+<0x9ced> <pointsOfInterest> <0x9ce4> .
+<0x9ced> <pointsOfInterest> <0x9ce7> .
+<0x9ced> <pointsOfInterest> <0x9ce8> .
+<0x9ced> <pointsOfInterest> <0x9ceb> .
+<0x9ced> <pointsOfInterest> <0x9cec> .
+<0x9ced> <pointsOfInterest> <0x9cf0> .
+<0x9cee> <pointsOfInterest> <0x9ce5> .
+<0x9cee> <pointsOfInterest> <0x9ce6> .
+<0x9cee> <pointsOfInterest> <0x9ce9> .
+<0x9cee> <pointsOfInterest> <0x9cef> .

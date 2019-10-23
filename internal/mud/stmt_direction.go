@@ -28,11 +28,11 @@ func (s *DirectionStatement) String() string {
 }
 
 func (s *DirectionStatement) execute() {
-	room := ServerInstance.getRoom(s.player.CurrentRoom)
+	room := WorldInstance.getRoom(s.player.CurrentRoom)
 
 	if val, ok := room.ExitMap[tokens[s.token]]; ok {
 		s.player.CurrentRoom = val
-		newRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+		newRoom := WorldInstance.getRoom(s.player.CurrentRoom)
 		newRoom.showTo(s.player)
 		return
 	}

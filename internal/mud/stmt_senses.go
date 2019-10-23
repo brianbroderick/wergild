@@ -81,7 +81,7 @@ func (s *LookStatement) setPlayer(player *Player) {
 }
 
 func (s *LookStatement) execute() {
-	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+	currentRoom := WorldInstance.getRoom(s.player.CurrentRoom)
 
 	switch s.token {
 	case EOF:
@@ -194,7 +194,7 @@ func (s *ListenStatement) setPlayer(player *Player) {
 }
 
 func (s *ListenStatement) execute() {
-	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+	currentRoom := WorldInstance.getRoom(s.player.CurrentRoom)
 
 	switch s.token {
 	case EOF:
@@ -301,7 +301,7 @@ func (p *Parser) parseSmellStatement() (*SmellStatement, error) {
 }
 
 func (s *SmellStatement) execute() {
-	currentRoom := ServerInstance.getRoom(s.player.CurrentRoom)
+	currentRoom := WorldInstance.getRoom(s.player.CurrentRoom)
 
 	switch s.token {
 	case EOF:

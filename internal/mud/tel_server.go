@@ -13,8 +13,7 @@ type Server struct {
 	playerList     []*Connection
 	ticker         *time.Ticker
 	Motd           string
-	Menu           string
-	roomList       map[string]*Room
+	// roomList       map[string]*Room
 }
 
 func NewDescriptor(connection net.Conn) {
@@ -38,10 +37,6 @@ func GetServer() *Server {
 		// 2. Prepare the command hashes
 		// fmt.Println("[CONFIG] Preparing commands")
 		// prepareCommands()
-
-		// 3. Load in the rooms
-		fmt.Println("[CONFIG] Loading rooms")
-		ServerInstance.roomList = loadRooms()
 	}
 
 	return ServerInstance
@@ -157,10 +152,6 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	connection.Write("The world darkens...\n")
 	connection.Player.do("look")
 	connection.Player.sendPrompt()
-}
-
-func (server *Server) getRoom(roomId string) *Room {
-	return server.roomList[roomId]
 }
 
 func (server *Server) AddConnection(connection net.Conn) *Connection {

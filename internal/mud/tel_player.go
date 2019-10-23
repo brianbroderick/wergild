@@ -33,7 +33,7 @@ func (player *Player) sendPrompt() {
 }
 
 func (player *Player) pulseUpdate() {
-	currentRoom := ServerInstance.getRoom(player.CurrentRoom)
+	currentRoom := WorldInstance.getRoom(player.CurrentRoom)
 	currentRoom.showEnv(player)
 
 	// fmt.Printf("This is for player %s\n", player.Name)
