@@ -162,12 +162,14 @@ func schemaString() string {
 type worldSeed struct {
 	Regions []mud.Region `json:"regions,omitempty"`
 	Rooms   []mud.Room   `json:"rooms,omitempty"`
+	Mobs    []mud.Mob    `json:"mobs,omitempty"`
 }
 
 func combineStructs() worldSeed {
 	seed := worldSeed{}
 	seed.Regions = getRegions()
 	seed.Rooms = getRooms()
+	seed.Mobs = getMobs()
 	return seed
 }
 
@@ -369,4 +371,15 @@ func getRooms() []mud.Room {
 	}
 
 	return []mud.Room{blacksmith, mainStreet, northRoom, commonRoom}
+}
+
+func getMobs() []mud.Mob {
+	william := mud.Mob{
+		UID:  "_:william",
+		Name: "William",
+		Slug: "william",
+		Desc: "William is an apprentice blacksmith.",
+	}
+
+	return []mud.Mob{william}
 }
