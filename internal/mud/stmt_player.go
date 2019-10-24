@@ -43,7 +43,7 @@ type aPlayer struct {
 	connection  *Connection
 	inventory   []*Item
 
-	race *Race
+	race *MobRace
 	lang string
 
 	level     int
@@ -51,7 +51,7 @@ type aPlayer struct {
 	coins     int
 	bankCoins int
 
-	class *Class
+	class *MobClass
 	guild *Guild
 
 	hp       int    // hit points - hitting zero means death

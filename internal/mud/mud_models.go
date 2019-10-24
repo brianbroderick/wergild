@@ -57,44 +57,44 @@ type Terrain struct {
 	TerrainType string `json:"terrainType,omitempty"`
 }
 
-type Creature struct {
-	UID                string    `json:"uid,omitempty"`
-	Type               string    `json:"dgraph.type,omitempty"`
-	Name               string    `json:"creatureName,omitempty"`
-	Desc               string    `json:"creatureDesc,omitempty"`
-	Slug               string    `json:"creatureSlug,omitempty"`
-	Age                int       `json:"age,omitempty"`
-	Lang               string    `json:"lang,omitempty"`
-	Level              int       `json:"level,omitempty"`
-	Exp                int       `json:"exp,omitempty"`
-	Coins              int       `json:"coins,omitempty"`
-	BankCoins          int       `json:"bankCoins,omitempty"`
-	Hp                 int       `json:"hp,omitempty"`
-	HpMax              int       `json:"hpMax,omitempty"`
-	Ap                 int       `json:"ap,omitempty"`
-	ApMax              int       `json:"apMax,omitempty"`
-	Wimpy              int       `json:"wimpy,omitempty"`
-	WimpyDir           string    `json:"wimpyDir,omitempty"`
-	Encumb             int       `json:"encumb,omitempty"`
-	Sober              int       `json:"sober,omitempty"`
-	Thirst             int       `json:"thirst,omitempty"`
-	Hunger             int       `json:"hunger,omitempty"`
-	Poison             int       `json:"poison,omitempty"`
-	Defend             string    `json:"defend,omitempty"`
-	Aim                string    `json:"aim,omitempty"`
-	Attack             string    `json:"attack,omitempty"`
-	Str                int       `json:"str,omitempty"`
-	Agl                int       `json:"agl,omitempty"`
-	Intl               int       `json:"intl,omitempty"`
-	Tgh                int       `json:"tgh,omitempty"`
-	Per                int       `json:"per,omitempty"`
-	StrMod             int       `json:"strMod,omitempty"`
-	AglMod             int       `json:"aglMod,omitempty"`
-	IntlMod            int       `json:"intlMod,omitempty"`
-	TghMod             int       `json:"tghMod,omitempty"`
-	PerMod             int       `json:"perMod,omitempty"`
-	InsertedCreatureAt time.Time `json:"insertedCreatureAt,omitempty"`
-	Items              []Item    `json:"items,omitempty"`
+type Mob struct {
+	UID           string    `json:"uid,omitempty"`
+	Type          string    `json:"dgraph.type,omitempty"`
+	Name          string    `json:"mobName,omitempty"`
+	Desc          string    `json:"mobDesc,omitempty"`
+	Slug          string    `json:"mobSlug,omitempty"`
+	Age           int       `json:"age,omitempty"`
+	Lang          string    `json:"lang,omitempty"`
+	Level         int       `json:"level,omitempty"`
+	Exp           int       `json:"exp,omitempty"`
+	Coins         int       `json:"coins,omitempty"`
+	BankCoins     int       `json:"bankCoins,omitempty"`
+	Hp            int       `json:"hp,omitempty"`
+	HpMax         int       `json:"hpMax,omitempty"`
+	Ap            int       `json:"ap,omitempty"`
+	ApMax         int       `json:"apMax,omitempty"`
+	Wimpy         int       `json:"wimpy,omitempty"`
+	WimpyDir      string    `json:"wimpyDir,omitempty"`
+	Encumb        int       `json:"encumb,omitempty"`
+	Sober         int       `json:"sober,omitempty"`
+	Thirst        int       `json:"thirst,omitempty"`
+	Hunger        int       `json:"hunger,omitempty"`
+	Poison        int       `json:"poison,omitempty"`
+	Defend        string    `json:"defend,omitempty"`
+	Aim           string    `json:"aim,omitempty"`
+	Attack        string    `json:"attack,omitempty"`
+	Str           int       `json:"str,omitempty"`
+	Agl           int       `json:"agl,omitempty"`
+	Intl          int       `json:"intl,omitempty"`
+	Tgh           int       `json:"tgh,omitempty"`
+	Per           int       `json:"per,omitempty"`
+	StrMod        int       `json:"strMod,omitempty"`
+	AglMod        int       `json:"aglMod,omitempty"`
+	IntlMod       int       `json:"intlMod,omitempty"`
+	TghMod        int       `json:"tghMod,omitempty"`
+	PerMod        int       `json:"perMod,omitempty"`
+	InsertedMobAt time.Time `json:"insertedMobAt,omitempty"`
+	Items         []Item    `json:"items,omitempty"`
 }
 
 type Item struct {
@@ -110,13 +110,13 @@ type Item struct {
 	Items     []Item `json:"items,omitempty"`
 }
 
-type CreatureClass struct {
+type MobClass struct {
 	UID  string `json:"uid,omitempty"`
 	Type string `json:"dgraph.type,omitempty"`
 	Name string `json:"className,omitempty"`
 }
 
-type CreatureRace struct {
+type MobRace struct {
 	UID  string `json:"uid,omitempty"`
 	Type string `json:"dgraph.type,omitempty"`
 	Race string `json:"race,omitempty"`

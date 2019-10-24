@@ -77,10 +77,10 @@ func schemaString() string {
 		terrainType: string
 	}
 
-	type Creature {
-		creatureName: string
-		creatureDesc: string
-		creatureSlug: string
+	type Mob {
+		mobName: string
+		mobDesc: string
+		mobSlug: string
 		age: int 
 		lang: string
 		level: int 
@@ -111,17 +111,17 @@ func schemaString() string {
 		intlMod: int
 		tghMod: int
 		perMod: int
-		insertedCreatureAt: dateTime 
+		insertedMobAt: dateTime 
 		items: [Item]
 	}
 	
-	creatureSlug: string @index(exact) @upsert . 
+	mobSlug: string @index(exact) @upsert . 
 	age: int @index(int) .
 	level: int @index(int) .
 	exp: int @index(int) .
 	coins: int @index(int) .
 	bankCoins: int @index(int) .
-	insertedCreatureAt: dateTime @index(hour) .
+	insertedMobAt: dateTime @index(hour) .
 
 	type Item {
 		itemHash: string
@@ -138,13 +138,13 @@ func schemaString() string {
 	itemName: string @index(fulltext) .
 	itemHash: string @index(exact) @upsert . 
 
-	type CreatureClass {
+	type mobClass {
 		className: string
 	}
 
 	className: string @index(exact) @count .
 
-	type CreatureRace {
+	type mobRace {
 		race: string
 	}
 
