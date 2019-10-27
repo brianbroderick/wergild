@@ -27,6 +27,7 @@ type Room struct {
 	Exits            []Exit            `json:"exits,omitempty"`
 	Terrain          Terrain           `json:"terrain,omitempty"`
 	Items            []Item            `json:"items,omitempty"`
+	Mobs             []Mob             `json:"mobs,omitempty"`
 	// Non-persistent fields
 	ExitMap map[string]string
 }
@@ -57,14 +58,26 @@ type Terrain struct {
 	TerrainType string `json:"terrainType,omitempty"`
 }
 
+type User struct {
+	UID      string `json:"uid,omitempty"`
+	Type     string `json:"dgraph.type,omitempty"`
+	Name     string `json:"userName,omitempty"`
+	Password string `json:"password,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Mob      Mob    `json:"mob,omitempty"`
+}
+
 type Mob struct {
 	UID           string    `json:"uid,omitempty"`
 	Type          string    `json:"dgraph.type,omitempty"`
 	Name          string    `json:"mobName,omitempty"`
+	Title         string    `json:"mobTitle,omitempty"`
+	Rank          string    `json:"mobRank,omitempty"`
 	Desc          string    `json:"mobDesc,omitempty"`
 	Slug          string    `json:"mobSlug,omitempty"`
 	Age           int       `json:"age,omitempty"`
 	Lang          string    `json:"lang,omitempty"`
+	Gender        string    `json:"gender,omitempty"`
 	Level         int       `json:"level,omitempty"`
 	Exp           int       `json:"exp,omitempty"`
 	Coins         int       `json:"coins,omitempty"`

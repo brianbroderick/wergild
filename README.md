@@ -38,3 +38,20 @@ Without the ability to move from one room to another, this would be a pretty bor
 ### REPEATED COMMANDS ###
 
 By starting your command with a number, it will execute that command that many times. It will err above 50. For example `10 look`. Be aware that causing unnecessary spam on the line may cause other players to get pissed and potentially retaliate. 
+
+## Kubernetes ##
+
+Clone dgraph at https://github.com/dgraph-io/dgraph
+CD to dgraph/contrib/config/kubernetes/helm
+If helm isn't set up, run `helm init`
+Run `helm install --name dgraph ./ --set alpha.service.type="LoadBalancer" --set ratel.service.type="LoadBalancer"`
+
+The LoadBalancer option makes it so you can get to Dgraph from outside K8s. This makes it possible to use Ratel or have Go running locally. 
+
+If things are messed up with Dgraph, you can reset by running `helm delete dgraph --purge` Then running the `helm install` command above. 
+
+In production, you wouldn't run the LoadBalancer flags so that DGraph is not accessible outside of K8s. 
+
+To check the status of dgraph, run: `helm status dgraph`
+
+Once everything is running, you can visit Ratel (Dgraph's web based interface) by going to http://localhost:8000

@@ -9,12 +9,11 @@ type Player struct {
 	Name        string
 	CurrentRoom string
 	connection  *Connection
-	//inventory    []*Item
-	//race         *Race
-	hp    int // hit points - hitting zero means death
-	hpMax int // max hit points
-	ap    int // action points. - hitting zero means you are too fatigued to do the action
-	apMax int // max action points
+	mob         *Mob
+	hp          int // hit points - hitting zero means death
+	hpMax       int // max hit points
+	ap          int // action points. - hitting zero means you are too fatigued to do the action
+	apMax       int // max action points
 }
 
 func (player *Player) setConnection(connection *Connection) {

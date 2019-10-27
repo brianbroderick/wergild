@@ -24,7 +24,7 @@ func loadRooms() map[string]*Room {
 }
 
 func (room *Room) showTo(player *Player) {
-	str := room.Desc + room.listExits() + room.listContents()
+	str := room.Desc + room.listExits() + room.listContents() + room.listMobs()
 	player.connection.Write(str)
 }
 
@@ -72,6 +72,18 @@ func (room *Room) listExits() string {
 	return "\n"
 }
 
+func (room *Room) listMobs() string {
+	str := ""
+	for _, mob := range room.Mobs {
+		if mob.Title != "" {
+			str += mob.Name + ", " + mob.Title + ".\n"
+		} else {
+			str += mob.Name + "\n"
+		}
+	}
+	return str
+}
+
 func queryAllRooms() []Room {
 	query := `{
 		room(func: type(Room)) {
@@ -86,6 +98,11 @@ func queryAllRooms() []Room {
 				dest {
 					uid
 				}
+			} 
+			mobs {
+				uid
+				mobName
+				mobTitle
 			}
 		}
 	}`

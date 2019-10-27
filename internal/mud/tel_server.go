@@ -13,7 +13,6 @@ type Server struct {
 	playerList     []*Connection
 	ticker         *time.Ticker
 	Motd           string
-	// roomList       map[string]*Room
 }
 
 func NewDescriptor(connection net.Conn) {
@@ -29,14 +28,10 @@ func GetServer() *Server {
 
 		pwd, _ := os.Getwd()
 
-		// 1. Pull in the welcome screen
+		// Pull in the welcome screen
 		fmt.Println("[CONFIG] Pulling MOTD")
 		motdBytes, _ := ioutil.ReadFile(pwd + "/resources/MOTD")
 		ServerInstance.Motd = string(motdBytes)
-
-		// 2. Prepare the command hashes
-		// fmt.Println("[CONFIG] Preparing commands")
-		// prepareCommands()
 	}
 
 	return ServerInstance
@@ -48,8 +43,6 @@ func (server *Server) onMessageReceived(connection *Connection, message string) 
 		connection.Player.sendPrompt()
 		return
 	}
-
-	fmt.Printf("%s\n", message)
 
 	// // message = applyNick(message)
 	// words := strings.Fields(message)

@@ -77,12 +77,25 @@ func schemaString() string {
 		terrainType: string
 	}
 
+	type User {
+		userName: string
+		password: string # todo: change to password field
+		email: string
+		mob: Mob
+	}
+
+	userName: string @index(exact) @upsert .
+	mob: uid @reverse .
+
 	type Mob {
 		mobName: string
 		mobDesc: string
 		mobSlug: string
+		mobTitle: string # prince, duke
+		mobRank: string # the bold, the brave, etc
 		age: int 
 		lang: string
+		gender: string
 		level: int 
 		exp: int 
 		coins: int 
@@ -163,6 +176,7 @@ type worldSeed struct {
 	Regions []mud.Region `json:"regions,omitempty"`
 	Rooms   []mud.Room   `json:"rooms,omitempty"`
 	Mobs    []mud.Mob    `json:"mobs,omitempty"`
+	Users   []mud.User   `json:"users,omitempty"`
 }
 
 func combineStructs() worldSeed {
@@ -170,6 +184,7 @@ func combineStructs() worldSeed {
 	seed.Regions = getRegions()
 	seed.Rooms = getRooms()
 	seed.Mobs = getMobs()
+	seed.Users = getUsers()
 	return seed
 }
 
@@ -223,6 +238,7 @@ func getRooms() []mud.Room {
 				Type:      "Exit",
 			},
 		},
+		Mobs: []mud.Mob{mud.Mob{UID: "_:william"}},
 	}
 
 	var mainStreet = mud.Room{
@@ -375,11 +391,31 @@ func getRooms() []mud.Room {
 
 func getMobs() []mud.Mob {
 	william := mud.Mob{
-		UID:  "_:william",
-		Name: "William",
-		Slug: "william",
-		Desc: "William is an apprentice blacksmith.",
+		UID:   "_:william",
+		Name:  "William",
+		Slug:  "william",
+		Title: "the apprentice smith",
+		Desc:  "This tall lad already shows the stature of his uncle in sheer height. Bulging muscles have started to fill out his gangly frame, and his skin has taken on the dark hue of blacksmiths everywhere. His dark hair is clipped into a short burr, showing a faded scar near his temple. He has kind, merry brown eyes and you sense that he may have a soft spot for those new to this world.",
+		Type:  "Mob",
 	}
 
 	return []mud.Mob{william}
+}
+
+func getUsers() []mud.User {
+	azkul := mud.User{
+		UID:      "_:azkulUser",
+		Name:     "azkul",
+		Password: "123",
+		Type:     "User",
+		Mob: mud.Mob{
+			UID:   "_:azkul",
+			Name:  "Azkul",
+			Slug:  "azkul",
+			Title: "the utter novice",
+			Type:  "Mob",
+		},
+	}
+
+	return []mud.User{azkul}
 }
