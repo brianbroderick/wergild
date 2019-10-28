@@ -79,12 +79,13 @@ func schemaString() string {
 
 	type User {
 		userName: string
-		password: string # todo: change to password field
+		pass: password 
 		email: string
 		mob: Mob
 	}
 
 	userName: string @index(exact) @upsert .
+	pass: password .
 	mob: uid @reverse .
 
 	type Mob {
@@ -404,10 +405,10 @@ func getMobs() []mud.Mob {
 
 func getUsers() []mud.User {
 	azkul := mud.User{
-		UID:      "_:azkulUser",
-		Name:     "azkul",
-		Password: "123",
-		Type:     "User",
+		UID:  "_:azkulUser",
+		Name: "azkul",
+		Pass: "123456",
+		Type: "User",
 		Mob: mud.Mob{
 			UID:   "_:azkul",
 			Name:  "Azkul",

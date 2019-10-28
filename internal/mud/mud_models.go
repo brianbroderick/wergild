@@ -59,12 +59,12 @@ type Terrain struct {
 }
 
 type User struct {
-	UID      string `json:"uid,omitempty"`
-	Type     string `json:"dgraph.type,omitempty"`
-	Name     string `json:"userName,omitempty"`
-	Password string `json:"password,omitempty"`
-	Email    string `json:"email,omitempty"`
-	Mob      Mob    `json:"mob,omitempty"`
+	UID   string `json:"uid,omitempty"`
+	Type  string `json:"dgraph.type,omitempty"`
+	Name  string `json:"userName,omitempty"`
+	Pass  string `json:"pass,omitempty"`
+	Email string `json:"email,omitempty"`
+	Mob   Mob    `json:"mob,omitempty"`
 }
 
 type Mob struct {
