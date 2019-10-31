@@ -1,5 +1,9 @@
 package mud
 
+import (
+	"io/ioutil"
+)
+
 var (
 	ServerInstance *Server
 	WorldInstance  *World
@@ -14,4 +18,9 @@ func init() {
 		users: make(map[string]*Mob),
 	}
 	BuildWorld()
+}
+
+func motd() string {
+	motdBytes, _ := ioutil.ReadFile("../../welcome/1.txt")
+	return string(motdBytes) + "\n"
 }

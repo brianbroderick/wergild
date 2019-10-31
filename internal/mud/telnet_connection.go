@@ -18,9 +18,10 @@ const (
 	STATE_LOGIN_USERNAME
 	STATE_LOGIN_PASSWORD
 	STATE_SHOULD_CREATE_NEW
-	STATE_CHARACTER_CREATION
+	STATE_USER_CREATION
 	STATE_PASSWORD_CREATION
 	STATE_EMAIL_CREATION
+	STATE_CHARACTER_CREATION
 	STATE_PLAYING
 	STATE_STATUE
 )
@@ -41,6 +42,7 @@ func (connection *Connection) Write(message string) {
 func (connection *Connection) listen() {
 	reader := bufio.NewReader(connection.conn)
 
+	connection.Write(motd())
 	connection.Write("What is your name: ")
 	connection.state = STATE_LOGIN_USERNAME
 
@@ -71,10 +73,10 @@ func (connection *Connection) listen() {
 				connection.state = STATE_LOGIN_PASSWORD
 				connection.Write("Password: ")
 			} else {
-				connection.state = STATE_CHARACTER_CREATION
+				connection.state = STATE_USER_CREATION
 				connection.Write("That username was not found. Create new: y/N? ")
 			}
-		case STATE_CHARACTER_CREATION:
+		case STATE_USER_CREATION:
 			if strings.ToLower(message) == "y" {
 				connection.state = STATE_PASSWORD_CREATION
 				connection.Write("Choose a password of at least 6 characters: ")
@@ -112,6 +114,8 @@ func (connection *Connection) listen() {
 				login.UpdateUser(connection.user)
 				ServerInstance.onPlayerAuthenticated(connection)
 			}
+		case STATE_CHARACTER_CREATION:
+
 		case STATE_LOGIN_PASSWORD:
 			auth, err := login.Auth(connection.user.Name, message)
 			if err != nil {
