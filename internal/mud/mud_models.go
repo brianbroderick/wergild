@@ -146,4 +146,5 @@ type DgraphResponse struct {
 	Rooms            []Room            `json:"room,omitempty"`
 	PointsOfInterest []PointOfInterest `json:"pointsOfInterest,omitempty"`
 	Errors           []error           `json:"errors,omitempty"`
+	Mobs             []Mob             `json:"mobs,omitempty"`
 }
