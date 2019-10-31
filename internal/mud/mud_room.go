@@ -18,6 +18,7 @@ func loadRooms() map[string]*Room {
 
 	for i, room := range rooms {
 		roomMap[room.UID] = &rooms[i]
+		roomMap[room.UID].Desc = formatToWidth(roomMap[room.UID].Desc, 80)
 	}
 
 	return roomMap

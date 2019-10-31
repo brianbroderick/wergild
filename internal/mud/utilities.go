@@ -2,6 +2,7 @@ package mud
 
 import (
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -28,4 +29,22 @@ func min(x, y int) int {
 func random_int(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
+}
+
+func formatToWidth(msg string, lineLen int) string {
+	words := strings.Fields(msg)
+	var slice []string
+	curLine := 0
+
+	for _, word := range words {
+		slice = append(slice, word+" ")
+
+		curLine += len(word) + 1
+		if curLine >= lineLen {
+			slice = append(slice, "\n")
+			curLine = 0
+		}
+	}
+
+	return strings.TrimSpace(strings.Join(slice, ""))
 }
