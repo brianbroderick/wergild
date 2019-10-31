@@ -4,7 +4,7 @@ import "bytes"
 
 // QuitStatement represents a command for exiting the game.
 type QuitStatement struct {
-	player *Player
+	mob *Mob
 }
 
 func (s *QuitStatement) String() string {
@@ -21,12 +21,11 @@ func (p *Parser) parseQuitStatement() (*QuitStatement, error) {
 }
 
 func (s *QuitStatement) execute() {
-	s.player.connection.Write("You slowly fade away.\n")
-	s.player.connection.conn.Close()
-	ServerInstance.playerExited(s.player.connection, nil)
-	ServerInstance.onClientConnectionClosed(s.player.connection, nil)
+	s.mob.conn.Write("You slowly fade away.\n")
+	s.mob.conn.conn.Close()
+	ServerInstance.onClientConnectionClosed(s.mob.conn, nil)
 }
 
-func (s *QuitStatement) setPlayer(player *Player) {
-	s.player = player
+func (s *QuitStatement) setMob(mob *Mob) {
+	s.mob = mob
 }

@@ -11,7 +11,7 @@ import (
 type Statement interface {
 	String() string // mostly used for testing
 	execute()
-	setPlayer(*Player)
+	setMob(*Mob)
 	// RequiredPrivileges() (ExecutionPrivileges, error)
 }
 

@@ -1,6 +1,10 @@
 package mud
 
-import "time"
+import (
+	"time"
+
+	"github.com/brianbroderick/wergild/internal/login"
+)
 
 type Region struct {
 	UID        string `json:"uid,omitempty"`
@@ -58,16 +62,13 @@ type Terrain struct {
 	TerrainType string `json:"terrainType,omitempty"`
 }
 
-type User struct {
-	UID   string `json:"uid,omitempty"`
-	Type  string `json:"dgraph.type,omitempty"`
-	Name  string `json:"userName,omitempty"`
-	Pass  string `json:"pass,omitempty"`
-	Email string `json:"email,omitempty"`
-	Mob   Mob    `json:"mob,omitempty"`
-}
-
 type Mob struct {
+	conn          *Connection
+	cmd           chan string // channel for any commands received
+	me            chan string // channel to send messages from my point of view
+	you           chan string // channel to send messages from your point of view
+	User          login.User  `json:"user,omitempty"`
+	CurrentRoom   string
 	UID           string    `json:"uid,omitempty"`
 	Type          string    `json:"dgraph.type,omitempty"`
 	Name          string    `json:"mobName,omitempty"`

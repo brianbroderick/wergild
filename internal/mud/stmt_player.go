@@ -4,7 +4,7 @@ import "bytes"
 
 // ScoreStatement represents a command for looking at a room or object.
 type ScoreStatement struct {
-	player *Player
+	mob *Mob
 }
 
 func (s *ScoreStatement) String() string {
@@ -21,7 +21,7 @@ func (p *Parser) parseScoreStatement() (*ScoreStatement, error) {
 }
 
 func (s *ScoreStatement) execute() {
-	s.player.connection.Write(`Hamanu the Brave Warrior of the Black Bear (neutral)
+	s.mob.conn.Write(`Hamanu the Brave Warrior of the Black Bear (neutral)
 
 Str: 16 (16)    Race : Dwarf (male)          Exp    : 4,314,431
 Agl: 16 (16)    Class: Artificer (22)        Money  : 25,361 coins
@@ -36,54 +36,54 @@ Dir  : Random      Hunted by: No one         You are: Unpoisoned
 `)
 }
 
-type aPlayer struct {
-	Name        string
-	Age         int
-	CurrentRoom int
-	connection  *Connection
-	inventory   []*Item
+// type aPlayer struct {
+// 	Name        string
+// 	Age         int
+// 	CurrentRoom int
+// 	connection  *Connection
+// 	inventory   []*Item
 
-	race *MobRace
-	lang string
+// 	race *MobRace
+// 	lang string
 
-	level     int
-	exp       int
-	coins     int
-	bankCoins int
+// 	level     int
+// 	exp       int
+// 	coins     int
+// 	bankCoins int
 
-	class *MobClass
-	guild *Guild
+// 	class *MobClass
+// 	guild *Guild
 
-	hp       int    // hit points - hitting zero means death
-	hpMax    int    // max hit points
-	ap       int    // action points. - hitting zero means you are too fatigued to do the action
-	apMax    int    // max action points
-	wimpy    int    // hp when it's time to run
-	wimpyDir string // direction to run, if possible
+// 	hp       int    // hit points - hitting zero means death
+// 	hpMax    int    // max hit points
+// 	ap       int    // action points. - hitting zero means you are too fatigued to do the action
+// 	apMax    int    // max action points
+// 	wimpy    int    // hp when it's time to run
+// 	wimpyDir string // direction to run, if possible
 
-	encumb int
-	sober  int
-	thirst int
-	hunger int
-	poison int
+// 	encumb int
+// 	sober  int
+// 	thirst int
+// 	hunger int
+// 	poison int
 
-	defend string
-	aim    string
-	attack string
+// 	defend string
+// 	aim    string
+// 	attack string
 
-	str  int
-	agl  int
-	intl int
-	tgh  int
-	wis  int
+// 	str  int
+// 	agl  int
+// 	intl int
+// 	tgh  int
+// 	wis  int
 
-	strMod  int
-	aglMod  int
-	intlMod int
-	tghMod  int
-	wisMod  int
-}
+// 	strMod  int
+// 	aglMod  int
+// 	intlMod int
+// 	tghMod  int
+// 	wisMod  int
+// }
 
-func (s *ScoreStatement) setPlayer(player *Player) {
-	s.player = player
+func (s *ScoreStatement) setMob(mob *Mob) {
+	s.mob = mob
 }

@@ -97,7 +97,7 @@ func (t *ParseTree) Clone() *ParseTree {
 
 // This is where the handlers are set up
 func init() {
-	// Player commands
+	// Mob commands
 	Language.Handle(SCORE, func(p *Parser) (Statement, error) {
 		return p.parseScoreStatement()
 	})

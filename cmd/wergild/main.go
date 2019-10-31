@@ -2,17 +2,13 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 	"net"
 	"os"
-	"time"
 
 	"github.com/brianbroderick/wergild/internal/mud"
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-
 	service := ":2222"
 
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
@@ -22,8 +18,6 @@ func main() {
 	checkError(err)
 	defer listener.Close()
 
-	mud.BuildWorld()
-	mud.GetServer().Start()
 	listenForConnections(listener)
 }
 
@@ -33,7 +27,7 @@ func listenForConnections(listener *net.TCPListener) {
 		if err != nil {
 			continue
 		}
-		mud.NewDescriptor(conn)
+		mud.ServerInstance.AddConnection(conn)
 	}
 }
 

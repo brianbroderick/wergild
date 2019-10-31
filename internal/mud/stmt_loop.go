@@ -7,9 +7,9 @@ import (
 
 // LoopStatement represents a command for repeating another command X times
 type LoopStatement struct {
-	player *Player
-	i      int
-	nStmt  Statement // msg to parse and run i times
+	mob   *Mob
+	i     int
+	nStmt Statement // msg to parse and run i times
 }
 
 // parseLoopStatement parses an integer to be looped on and returns a Statement AST object.
@@ -45,12 +45,12 @@ func (s *LoopStatement) String() string {
 	return buf.String()
 }
 
-func (s *LoopStatement) setPlayer(player *Player) {
-	s.player = player
+func (s *LoopStatement) setMob(mob *Mob) {
+	s.mob = mob
 }
 
 func (s *LoopStatement) execute() {
-	s.nStmt.setPlayer(s.player)
+	s.nStmt.setMob(s.mob)
 
 	for i := 0; i < s.i; i++ {
 		s.nStmt.execute()

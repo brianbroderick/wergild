@@ -4,16 +4,16 @@ import "bytes"
 
 // FeelingStatement represents a command for looking at a room or object.
 type FeelingStatement struct {
-	player *Player
-	ident  string // feeling. If not found, respond with something like "what?"
+	mob   *Mob
+	ident string // feeling. If not found, respond with something like "what?"
 }
 
 func (s *FeelingStatement) execute() {
 	switch s.ident {
 	case "laugh":
-		s.player.connection.Write("You fall down laughing.\n")
+		s.mob.conn.Write("You fall down laughing.\n")
 	default:
-		s.player.connection.Write("what? \n")
+		s.mob.conn.Write("what? \n")
 	}
 }
 
@@ -43,6 +43,6 @@ func (s *FeelingStatement) String() string {
 	return buf.String()
 }
 
-func (s *FeelingStatement) setPlayer(player *Player) {
-	s.player = player
+func (s *FeelingStatement) setMob(mob *Mob) {
+	s.mob = mob
 }

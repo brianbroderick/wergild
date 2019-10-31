@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/wergild/internal/login"
 	"github.com/brianbroderick/wergild/internal/mud"
 )
 
@@ -39,6 +40,7 @@ func schemaString() string {
 		exits: [Exit]
 		terrain: Terrain
 		items: [Item]
+		mobs: [Mob]
 	}
 
 	region: uid @reverse .
@@ -51,6 +53,7 @@ func schemaString() string {
 	roomEnv: [string] .
 	exits: [uid] . # no reverse - can have one way exits
 	pointsOfInterest: [uid] @reverse .
+	mobs: [uid] @reverse .
 	terrain: uid .
 	items: [uid] .
 
@@ -81,7 +84,6 @@ func schemaString() string {
 		userName: string
 		pass: password 
 		email: string
-		mob: Mob
 	}
 
 	userName: string @index(exact) @upsert .
@@ -89,6 +91,7 @@ func schemaString() string {
 	mob: uid @reverse .
 
 	type Mob {
+		user: User
 		mobName: string
 		mobDesc: string
 		mobSlug: string
@@ -129,6 +132,7 @@ func schemaString() string {
 		items: [Item]
 	}
 	
+	user: uid @reverse .
 	mobSlug: string @index(exact) @upsert . 
 	age: int @index(int) .
 	level: int @index(int) .
@@ -177,7 +181,7 @@ type worldSeed struct {
 	Regions []mud.Region `json:"regions,omitempty"`
 	Rooms   []mud.Room   `json:"rooms,omitempty"`
 	Mobs    []mud.Mob    `json:"mobs,omitempty"`
-	Users   []mud.User   `json:"users,omitempty"`
+	Users   []login.User `json:"users,omitempty"`
 }
 
 func combineStructs() worldSeed {
@@ -185,7 +189,6 @@ func combineStructs() worldSeed {
 	seed.Regions = getRegions()
 	seed.Rooms = getRooms()
 	seed.Mobs = getMobs()
-	seed.Users = getUsers()
 	return seed
 }
 
@@ -400,23 +403,23 @@ func getMobs() []mud.Mob {
 		Type:  "Mob",
 	}
 
-	return []mud.Mob{william}
-}
-
-func getUsers() []mud.User {
-	azkul := mud.User{
-		UID:  "_:azkulUser",
-		Name: "azkul",
-		Pass: "123456",
-		Type: "User",
-		Mob: mud.Mob{
-			UID:   "_:azkul",
-			Name:  "Azkul",
-			Slug:  "azkul",
-			Title: "the utter novice",
-			Type:  "Mob",
+	azkul := mud.Mob{
+		UID:   "_:azkul",
+		Name:  "Azkul",
+		Slug:  "azkul",
+		Title: "the utter novice",
+		Type:  "Mob",
+		Ap:    50,
+		Hp:    50,
+		ApMax: 50,
+		HpMax: 50,
+		User: login.User{
+			UID:  "_:azkulUser",
+			Name: "azkul",
+			Pass: "123456",
+			Type: "User",
 		},
 	}
 
-	return []mud.User{azkul}
+	return []mud.Mob{william, azkul}
 }

@@ -6,8 +6,8 @@ import (
 
 // DirectionStatement represents a command for looking at a room or object.
 type DirectionStatement struct {
-	player *Player
-	token  Token
+	mob   *Mob
+	token Token
 }
 
 // parseDirectionStatement parses a look command and returns a Statement AST object.
@@ -28,18 +28,18 @@ func (s *DirectionStatement) String() string {
 }
 
 func (s *DirectionStatement) execute() {
-	room := WorldInstance.getRoom(s.player.CurrentRoom)
+	room := WorldInstance.getRoom(s.mob.CurrentRoom)
 
 	if val, ok := room.ExitMap[tokens[s.token]]; ok {
-		s.player.CurrentRoom = val
-		newRoom := WorldInstance.getRoom(s.player.CurrentRoom)
-		newRoom.showTo(s.player)
+		s.mob.CurrentRoom = val
+		newRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
+		newRoom.showTo(s.mob)
 		return
 	}
 
-	s.player.connection.Write("You're unable to go that way.\n")
+	s.mob.conn.Write("You're unable to go that way.\n")
 }
 
-func (s *DirectionStatement) setPlayer(player *Player) {
-	s.player = player
+func (s *DirectionStatement) setMob(mob *Mob) {
+	s.mob = mob
 }

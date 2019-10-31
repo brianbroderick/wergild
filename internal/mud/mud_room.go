@@ -23,20 +23,20 @@ func loadRooms() map[string]*Room {
 	return roomMap
 }
 
-func (room *Room) showTo(player *Player) {
+func (room *Room) showTo(mob *Mob) {
 	str := room.Desc + room.listExits() + room.listContents() + room.listMobs()
-	player.connection.Write(str)
+	mob.conn.Write(str)
 }
 
-func (room *Room) showSmellTo(player *Player) {
-	player.connection.Write(room.Smell)
+func (room *Room) showSmellTo(mob *Mob) {
+	mob.conn.Write(room.Smell)
 }
 
-func (room *Room) showListenTo(player *Player) {
-	player.connection.Write(room.Listen)
+func (room *Room) showListenTo(mob *Mob) {
+	mob.conn.Write(room.Listen)
 }
 
-func (room *Room) showEnv(player *Player) {
+func (room *Room) showEnv(mob *Mob) {
 	if len(room.Env) == 0 {
 		return
 	}
@@ -47,7 +47,7 @@ func (room *Room) showEnv(player *Player) {
 		return
 	}
 
-	player.connection.Write(room.Env[rand.Intn(len(room.Env))] + "\n")
+	mob.conn.Write(room.Env[rand.Intn(len(room.Env))] + "\n")
 }
 
 func (room *Room) listContents() string {
