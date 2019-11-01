@@ -62,3 +62,8 @@ func (mob *Mob) do(message string) {
 	stmt.setMob(mob)
 	stmt.execute()
 }
+
+func (mob *Mob) pulseUpdate() {
+	currentRoom := WorldInstance.getRoom(mob.CurrentRoom)
+	currentRoom.showEnv(mob)
+}
