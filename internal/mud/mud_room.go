@@ -26,15 +26,15 @@ func loadRooms() map[string]*Room {
 
 func (room *Room) showTo(mob *Mob) {
 	str := room.Desc + room.listExits() + room.listContents() + room.listMobs()
-	mob.conn.Write(str)
+	mob.myMessageToChannel(str)
 }
 
 func (room *Room) showSmellTo(mob *Mob) {
-	mob.conn.Write(room.Smell)
+	mob.myMessageToChannel(room.Smell)
 }
 
 func (room *Room) showListenTo(mob *Mob) {
-	mob.conn.Write(room.Listen)
+	mob.myMessageToChannel(room.Listen)
 }
 
 func (room *Room) showEnv(mob *Mob) {
@@ -48,7 +48,8 @@ func (room *Room) showEnv(mob *Mob) {
 		return
 	}
 
-	mob.conn.Write(room.Env[rand.Intn(len(room.Env))] + "\n")
+	str := room.Env[rand.Intn(len(room.Env))] + "\n"
+	mob.myMessageToChannel(str)
 }
 
 func (room *Room) listContents() string {
