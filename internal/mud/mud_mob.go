@@ -16,6 +16,8 @@ func queryMob(slug string) (Mob, error) {
 			encumb sober thirst hunger poison 
 			defend aim attack 
 			str agl intl tgh per strMod aglMod intlMod tghMod perMod
+			user { userName }
+		}
 	}`
 
 	variables := make(map[string]string)
