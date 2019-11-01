@@ -18,6 +18,7 @@ func init() {
 		users: make(map[string]*Mob),
 	}
 	BuildWorld()
+	ServerInstance.Start()
 }
 
 func motd() string {

@@ -43,12 +43,7 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	m.cmd = make(chan string, 1)
 	m.me = make(chan string, 1)
 	m.you = make(chan string, 1)
-	// m := Mob{
-	// 	CurrentRoom: roomUID,
-	// 	conn:        connection,
-	// 	cmd:         make(chan string, 1),
-	// 	me:          make(chan string, 1),
-	// 	you:         make(chan string, 1)}
+
 	server.mobs[name] = &m
 	server.users[name] = &m
 	connection.state = STATE_PLAYING
@@ -82,17 +77,6 @@ func (server *Server) Command(k string) {
 	}
 }
 
-// func (server *Server) WriteToConn() {
-// 	for k := range server.mobs {
-// 		select {
-// 		case msg := <-server.mobs[k].c:
-// 			server.mobs[k].conn.Write(msg)
-// 		default:
-// 			fmt.Println("no message received")
-// 		}
-// 	}
-// }
-
 func (server *Server) onClientConnectionClosed(connnection *Connection, err error) {
 	// delete the connection & remove from maps
 	connnection.conn.Close()
@@ -103,4 +87,21 @@ func (server *Server) onClientConnectionClosed(connnection *Connection, err erro
 
 func (server *Server) usersCount() int {
 	return len(server.users)
+}
+
+func (server *Server) Start() {
+	server.ticker = time.NewTicker(time.Millisecond * 3000)
+
+	go func() {
+		for range server.ticker.C {
+			for _, m := range server.users {
+				m.pulseUpdate()
+				// fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
+				// if c.Player != nil {
+				// 	c.Player.pulseUpdate()
+				// }
+			}
+		}
+	}()
+
 }
