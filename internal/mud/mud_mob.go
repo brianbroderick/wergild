@@ -49,7 +49,7 @@ func (mob *Mob) sendPrompt() {
 		mob.Hp,
 		mob.Ap)
 
-	mob.conn.Write(str)
+	mob.myMessageToChannel(str)
 }
 
 func (mob *Mob) do(message string) {
@@ -66,4 +66,26 @@ func (mob *Mob) do(message string) {
 func (mob *Mob) pulseUpdate() {
 	currentRoom := WorldInstance.getRoom(mob.CurrentRoom)
 	currentRoom.showEnv(mob)
+}
+
+func (mob *Mob) myChannelToConsole() {
+	select {
+	case msg := <-mob.me:
+		mob.conn.Write(msg)
+	default:
+		mob.messageErr()
+	}
+}
+
+func (mob *Mob) myMessageToChannel(str string) {
+	select {
+	case mob.me <- str:
+		mob.myChannelToConsole()
+	default:
+		mob.messageErr()
+	}
+}
+
+func (mob *Mob) messageErr() {
+	mob.conn.Write("Slow down. Your last message was not processed.\n")
 }

@@ -38,7 +38,7 @@ func (connection *Connection) Write(message string) {
 }
 
 // listen goes through the login/registration process.
-// once logged in, it passes messages to ServerInstance.onMessageReceived
+// once logged in, it passes messages to ServerInstance.onCommandReceived
 func (connection *Connection) listen() {
 	reader := bufio.NewReader(connection.conn)
 
@@ -131,7 +131,7 @@ func (connection *Connection) listen() {
 			}
 
 		default:
-			ServerInstance.onMessageReceived(connection, message)
+			ServerInstance.onCommandReceived(connection, message)
 		}
 	}
 }

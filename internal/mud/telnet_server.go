@@ -49,10 +49,10 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	connection.state = STATE_PLAYING
 	fmt.Printf("[AUTH] There are %d connected sessions.\n", server.usersCount())
 
-	server.onMessageReceived(connection, "look")
+	server.onCommandReceived(connection, "look")
 }
 
-func (server *Server) onMessageReceived(conn *Connection, message string) {
+func (server *Server) onCommandReceived(conn *Connection, message string) {
 	select {
 	case server.mobs[conn.user.Name].cmd <- message:
 		server.Command(conn.user.Name)
@@ -96,10 +96,6 @@ func (server *Server) Start() {
 		for range server.ticker.C {
 			for _, m := range server.users {
 				m.pulseUpdate()
-				// fmt.Printf("[TICK] Running update tick on player (%s) at state [%d]\n", c.username, c.state)
-				// if c.Player != nil {
-				// 	c.Player.pulseUpdate()
-				// }
 			}
 		}
 	}()
