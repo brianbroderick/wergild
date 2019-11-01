@@ -27,7 +27,6 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 		connection.hasError(err)
 		return
 	}
-
 	name := connection.user.Name
 
 	if _, ok := server.mobs[name]; ok {
@@ -37,12 +36,19 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	} else {
 		connection.Write("The world darkens...\n")
 	}
-	m := Mob{
-		CurrentRoom: roomUID,
-		conn:        connection,
-		cmd:         make(chan string, 1),
-		me:          make(chan string, 1),
-		you:         make(chan string, 1)}
+
+	m, err := queryMob(name)
+	m.CurrentRoom = roomUID
+	m.conn = connection
+	m.cmd = make(chan string, 1)
+	m.me = make(chan string, 1)
+	m.you = make(chan string, 1)
+	// m := Mob{
+	// 	CurrentRoom: roomUID,
+	// 	conn:        connection,
+	// 	cmd:         make(chan string, 1),
+	// 	me:          make(chan string, 1),
+	// 	you:         make(chan string, 1)}
 	server.mobs[name] = &m
 	server.users[name] = &m
 	connection.state = STATE_PLAYING
