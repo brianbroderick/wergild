@@ -99,5 +99,4 @@ func (server *Server) Start() {
 			}
 		}
 	}()
-
 }
