@@ -90,7 +90,7 @@ func (server *Server) usersCount() int {
 }
 
 func (server *Server) Start() {
-	server.ticker = time.NewTicker(time.Millisecond * 3000)
+	server.ticker = time.NewTicker(time.Millisecond * 8000)
 
 	go func() {
 		for range server.ticker.C {

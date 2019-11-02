@@ -42,9 +42,9 @@ func (room *Room) showEnv(mob *Mob) {
 		return
 	}
 
-	// Don't spam env messages. Make it happen 25% of the time for each pulse
+	// Don't spam env messages. Make it happen 34% of the time for each pulse
 	percent := rand.Intn(100)
-	if percent > 25 {
+	if percent > 34 {
 		return
 	}
 
