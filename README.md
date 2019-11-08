@@ -55,3 +55,23 @@ In production, you wouldn't run the LoadBalancer flags so that DGraph is not acc
 To check the status of dgraph, run: `helm status dgraph`
 
 Once everything is running, you can visit Ratel (Dgraph's web based interface) by going to http://localhost:8000
+
+## DigitalOcean Kubernetes ##
+
+### DGraph ###
+
+### To Create ###
+kubectl create -f dgraph-single.yaml
+
+### To Delete ###
+kubectl delete pods,statefulsets,services,persistentvolumeclaims,persistentvolumes -l app=dgraph
+kubectl delete -f dgraph-single.yaml
+
+### Wergild ###
+
+docker build -t wergild .
+docker run -it --rm --name wergild wergild
+
+
+docker run -it -d -p 2222:2222 --rm --name wergild wergild
+docker run -it -p 2222:2222 --rm --name wergild wergild

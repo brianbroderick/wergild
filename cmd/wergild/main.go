@@ -8,6 +8,8 @@ import (
 	"github.com/brianbroderick/wergild/internal/mud"
 )
 
+// 	Set the env DGRAPH_HOST if it's anything other than "127.0.0.1:9080"
+
 func main() {
 	service := ":2222"
 
