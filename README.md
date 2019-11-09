@@ -41,10 +41,10 @@ By starting your command with a number, it will execute that command that many t
 
 ## Kubernetes ##
 
-Clone dgraph at https://github.com/dgraph-io/dgraph
-CD to dgraph/contrib/config/kubernetes/helm
-If helm isn't set up, run `helm init`
-Run `helm install --name dgraph ./ --set alpha.service.type="LoadBalancer" --set ratel.service.type="LoadBalancer"`
+* Clone dgraph at https://github.com/dgraph-io/dgraph
+* CD to dgraph/contrib/config/kubernetes/helm
+* If helm isn't set up, run `helm init`
+* Run `helm install --name dgraph ./ --set alpha.service.type="LoadBalancer" --set ratel.service.type="LoadBalancer"`
 
 The LoadBalancer option makes it so you can get to Dgraph from outside K8s. This makes it possible to use Ratel or have Go running locally. 
 
@@ -61,17 +61,22 @@ Once everything is running, you can visit Ratel (Dgraph's web based interface) b
 ### DGraph ###
 
 ### To Create ###
+```
 kubectl create -f dgraph-single.yaml
+```
 
 ### To Delete ###
+```
 kubectl delete pods,statefulsets,services,persistentvolumeclaims,persistentvolumes -l app=dgraph
 kubectl delete -f dgraph-single.yaml
+```
 
 ### Wergild ###
 
+```
 docker build -t wergild .
 docker run -it --rm --name wergild wergild
 
-
 docker run -it -d -p 2222:2222 --rm --name wergild wergild
 docker run -it -p 2222:2222 --rm --name wergild wergild
+```
