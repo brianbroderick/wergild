@@ -14,3 +14,5 @@
 wergild-go
 cmd/wergild/wergild
 cmd/seed/seed
+
+.env
