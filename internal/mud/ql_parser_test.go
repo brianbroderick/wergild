@@ -65,6 +65,24 @@ func TestParser_ParseStatement(t *testing.T) {
 			p:   `SOUTH`,
 		},
 
+		{
+			s:   `smell`,
+			obj: &SmellStatement{token: EOF, ident: ""},
+			p:   `SMELL`,
+		},
+
+		{
+			s:   `listen`,
+			obj: &ListenStatement{token: EOF, ident: ""},
+			p:   `LISTEN`,
+		},
+
+		{
+			s:   `touch`,
+			obj: &TouchStatement{token: EOF, ident: ""},
+			p:   `TOUCH`,
+		},
+
 		// // Errors
 		// {s: `foo`, err: `found "foo", expected SELECT`},
 		// {s: `SELECT !`, err: `found "!", expected field`},
