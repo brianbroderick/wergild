@@ -39,6 +39,25 @@ Without the ability to move from one room to another, this would be a pretty bor
 
 By starting your command with a number, it will execute that command that many times. It will err above 50. For example `10 look`. Be aware that causing unnecessary spam on the line may cause other players to get pissed and potentially retaliate. 
 
+
+# SETUP #
+
+## ENV Variables ##
+
+The following ENV variable determines where it looks for Dgraph by default. Dgraph gRPC uses port 9080 by default and 8080 for HTTP calls (i.e. Ratel). 
+
+DGRAPH_HOST=127.0.0.1:9080
+
+### Docker ###
+
+```
+docker build -t wergild .
+docker run -it --rm --name wergild wergild
+
+docker run -it -d -p 2222:2222 --rm --name wergild wergild
+docker run -it -p 2222:2222 --rm --name wergild wergild
+```
+
 ## Kubernetes ##
 
 * Clone dgraph at https://github.com/dgraph-io/dgraph
@@ -69,14 +88,4 @@ kubectl create -f dgraph-single.yaml
 ```
 kubectl delete pods,statefulsets,services,persistentvolumeclaims,persistentvolumes -l app=dgraph
 kubectl delete -f dgraph-single.yaml
-```
-
-### Wergild ###
-
-```
-docker build -t wergild .
-docker run -it --rm --name wergild wergild
-
-docker run -it -d -p 2222:2222 --rm --name wergild wergild
-docker run -it -p 2222:2222 --rm --name wergild wergild
 ```
