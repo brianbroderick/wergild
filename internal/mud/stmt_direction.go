@@ -32,7 +32,7 @@ func (s *DirectionStatement) execute() {
 
 	if val, ok := room.ExitMap[tokens[s.token]]; ok {
 		s.mob.CurrentRoom = val
-		room.exitRoom(s.mob)
+		room.exitRoom(s.mob, s.token.String())
 		newRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
 		newRoom.showTo(s.mob)
 		newRoom.enterRoom(s.mob)

@@ -29,9 +29,18 @@ func loadRooms() map[string]*Room {
 	return roomMap
 }
 
-func (room *Room) exitRoom(mob *Mob) {
+func (room *Room) exitRoom(mob *Mob, direction string) {
 	delete(room.MobMap, mob.Slug)
-	str := mob.Name + " left the room.\n"
+	str := mob.Name + " leaves " + strings.ToLower(direction) + ".\n"
+
+	for _, mob := range room.MobMap {
+		mob.yourMessageToChannel(str)
+	}
+}
+
+func (room *Room) exitWorld(mob *Mob) {
+	delete(room.MobMap, mob.Slug)
+	str := mob.Name + " slowly fades away.\n"
 
 	for _, mob := range room.MobMap {
 		mob.yourMessageToChannel(str)
@@ -39,7 +48,7 @@ func (room *Room) exitRoom(mob *Mob) {
 }
 
 func (room *Room) enterRoom(mob *Mob) {
-	str := mob.Name + " entered the room.\n"
+	str := mob.Name + " arrives.\n"
 
 	for _, mob := range room.MobMap {
 		mob.yourMessageToChannel(str)

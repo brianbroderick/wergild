@@ -50,6 +50,7 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	fmt.Printf("[AUTH] There are %d connected sessions.\n", server.usersCount())
 
 	server.onCommandReceived(connection, "look")
+	WorldInstance.roomList[roomUID].enterRoom(&m)
 }
 
 func (server *Server) onCommandReceived(conn *Connection, message string) {

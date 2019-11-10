@@ -21,6 +21,7 @@ func (p *Parser) parseQuitStatement() (*QuitStatement, error) {
 }
 
 func (s *QuitStatement) execute() {
+	WorldInstance.getRoom(s.mob.CurrentRoom).exitWorld(s.mob)
 	s.mob.conn.Write("You slowly fade away.\n")
 	s.mob.conn.conn.Close()
 	ServerInstance.onClientConnectionClosed(s.mob.conn, nil)
