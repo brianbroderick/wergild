@@ -17,7 +17,7 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 RUN mkdir welcome
-COPY --from=builder /go/src/github.com/brianbroderick/wergild/welcome/ welcome
+COPY --from=builder /go/src/github.com/brianbroderick/wergild/cmd/wergild/welcome/ welcome
 COPY --from=builder /go/bin/wergild .
 
 EXPOSE 2222

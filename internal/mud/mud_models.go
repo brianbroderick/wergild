@@ -34,7 +34,7 @@ type Room struct {
 	Mobs             []Mob             `json:"mobs,omitempty"`
 	// Non-persistent fields
 	ExitMap map[string]string
-	MobMap  map[string]*Mob
+	MobMap  map[string]*Mob // Which mobs are currently in the room
 }
 
 // Room connects to an Exit. It's a one way exit, so there's no need for a source

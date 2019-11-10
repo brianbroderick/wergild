@@ -22,6 +22,6 @@ func init() {
 }
 
 func motd() string {
-	motdBytes, _ := ioutil.ReadFile("../../welcome/1.txt")
+	motdBytes, _ := ioutil.ReadFile("welcome/1.txt")
 	return string(motdBytes) + "\n"
 }
