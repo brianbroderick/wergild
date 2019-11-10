@@ -90,6 +90,7 @@ func (server *Server) usersCount() int {
 }
 
 func (server *Server) Start() {
+	fmt.Println("[SERVER] Ticker Started")
 	server.ticker = time.NewTicker(time.Millisecond * 8000)
 
 	go func() {
