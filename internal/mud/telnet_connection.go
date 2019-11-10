@@ -34,7 +34,9 @@ type Connection struct {
 }
 
 func (connection *Connection) Write(message string) {
-	connection.conn.Write([]byte(message))
+	if connection != nil {
+		connection.conn.Write([]byte(message))
+	}
 }
 
 // listen goes through the login/registration process.
@@ -99,6 +101,7 @@ func (connection *Connection) listen() {
 				if err != nil {
 					connection.hasError(err)
 				}
+				CreateUserMob(user)
 				connection.user = user
 				connection.state = STATE_EMAIL_CREATION
 				connection.Write("Choose an email address: ")

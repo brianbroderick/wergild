@@ -1,10 +1,12 @@
 package mud
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/wergild/internal/login"
 )
 
 func queryMob(slug string) (Mob, error) {
@@ -15,7 +17,7 @@ func queryMob(slug string) (Mob, error) {
 			hp hpMax ap apMax wimpy wimpyDir 
 			encumb sober thirst hunger poison 
 			defend aim attack 
-			str agl intl tgh per strMod aglMod intlMod tghMod perMod
+			str agl intl tgh per 
 			user { userName }
 		}
 	}`
@@ -71,7 +73,9 @@ func (mob *Mob) pulseUpdate() {
 func (mob *Mob) myChannelToConsole() {
 	select {
 	case msg := <-mob.me:
-		mob.conn.Write(msg)
+		if mob.conn != nil {
+			mob.conn.Write(msg)
+		}
 	default:
 		mob.messageErr()
 	}
@@ -86,6 +90,55 @@ func (mob *Mob) myMessageToChannel(str string) {
 	}
 }
 
+func (mob *Mob) yourChannelToConsole() {
+	select {
+	case msg := <-mob.you:
+		if mob.conn != nil {
+			mob.conn.Write(msg)
+		}
+	default:
+		mob.messageErr()
+	}
+}
+
+func (mob *Mob) yourMessageToChannel(str string) {
+	select {
+	case mob.you <- str:
+		mob.yourChannelToConsole()
+	default:
+		mob.messageErr()
+	}
+}
+
 func (mob *Mob) messageErr() {
 	mob.conn.Write("Slow down. Your last message was not processed.\n")
+}
+
+func CreateUserMob(user login.User) error {
+	m := Mob{User: user,
+		UID:   "_:mob",
+		Type:  "Mob",
+		Name:  user.Name,
+		Title: "the utter novice",
+		Slug:  user.Name,
+		Lang:  "common",
+		Level: 1,
+		Hp:    50,
+		HpMax: 50,
+		Ap:    50,
+		ApMax: 50,
+		Str:   1,
+		Agl:   1,
+		Intl:  1,
+		Tgh:   1,
+		Per:   1,
+	}
+
+	j, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+
+	agora.MutateDgraph(j)
+	return nil
 }

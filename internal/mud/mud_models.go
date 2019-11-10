@@ -103,11 +103,6 @@ type Mob struct {
 	Intl          int       `json:"intl,omitempty"`
 	Tgh           int       `json:"tgh,omitempty"`
 	Per           int       `json:"per,omitempty"`
-	StrMod        int       `json:"strMod,omitempty"`
-	AglMod        int       `json:"aglMod,omitempty"`
-	IntlMod       int       `json:"intlMod,omitempty"`
-	TghMod        int       `json:"tghMod,omitempty"`
-	PerMod        int       `json:"perMod,omitempty"`
 	InsertedMobAt time.Time `json:"insertedMobAt,omitempty"`
 	Items         []Item    `json:"items,omitempty"`
 }

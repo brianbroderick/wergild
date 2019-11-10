@@ -19,13 +19,37 @@ func loadRooms() map[string]*Room {
 	for i, room := range rooms {
 		roomMap[room.UID] = &rooms[i]
 		roomMap[room.UID].Desc = formatToWidth(roomMap[room.UID].Desc, 80)
+		roomMap[room.UID].MobMap = make(map[string]*Mob)
+
+		for j, mob := range roomMap[room.UID].Mobs {
+			roomMap[room.UID].MobMap[mob.Slug] = &roomMap[room.UID].Mobs[j]
+		}
 	}
 
 	return roomMap
 }
 
+func (room *Room) exitRoom(mob *Mob) {
+	delete(room.MobMap, mob.Slug)
+	str := mob.Name + " left the room.\n"
+
+	for _, mob := range room.MobMap {
+		mob.yourMessageToChannel(str)
+	}
+}
+
+func (room *Room) enterRoom(mob *Mob) {
+	str := mob.Name + " entered the room.\n"
+
+	for _, mob := range room.MobMap {
+		mob.yourMessageToChannel(str)
+	}
+
+	room.MobMap[mob.Slug] = mob
+}
+
 func (room *Room) showTo(mob *Mob) {
-	str := room.Desc + room.listExits() + room.listContents() + room.listMobs()
+	str := room.Desc + room.listExits() + room.listContents() + room.listMobs(mob)
 	mob.myMessageToChannel(str)
 }
 
@@ -74,15 +98,20 @@ func (room *Room) listExits() string {
 	return "\n"
 }
 
-func (room *Room) listMobs() string {
+func (room *Room) listMobs(me *Mob) string {
 	str := ""
-	for _, mob := range room.Mobs {
-		if mob.Title != "" {
+
+	for _, mob := range room.MobMap {
+		switch {
+		case mob.Slug == me.Slug:
+			// do nothing
+		case mob.Title != "":
 			str += mob.Name + ", " + mob.Title + ".\n"
-		} else {
+		default:
 			str += mob.Name + "\n"
 		}
 	}
+
 	return str
 }
 
@@ -105,6 +134,7 @@ func queryAllRooms() []Room {
 				uid
 				mobName
 				mobTitle
+				mobSlug
 			}
 		}
 	}`

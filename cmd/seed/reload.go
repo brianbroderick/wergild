@@ -123,11 +123,6 @@ func schemaString() string {
 		intl: int
 		tgh: int
 		per: int
-		strMod: int
-		aglMod: int
-		intlMod: int
-		tghMod: int
-		perMod: int
 		insertedMobAt: dateTime 
 		items: [Item]
 	}
@@ -409,10 +404,17 @@ func getMobs() []mud.Mob {
 		Slug:  "azkul",
 		Title: "the utter novice",
 		Type:  "Mob",
+		Lang:  "common",
 		Ap:    50,
 		Hp:    50,
 		ApMax: 50,
 		HpMax: 50,
+		Level: 1,
+		Str:   1,
+		Agl:   1,
+		Intl:  1,
+		Tgh:   1,
+		Per:   1,
 		User: login.User{
 			UID:  "_:azkulUser",
 			Name: "azkul",
