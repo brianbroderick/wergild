@@ -5,7 +5,7 @@ Wergild is a MUD written in Go.
 To add commands: 
 First add a token, and possible aliases in token.go. We'll use LOOK as our example. LOOK has an alias L. LOOK gets added to the token constants, and L gets added to convertToTokens. You'll also need to add an entry for both constants in the tokens map. This is so we can look up a token via its string representation.
 
-Next, add a handler in parse_tree.go like this:  
+Next, add a handler in ql_parse_tree.go like this:  
 
 ```
 Language.Handle(LOOK, func(p *Parser) (Statement, error) {

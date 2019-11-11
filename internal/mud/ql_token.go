@@ -13,6 +13,11 @@ const (
 	NIL
 	COMMENT
 
+	// Communication
+	SENTENCE
+	QUESTION
+	EXCLAIM
+
 	literalBeg
 	// Literals
 	IDENT       // main
@@ -61,6 +66,7 @@ const (
 	DOUBLECOLON // ::
 	SEMICOLON   // ;
 	DOT         // .
+	APOSTROPHE  // '
 
 	aliasBeg
 	L    // LOOK
@@ -83,6 +89,7 @@ const (
 	LISTEN
 	TO
 	TOUCH
+	SAY
 
 	// Movement Keywords
 	NORTH
@@ -107,6 +114,11 @@ var tokens = [...]string{
 	EOF:     "EOF",
 	WS:      "WS",
 	NIL:     "NIL",
+
+	// Communication
+	SENTENCE: "SENTENCE",
+	QUESTION: "QUESTION",
+	EXCLAIM:  "EXCLAIM",
 
 	IDENT:       "IDENT",
 	NUMBER:      "NUMBER",
@@ -146,6 +158,7 @@ var tokens = [...]string{
 	DOUBLECOLON: "::",
 	SEMICOLON:   ";",
 	DOT:         ".",
+	APOSTROPHE:  "'",
 
 	LOOK:   "LOOK",
 	AT:     "AT",
@@ -155,6 +168,7 @@ var tokens = [...]string{
 	LISTEN: "LISTEN",
 	TO:     "TO",
 	TOUCH:  "TOUCH",
+	SAY:    "SAY",
 
 	// Movement Keywords:
 	NORTH: "NORTH",

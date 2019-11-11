@@ -168,6 +168,8 @@ func (p *Parser) peekRune() rune {
 // scan returns the next token from the underlying scanner.
 func (p *Parser) Scan() (tok Token, pos Pos, lit string) { return p.s.Scan() }
 
+func (p *Parser) ScanSentence() (tok Token, pos Pos, lit string) { return p.s.s.scanSentence() }
+
 // ScanIgnoreWhitespace scans the next non-whitespace and non-comment token.
 func (p *Parser) ScanIgnoreWhitespace() (tok Token, pos Pos, lit string) {
 	for {

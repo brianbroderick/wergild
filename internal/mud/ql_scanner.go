@@ -345,6 +345,49 @@ func (s *Scanner) scanDigits() string {
 	return buf.String()
 }
 
+// scanSentence consumes all contiguous runes.
+func (s *Scanner) scanSentence() (tok Token, pos Pos, lit string) {
+	// Create a buffer and read the current character into it.
+	var buf bytes.Buffer
+	ch, _ := s.r.read()
+
+	if !isWhitespace(ch) {
+		_, _ = buf.WriteRune(ch)
+	}
+
+	// Read every subsequent rune into the buffer.
+	// EOF will cause the loop to exit.
+	for {
+		ch, _ = s.r.read()
+		if ch == eof {
+			break
+		} else {
+			_, _ = buf.WriteRune(ch)
+		}
+	}
+
+	// Find last non whitespace run.
+	// ? == QUESTION
+	// ! == EXCLAIM
+	for {
+		s.r.unread()
+		if pos.Char <= 0 {
+			return SENTENCE, pos, buf.String()
+		}
+
+		ch, pos = s.r.curr()
+		switch {
+		case isIdentChar(ch):
+			return SENTENCE, pos, buf.String()
+		case ch == '!':
+			return EXCLAIM, pos, buf.String()
+		case ch == '?':
+			return QUESTION, pos, buf.String()
+		}
+	}
+
+}
+
 // isWhitespace returns true if the rune is a space, tab, or newline.
 func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 

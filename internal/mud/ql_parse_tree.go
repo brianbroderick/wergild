@@ -102,6 +102,11 @@ func init() {
 		return p.parseScoreStatement()
 	})
 
+	// Say stuff
+	Language.Handle(SAY, func(p *Parser) (Statement, error) {
+		return p.parseSayStatement()
+	})
+
 	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
