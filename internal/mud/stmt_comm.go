@@ -44,6 +44,11 @@ func (s *SayStatement) execute() {
 		myDescriptor = "You ask: "
 	}
 
+	if s.sentence == "" {
+		s.mob.myMessageToChannel("You open your mouth to speak, but nothing comes out.\n")
+		return
+	}
+
 	myStr := myDescriptor + s.sentence + "\n"
 	s.mob.myMessageToChannel(myStr)
 
