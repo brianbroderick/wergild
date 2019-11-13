@@ -107,6 +107,14 @@ func init() {
 		return p.parseSayStatement()
 	})
 
+	Language.Handle(TELL, func(p *Parser) (Statement, error) {
+		return p.parseTellStatement()
+	})
+
+	Language.Handle(SHOUT, func(p *Parser) (Statement, error) {
+		return p.parseShoutStatement()
+	})
+
 	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()

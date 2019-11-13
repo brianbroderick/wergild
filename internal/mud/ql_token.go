@@ -90,6 +90,8 @@ const (
 	TO
 	TOUCH
 	SAY
+	TELL
+	SHOUT
 
 	// Movement Keywords
 	NORTH
@@ -169,6 +171,8 @@ var tokens = [...]string{
 	TO:     "TO",
 	TOUCH:  "TOUCH",
 	SAY:    "SAY",
+	TELL:   "TELL",
+	SHOUT:  "SHOUT",
 
 	// Movement Keywords:
 	NORTH: "NORTH",

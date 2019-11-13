@@ -369,6 +369,10 @@ func (s *Scanner) scanSentence() (tok Token, pos Pos, lit string) {
 
 	str := strings.TrimSpace(buf.String())
 
+	if len(str) == 0 {
+		return SENTENCE, pos, str
+	}
+
 	cPos := pos.Char
 	// Find last non whitespace run.
 	// ? == QUESTION
