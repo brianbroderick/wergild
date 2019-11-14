@@ -15,6 +15,14 @@ func (s *FeelingStatement) execute() {
 	me := ""
 	you := ""
 	switch s.ident {
+	case "bow":
+		if s.object == "" {
+			me = "You bow.\n"
+			you = s.mob.Name + " bows.\n"
+		} else {
+			me = fmt.Sprintf("You bow to %s.\n", s.object)
+			you = fmt.Sprintf("%s bows to %s.\n", s.mob.Name, s.object)
+		}
 	case "laugh":
 		if s.object == "" {
 			me = "You fall down laughing.\n"
