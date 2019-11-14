@@ -2,18 +2,41 @@ package mud
 
 import "bytes"
 
+import "fmt"
+
 // FeelingStatement represents a command for looking at a room or object.
 type FeelingStatement struct {
-	mob   *Mob
-	ident string // feeling. If not found, respond with something like "what?"
+	mob    *Mob
+	ident  string // feeling. If not found, respond with something like "what?"
+	object string
 }
 
 func (s *FeelingStatement) execute() {
+	me := ""
+	you := ""
 	switch s.ident {
 	case "laugh":
-		s.mob.conn.Write("You fall down laughing.\n")
+		if s.object == "" {
+			me = "You fall down laughing.\n"
+			you = s.mob.Name + " falls down laughing.\n"
+		} else {
+			me = fmt.Sprintf("You laugh at %s.\n", s.object)
+			you = fmt.Sprintf("%s laughs at %s.\n", s.mob.Name, s.object)
+		}
 	default:
-		s.mob.conn.Write("what? \n")
+		s.mob.myMessageToChannel("what?\n")
+	}
+
+	if me != "" {
+		s.mob.myMessageToChannel(me)
+	}
+
+	room := WorldInstance.getRoom(s.mob.CurrentRoom)
+	for _, mob := range room.MobMap {
+		if s.mob.Slug == mob.Slug {
+			continue
+		}
+		mob.yourMessageToChannel(you)
 	}
 }
 
@@ -30,6 +53,15 @@ func (p *Parser) parseFeelingStatement() (*FeelingStatement, error) {
 		return nil, err
 	}
 
+	tok, _, _ := p.ScanIgnoreWhitespace()
+	switch tok {
+	case AT, TO:
+		obj, err := p.ParseIdent()
+		if err != nil {
+			return nil, err
+		}
+		stmt.object = obj
+	}
 	return stmt, nil
 }
 
