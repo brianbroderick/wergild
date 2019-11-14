@@ -92,6 +92,7 @@ const (
 	SAY
 	TELL
 	SHOUT
+	EMOTE
 
 	// Movement Keywords
 	NORTH
@@ -173,6 +174,7 @@ var tokens = [...]string{
 	SAY:    "SAY",
 	TELL:   "TELL",
 	SHOUT:  "SHOUT",
+	EMOTE:  "EMOTE",
 
 	// Movement Keywords:
 	NORTH: "NORTH",

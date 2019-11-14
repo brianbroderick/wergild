@@ -115,6 +115,11 @@ func init() {
 		return p.parseShoutStatement()
 	})
 
+	// Emote stuff
+	Language.Handle(EMOTE, func(p *Parser) (Statement, error) {
+		return p.parseEmoteStatement()
+	})
+
 	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()

@@ -25,7 +25,7 @@ func (s *SayStatement) String() string {
 }
 
 // parseSayStatement parses a look command and returns a Statement AST object.
-// This function assumes the QUIT token has already been consumed.
+// This function assumes the SAY token has already been consumed.
 func (p *Parser) parseSayStatement() (*SayStatement, error) {
 	stmt := &SayStatement{}
 
@@ -42,7 +42,11 @@ func (p *Parser) parseSayStatement() (*SayStatement, error) {
 
 	// Add first token back
 	if tok != TO {
-		stmt.sentence = lit + " " + stmt.sentence
+		if len(stmt.sentence) > 0 && stmt.sentence[0] == '\'' {
+			stmt.sentence = lit + stmt.sentence
+		} else {
+			stmt.sentence = lit + " " + stmt.sentence
+		}
 	}
 
 	return stmt, nil
@@ -231,5 +235,61 @@ func (s *ShoutStatement) execute() {
 }
 
 func (s *ShoutStatement) setMob(mob *Mob) {
+	s.mob = mob
+}
+
+//******
+// EMOTE
+//******
+
+// EmoteStatement allows you to converse with others in the same room
+type EmoteStatement struct {
+	mob      *Mob
+	sentence string
+	token    Token
+}
+
+// TODO: Finish writing options
+func (s *EmoteStatement) String() string {
+	var buf bytes.Buffer
+	_, _ = buf.WriteString("EMOTE")
+
+	return buf.String()
+}
+
+// parseEmoteStatement parses a look command and returns a Statement AST object.
+// This function assumes the QUIT token has already been consumed.
+func (p *Parser) parseEmoteStatement() (*EmoteStatement, error) {
+	stmt := &EmoteStatement{}
+	stmt.token, _, stmt.sentence = p.ScanSentence()
+
+	return stmt, nil
+}
+
+func (s *EmoteStatement) execute() {
+	if s.sentence == "" {
+		s.mob.myMessageToChannel("You're too distracted and nothing happens.\n")
+		return
+	}
+
+	yourDescriptor := s.mob.Name + " "
+	myDescriptor := "You "
+
+	myStr := myDescriptor + s.sentence + "\n"
+	s.mob.myMessageToChannel(myStr)
+
+	room := WorldInstance.getRoom(s.mob.CurrentRoom)
+
+	youStr := yourDescriptor + s.sentence + "\n"
+
+	for _, mob := range room.MobMap {
+		if s.mob.Slug == mob.Slug {
+			continue
+		}
+		mob.yourMessageToChannel(youStr)
+	}
+}
+
+func (s *EmoteStatement) setMob(mob *Mob) {
 	s.mob = mob
 }
