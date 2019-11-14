@@ -13,6 +13,7 @@ type SayStatement struct {
 	mob      *Mob
 	sentence string
 	token    Token
+	object   string
 }
 
 // TODO: Finish writing options
@@ -27,7 +28,22 @@ func (s *SayStatement) String() string {
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseSayStatement() (*SayStatement, error) {
 	stmt := &SayStatement{}
+
+	tok, _, lit := p.ScanIgnoreWhitespace()
+	if tok == TO {
+		obj, err := p.ParseIdent()
+		if err != nil {
+			return nil, err
+		}
+		stmt.object = obj
+	}
+
 	stmt.token, _, stmt.sentence = p.ScanSentence()
+
+	// Add first token back
+	if tok != TO {
+		stmt.sentence = lit + " " + stmt.sentence
+	}
 
 	return stmt, nil
 }
@@ -40,28 +56,50 @@ func (s *SayStatement) execute() {
 
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
 
+	toObj := ""
+	toYou := ""
 	yourDescriptor := ""
 	myDescriptor := ""
 	switch s.token {
 	case SENTENCE:
-		yourDescriptor = s.mob.Name + " says: "
-		myDescriptor = "You say: "
+		yourDescriptor = s.mob.Name + " says"
+		myDescriptor = "You say"
+		if s.object != "" {
+			toObj = " to " + s.object
+			toYou = " to you"
+		}
 	case EXCLAIM:
-		yourDescriptor = s.mob.Name + " exclaims: "
-		myDescriptor = "You exclaim: "
+		yourDescriptor = s.mob.Name + " exclaims"
+		myDescriptor = "You exclaim"
+		if s.object != "" {
+			toObj = " to " + s.object
+			toYou = " to you"
+		}
 	case QUESTION:
-		yourDescriptor = s.mob.Name + " asks: "
-		myDescriptor = "You ask: "
+		yourDescriptor = s.mob.Name + " asks"
+		myDescriptor = "You ask"
+		if s.object != "" {
+			toObj = " " + s.object
+			toYou = " you"
+		}
 	}
 
-	myStr := myDescriptor + s.sentence + "\n"
+	myStr := myDescriptor + toObj + ": " + s.sentence + "\n"
 	s.mob.myMessageToChannel(myStr)
 
-	yourStr := yourDescriptor + s.sentence + "\n"
+	yourStr := ""
+
 	for _, mob := range room.MobMap {
-		if s.mob.Slug != mob.Slug {
-			mob.yourMessageToChannel(yourStr)
+		if s.mob.Slug == mob.Slug {
+			continue
 		}
+
+		if mob.Slug == s.object {
+			yourStr = yourDescriptor + toYou + ": " + s.sentence + "\n"
+		} else {
+			yourStr = yourDescriptor + toObj + ": " + s.sentence + "\n"
+		}
+		mob.yourMessageToChannel(yourStr)
 	}
 }
 

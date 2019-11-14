@@ -181,6 +181,21 @@ func (p *Parser) ScanIgnoreWhitespace() (tok Token, pos Pos, lit string) {
 	}
 }
 
+// // UnScanIgnoreWhitespace scans the next non-whitespace and non-comment token.
+// func (p *Parser) UnScanIgnoreWhitespace() (tok Token, pos Pos, lit string) {
+// 	for {
+// 		p.s.Unscan()
+// 		tok, pos, lit = p.s.curr()
+// 		fmt.Printf("tok: %s \n", tokens[tok])
+
+// 		if tok == WS || tok == COMMENT {
+
+// 			continue
+// 		}
+// 		return
+// 	}
+// }
+
 // consumeWhitespace scans the next token if it's whitespace.
 func (p *Parser) consumeWhitespace() {
 	if tok, _, _ := p.Scan(); tok != WS {

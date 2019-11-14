@@ -38,11 +38,9 @@ func (p *Parser) parseLookStatement() (*LookStatement, error) {
 		stmt.token = tok
 	case EOF:
 		stmt.token = EOF
-		p.Unscan()
 		return stmt, nil
 	default:
 		stmt.token = NIL
-		p.Unscan()
 		return stmt, nil
 	}
 
@@ -151,11 +149,9 @@ func (p *Parser) parseListenStatement() (*ListenStatement, error) {
 		stmt.token = tok
 	case EOF:
 		stmt.token = EOF
-		p.Unscan()
 		return stmt, nil
 	default:
 		stmt.token = NIL
-		p.Unscan()
 		return stmt, nil
 	}
 
@@ -284,7 +280,6 @@ func (p *Parser) parseSmellStatement() (*SmellStatement, error) {
 		stmt.token = tok
 	case EOF:
 		stmt.token = EOF
-		p.Unscan()
 		return stmt, nil
 	default:
 		stmt.token = NIL
@@ -395,7 +390,6 @@ func (p *Parser) parseTouchStatement() (*TouchStatement, error) {
 		stmt.token = tok
 	case EOF:
 		stmt.token = EOF
-		p.Unscan()
 		return stmt, nil
 	default:
 		stmt.token = NIL
