@@ -16,4 +16,4 @@ Does each living entity exist on its own? Or, does it form part of a much larger
 
 If consciousness is attached to physical matter, what would this combined consiousness look like? If we could see from the outside of the universe in, perhaps we would know. 
 
-If we are all unique facets, with our own thoughts and experiences, how will our existence benefit the whole?
+We are small and insignificant; yet, we are all unique facets, with our own thoughts and experiences. Combined together, the sum of our joy, loss, love, anger, pain, and death are unique. How will we ensure that our existence benefits the collective understanding and that we are not forgotten?
