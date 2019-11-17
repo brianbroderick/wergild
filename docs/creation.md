@@ -6,10 +6,8 @@ If an electron could be seen, what would it look like? Would its surface be cove
 Could even one electron in a trillion sustain life? What would it look like sitting on an electron looking 
 to the sky and seeing a universe of atoms? 
 
-What is the electron made of? Are there trillions of somethings vastly smaller that make up one electron? 
-If so, do they follow the same pattern?
-
-Similar is the macro vs. the micro. If the pattern repeats itself so, does size matter? 
+Similar is the macro vs. the micro. If the pattern repeats itself so, does size matter? Is there an array of even smaller
+somethings that make up an electron? If so, do they follow the same pattern?
 
 By combining a universe of atoms, an object is formed. Would another object be formed by combining a universe of stars?
 What would that be? 
@@ -18,4 +16,6 @@ What is life? A complex organism such as a plant or animal is considered alive. 
 of individual cells, which are also alive. When enough cells die, so does the host, but this doesn't mean the atoms
 making up these cells are removed from existence. The nutrients of a fallen leaf are absorbed into the ground and help sustain next year's growth. 
 
-What is consciousness? This seems to exist outside the realm of physical matter. Yet, for all of our science, we  
+What is consciousness? This is one thing that seems to exist outside the realm of physical matter. Yet, for all of our science, it's difficult to measure. Even more mysteriously, the only consciousness we can guarantee exists is our own.
+
+The entire universe exists from our point of view, and our consciousness exists apart from physcial matter. 
