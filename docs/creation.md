@@ -1,4 +1,4 @@
-Vast is the universe. Trillions of galaxies dot the sky, each will millions of stars and billions of planets. 
+Vast is the universe. Trillions of galaxies dot the sky, each with millions of stars and billions of planets. 
 We look from the inside out, but what does it look like from the outside in?
 
 Small is the atom. Smaller yet is the electron, neutron, and proton. Yet, this follows the same pattern as the solar system. 
