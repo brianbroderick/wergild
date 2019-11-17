@@ -12,6 +12,8 @@ What is consciousness? This is one thing that seems to exist outside the realm o
 
 If the entire universe exists from our point of view, and our consciousness is largely disconnected from physcial matter, why do we not have all the answers? What are we hiding from ourselves?
 
-Does each living entity exist on its own? Or, does it form part of a much greater consciousness? We've seen how natural ecosystems balance itself. The cheetah preys upon the weakest gazelle, which in turn keeps the herd strong. Seen in this light, an ecosystem is greater than the sum of its parts. Perhaps, we are mearly facets of a greater understanding. We feel an inherient connection with other living creatures. Maybe this is why.
+Does each living entity exist on its own? Or, does it form part of a much larger consciousness? We've seen how natural ecosystems balance itself. The cheetah preys upon the weakest gazelle, which in turn keeps the herd strong. Seen in this light, an ecosystem is greater than the sum of its parts. Perhaps, we are mearly facets of a greater understanding. We feel an inherient connection with other living creatures. Maybe this is why.
 
-Birth, happiness, connection, pain, joy, loss, and death may all be experiments compiled in different ways to further enlighten our collective understanding.  
+If consciousness is attached to physical matter, what would this combined consiousness look like? If we could see from the outside of the universe in, perhaps we would know. 
+
+If we are all unique facets, with our own thoughts and experiences, how will our existence benefit the whole?
