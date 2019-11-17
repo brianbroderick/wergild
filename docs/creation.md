@@ -12,3 +12,10 @@ If so, do they follow the same pattern?
 Similar is the macro vs. the micro. If the pattern repeats itself so, does size matter? 
 
 By combining a universe of atoms, an object is formed. Would another object be formed by combining a universe of stars?
+What would that be? 
+
+What is life? A complex organism such as a plant or animal is considered alive. These are made up of trillions 
+of individual cells, which are also alive. When enough cells die, so does the host, but this doesn't mean the atoms
+making up these cells are removed from existence. The nutrients of a fallen leaf are absorbed into the ground and help sustain next year's growth. 
+
+What is consciousness? This seems to exist outside the realm of physical matter. Yet, for all of our science, we  
