@@ -6,8 +6,8 @@ If an electron could be seen, what would it look like? Would its surface be cove
 Could even one electron in a trillion sustain life? What would it look like sitting on an electron looking 
 to the sky and seeing a universe of atoms? 
 
-Similar is the macro vs. the micro. If the pattern repeats itself so, does size matter? Is there an array of even smaller
-somethings that make up an electron? If so, do they follow the same pattern?
+Similar is the macro vs. the micro. The pattern repeats itself, thus does size matter? Is there an array of even smaller
+somethings that make up an electron? If so, do they also follow the pattern?
 
 By combining a universe of atoms, an object is formed. Would another object be formed by combining a universe of stars?
 What would that be? 
