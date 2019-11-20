@@ -11,6 +11,9 @@ https://www.thoughtco.com/green-minerals-examples-1440940
 Jade: green. 
 https://www.thoughtco.com/green-minerals-examples-1440940
 
+Hafnium: shiny steel gray
+https://en.wikipedia.org/wiki/Hafnium
+
 Rhodium: silver, reflective
 Platinum
 Gold
