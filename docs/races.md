@@ -14,10 +14,10 @@ Os:
 
 blue hue. 
 
-Jaded:
+Demantoid:
 
-green hue. angry, orclike. 
+green hue. angry, orclike, jaded, demented 
 
-Iridites:
+Haf: steel gray, shiny, elflike
 
-silver hue. elflike. 
+
