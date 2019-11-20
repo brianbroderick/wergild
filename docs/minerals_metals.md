@@ -14,6 +14,9 @@ https://www.thoughtco.com/green-minerals-examples-1440940
 Hafnium: shiny steel gray
 https://en.wikipedia.org/wiki/Hafnium
 
+Demantoid
+https://en.wikipedia.org/wiki/Demantoid
+
 Rhodium: silver, reflective
 Platinum
 Gold
