@@ -113,6 +113,21 @@ func (world *worldSeed) gates() {
 	})
 
 	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:rhenium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "rhenium_gate",
+		Name:    "Rhenium Gate",
+		Desc:    "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   0,
+		CoorY:   -11,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
 		UID:     "_:indium_gate",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_forwell"},
@@ -128,15 +143,30 @@ func (world *worldSeed) gates() {
 	})
 
 	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:rhenium_gate",
+		UID:     "_:platinum_gate",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_forwell"},
 		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "rhenium_gate",
-		Name:    "Rhenium Gate",
-		Desc:    "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   0,
-		CoorY:   -11,
+		Slug:    "platinum_gate",
+		Name:    "Platinum Gate",
+		Desc:    "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		CoorX:   -7,
+		CoorY:   -4,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:scandium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "scandium_gate",
+		Name:    "Scandium Gate",
+		Desc:    "Scandium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		CoorX:   -7,
+		CoorY:   -1,
 		Exits:   []mud.Exit{
 			// mud.NewExit("_:open_squareSE", "w"),
 		},
