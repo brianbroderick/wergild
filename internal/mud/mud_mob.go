@@ -115,12 +115,24 @@ func (mob *Mob) messageErr() {
 }
 
 func CreateUserMob(user login.User) error {
-	m := Mob{User: user,
+	m := NewMob()
+	m.Name = user.Name
+	m.Slug = strings.ToLower(user.Name)
+
+	j, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+
+	agora.MutateDgraph(j)
+	return nil
+}
+
+func NewMob() Mob {
+	return Mob{
 		UID:   "_:mob",
 		Type:  "Mob",
-		Name:  user.Name,
 		Title: "the utter novice",
-		Slug:  user.Name,
 		Lang:  "common",
 		Level: 1,
 		Hp:    50,
@@ -133,12 +145,4 @@ func CreateUserMob(user login.User) error {
 		Tgh:   1,
 		Per:   1,
 	}
-
-	j, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	agora.MutateDgraph(j)
-	return nil
 }

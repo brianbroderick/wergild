@@ -7,9 +7,13 @@ import (
 )
 
 type Region struct {
-	UID        string `json:"uid,omitempty"`
-	Type       string `json:"dgraph.type,omitempty"`
-	RegionName string `json:"regionName,omitempty"`
+	UID        string  `json:"uid,omitempty"`
+	Type       string  `json:"dgraph.type,omitempty"`
+	RegionName string  `json:"regionName,omitempty"`
+	PartOf     *Region `json:"region,omitempty"`
+	CoorX      int     `json:"coorX,omitempty"`
+	CoorY      int     `json:"coorY,omitempty"`
+	CoorZ      int     `json:"coorZ,omitempty"`
 }
 
 type Room struct {
@@ -58,9 +62,9 @@ type PointOfInterest struct {
 }
 
 type Terrain struct {
-	UID         string `json:"uid,omitempty"`
-	Type        string `json:"dgraph.type,omitempty"`
-	TerrainType string `json:"terrainType,omitempty"`
+	UID  string `json:"uid,omitempty"`
+	Type string `json:"dgraph.type,omitempty"`
+	Name string `json:"terrainName,omitempty"`
 }
 
 type Mob struct {
@@ -70,41 +74,49 @@ type Mob struct {
 	you           chan string // channel to send messages from your point of view
 	User          login.User  `json:"user,omitempty"`
 	CurrentRoom   string
-	UID           string    `json:"uid,omitempty"`
-	Type          string    `json:"dgraph.type,omitempty"`
-	Name          string    `json:"mobName,omitempty"`
-	Title         string    `json:"mobTitle,omitempty"`
-	Rank          string    `json:"mobRank,omitempty"`
-	Desc          string    `json:"mobDesc,omitempty"`
-	Slug          string    `json:"mobSlug,omitempty"`
-	Age           int       `json:"age,omitempty"`
-	Lang          string    `json:"lang,omitempty"`
-	Gender        string    `json:"gender,omitempty"`
-	Level         int       `json:"level,omitempty"`
-	Exp           int       `json:"exp,omitempty"`
-	Coins         int       `json:"coins,omitempty"`
-	BankCoins     int       `json:"bankCoins,omitempty"`
-	Hp            int       `json:"hp,omitempty"`
-	HpMax         int       `json:"hpMax,omitempty"`
-	Ap            int       `json:"ap,omitempty"`
-	ApMax         int       `json:"apMax,omitempty"`
-	Wimpy         int       `json:"wimpy,omitempty"`
-	WimpyDir      string    `json:"wimpyDir,omitempty"`
-	Encumb        int       `json:"encumb,omitempty"`
-	Sober         int       `json:"sober,omitempty"`
-	Thirst        int       `json:"thirst,omitempty"`
-	Hunger        int       `json:"hunger,omitempty"`
-	Poison        int       `json:"poison,omitempty"`
-	Defend        string    `json:"defend,omitempty"`
-	Aim           string    `json:"aim,omitempty"`
-	Attack        string    `json:"attack,omitempty"`
-	Str           int       `json:"str,omitempty"`
-	Agl           int       `json:"agl,omitempty"`
-	Intl          int       `json:"intl,omitempty"`
-	Tgh           int       `json:"tgh,omitempty"`
-	Per           int       `json:"per,omitempty"`
-	InsertedMobAt time.Time `json:"insertedMobAt,omitempty"`
-	Items         []Item    `json:"items,omitempty"`
+	UID           string         `json:"uid,omitempty"`
+	Type          string         `json:"dgraph.type,omitempty"`
+	Name          string         `json:"mobName,omitempty"`
+	Title         string         `json:"mobTitle,omitempty"`
+	Rank          string         `json:"mobRank,omitempty"`
+	Desc          string         `json:"mobDesc,omitempty"`
+	Slug          string         `json:"mobSlug,omitempty"`
+	Age           int            `json:"age,omitempty"`
+	Lang          string         `json:"lang,omitempty"`
+	Gender        string         `json:"gender,omitempty"`
+	Level         int            `json:"level,omitempty"`
+	Exp           int            `json:"exp,omitempty"`
+	Coins         int            `json:"coins,omitempty"`
+	BankCoins     int            `json:"bankCoins,omitempty"`
+	Hp            int            `json:"hp,omitempty"`
+	HpMax         int            `json:"hpMax,omitempty"`
+	Ap            int            `json:"ap,omitempty"`
+	ApMax         int            `json:"apMax,omitempty"`
+	Wimpy         int            `json:"wimpy,omitempty"`
+	WimpyDir      string         `json:"wimpyDir,omitempty"`
+	Encumb        int            `json:"encumb,omitempty"`
+	Sober         int            `json:"sober,omitempty"`
+	Thirst        int            `json:"thirst,omitempty"`
+	Hunger        int            `json:"hunger,omitempty"`
+	Poison        int            `json:"poison,omitempty"`
+	Defend        string         `json:"defend,omitempty"`
+	Aim           string         `json:"aim,omitempty"`
+	Attack        string         `json:"attack,omitempty"`
+	Str           int            `json:"str,omitempty"`
+	Agl           int            `json:"agl,omitempty"`
+	Intl          int            `json:"intl,omitempty"`
+	Tgh           int            `json:"tgh,omitempty"`
+	Per           int            `json:"per,omitempty"`
+	InsertedMobAt time.Time      `json:"insertedMobAt,omitempty"`
+	Items         []Item         `json:"items,omitempty"`
+	Conversations []Conversation `json:"conversations,omitempty"`
+}
+
+type Conversation struct {
+	UID     string `json:"uid,omitempty"`
+	Type    string `json:"dgraph.type,omitempty"`
+	Trigger string `json:"trigger,omitempty"`
+	Say     string `json:"say,omitempty"`
 }
 
 type Item struct {
