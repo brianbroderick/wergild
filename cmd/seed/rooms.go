@@ -4,6 +4,7 @@ import "github.com/brianbroderick/wergild/internal/mud"
 
 func (world *worldSeed) setRooms() {
 	world.blacksmith()
+	world.gates()
 	world.generalStore()
 	world.inn()
 	world.magicShop()
@@ -22,17 +23,124 @@ func (world *worldSeed) blacksmith() {
 		Terrain: mud.Terrain{UID: "_:t_building"},
 		Slug:    "blacksmith",
 		Name:    "Blacksmith",
-		Desc:    "You are in the main room of the blacksmith. Large iron tools line the walls. A forge and an anvil are the room's prominent features. There is a doorway to the north that leads to Main street.",
+		Desc:    "You are in the main room of the blacksmith. Large iron tools line the walls. A forge and an anvil are the room's prominent features. There is a doorway to the south that leads to the central square.",
 		Env: []string{"Heat radiates from the forge.",
 			"Hot embers glow in the forge.",
 			"Orange and red flames flicker causing shadows to dance around the room."},
 		Exits: []mud.Exit{
 			mud.NewExit("_:open_squareNW", "s"),
 		},
-		Mobs: []mud.Mob{mud.Mob{UID: "_:william"}},
+		Mobs: []mud.Mob{mud.Mob{UID: "_:erik"}},
 	}
 
 	world.Rooms = append(world.Rooms, room)
+}
+
+func (world *worldSeed) gates() {
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:iridium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "iridium_gate",
+		Name:    "Iridium Gate",
+		Desc:    "Iridium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   -4,
+		CoorY:   6,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:rhodium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "rhodium_gate",
+		Name:    "Rhodium Gate",
+		Desc:    "Rhodium Gate is an impressive silvery-white walled portal between Forwell and the world beyond. An iron portcullis is closed preventing people from passing through.",
+		CoorX:   1,
+		CoorY:   6,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:palladium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "palladium_gate",
+		Name:    "Palladium Gate",
+		Desc:    "Palladium Gate consists of gleaming silvery-white walls. When it's open, its a portal between Forwell and the world beyond. Unfortunately, the iron portcullis is closed preventing people from passing through.",
+		CoorX:   6,
+		CoorY:   0,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:tungston_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "tungston_gate",
+		Name:    "Tungston Gate",
+		Desc:    "Tungston Gate is an impressive portal between Forwell and the world beyond. Though the walls are naturally gray, they are covered in lustrous green, yellow, and violet paint. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   6,
+		CoorY:   -6,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:ruthenium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "ruthenium_gate",
+		Name:    "Ruthenium Gate",
+		Desc:    "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   5,
+		CoorY:   -9,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:indium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "indium_gate",
+		Name:    "Indium Gate",
+		Desc:    "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   -6,
+		CoorY:   -11,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
+
+	world.Rooms = append(world.Rooms, mud.Room{
+		UID:     "_:rhenium_gate",
+		Type:    "Room",
+		Region:  mud.Region{UID: "_:region_forwell"},
+		Terrain: mud.Terrain{UID: "_:t_building"},
+		Slug:    "rhenium_gate",
+		Name:    "Rhenium Gate",
+		Desc:    "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
+		CoorX:   0,
+		CoorY:   -11,
+		Exits:   []mud.Exit{
+			// mud.NewExit("_:open_squareSE", "w"),
+		},
+	})
 }
 
 func (world *worldSeed) generalStore() {
@@ -40,7 +148,7 @@ func (world *worldSeed) generalStore() {
 		UID:     "_:general_store",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_general_store"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
+		Terrain: mud.Terrain{UID: "_:t_shop"},
 		Slug:    "general_store",
 		Name:    "General Store",
 		Desc:    "General Store",
@@ -60,7 +168,7 @@ func (world *worldSeed) inn() {
 		Terrain: mud.Terrain{UID: "_:t_building"},
 		Slug:    "forwell_inn_north_room",
 		Name:    "North Room",
-		Desc:    "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room. A large window to the northwest displays the forest outside.",
+		Desc:    "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room.",
 		Smell:   "The smell of burning charcoal and wood permeate the room.",
 		Listen:  "The sounds of people laughing and chatting can be heard.",
 		Env: []string{"The logs burn softly in the pit.",
@@ -88,13 +196,6 @@ func (world *worldSeed) inn() {
 				Touch: "The table is smooth and feels well made.",
 				Type:  "PointOfInterest",
 			},
-			{
-				Name:   "large northwest window",
-				Desc:   "Peering through the window reveals a beautiful forest outside.",
-				Listen: "Birds can be faintly heard out the window.",
-				Touch:  "The window is smooth. You better not let the innkeeper know you left prints on the window!",
-				Type:   "PointOfInterest",
-			},
 		},
 		Exits: []mud.Exit{
 			mud.NewExit("_:inn_common", "s"),
@@ -108,7 +209,7 @@ func (world *worldSeed) inn() {
 		Terrain: mud.Terrain{UID: "_:t_building"},
 		Slug:    "forwell_inn_common_room",
 		Name:    "Common Room",
-		Desc:    "You stand in the common room of the Ancient Inn of Forwell. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
+		Desc:    "You're in the common room of the inn where many start their adventures. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
 		Smell:   "The smell of rustic wood enters your nose.",
 		Listen:  "The sounds of people chatting and discussing their travels can be heard.",
 		PointsOfInterest: []mud.PointOfInterest{
@@ -169,7 +270,7 @@ func (world *worldSeed) magicShop() {
 		UID:     "_:magic_shop",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_magic_shop"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
+		Terrain: mud.Terrain{UID: "_:t_shop"},
 		Slug:    "magic_shop",
 		Name:    "Magic Shop",
 		Desc:    "Magic Shop",
@@ -186,7 +287,7 @@ func (world *worldSeed) mapShop() {
 		UID:     "_:map_shop",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_map_shop"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
+		Terrain: mud.Terrain{UID: "_:t_shop"},
 		Slug:    "map_shop",
 		Name:    "Map Shop",
 		Desc:    "Map Shop",
@@ -366,7 +467,7 @@ func (world *worldSeed) tradingPost() {
 		UID:     "_:trading_post",
 		Type:    "Room",
 		Region:  mud.Region{UID: "_:region_trading_post"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
+		Terrain: mud.Terrain{UID: "_:t_shop"},
 		Slug:    "trading_post",
 		Name:    "Trading Post",
 		Desc:    "Trading Post",

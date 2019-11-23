@@ -39,9 +39,16 @@ func (world *worldSeed) setTerrain() {
 			Name: "Point of Interest",
 			Type: "Terrain",
 		},
+		// village, town, city
 		mud.Terrain{
 			UID:  "_:t_settlement",
 			Name: "Settlement",
+			Type: "Terrain",
+		},
+		// A shop is a specialized building. Shop should override a building
+		mud.Terrain{
+			UID:  "_:t_shop",
+			Name: "Shop",
 			Type: "Terrain",
 		},
 		mud.Terrain{
