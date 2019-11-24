@@ -2,6 +2,7 @@ package mud
 
 import (
 	"math/rand"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -31,6 +32,7 @@ func random_int(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
+// format to a certain number of characters for telnet happiness.
 func formatToWidth(msg string, lineLen int) string {
 	words := strings.Fields(msg)
 	var slice []string
@@ -47,4 +49,16 @@ func formatToWidth(msg string, lineLen int) string {
 	}
 
 	return strings.TrimSpace(strings.Join(slice, ""))
+}
+
+func ToSlug(str string) string {
+	reAn := regexp.MustCompile(`[^a-z0-9]`)
+	reSp := regexp.MustCompile(`\s+`)
+
+	str = strings.ToLower(str)
+	str = reAn.ReplaceAllString(str, " ")
+	str = strings.TrimSpace(str)
+	str = reSp.ReplaceAllString(str, "_")
+
+	return str
 }

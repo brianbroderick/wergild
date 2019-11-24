@@ -3,209 +3,116 @@ package main
 import "github.com/brianbroderick/wergild/internal/mud"
 
 func (world *worldSeed) setRooms() {
-	world.blacksmith()
+	world.commonBuildings()
 	world.gates()
-	world.generalStore()
 	world.inn()
-	world.magicShop()
-	world.mapShop()
-	world.openSquare()
+	world.shops()
+	world.centralCourtyard()
 	world.streets()
-	world.tradingPost()
 	world.wells()
 }
 
-func (world *worldSeed) blacksmith() {
-	room := mud.Room{
-		UID:     "_:blacksmith",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_blacksmith"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "blacksmith",
-		Name:    "Blacksmith",
-		Desc:    "You are in the main room of the blacksmith. Large iron tools line the walls. A forge and an anvil are the room's prominent features. There is a doorway to the south that leads to the central square.",
-		Env: []string{"Heat radiates from the forge.",
+func (world *worldSeed) commonBuildings() {
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Blacksmith",
+		desc: "You are in the main room of the blacksmith. Large iron tools line the walls. A forge and an anvil are the room's prominent features. There is a doorway to the south that leads to the central square.",
+		env: []string{"Heat radiates from the forge.",
 			"Hot embers glow in the forge.",
 			"Orange and red flames flicker causing shadows to dance around the room."},
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareNW", "s"),
+		region: "_:region_blacksmith",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyard_nw", "s"),
 		},
-		Mobs: []mud.Mob{mud.Mob{UID: "_:erik"}},
-	}
-
-	world.Rooms = append(world.Rooms, room)
+		mobs: []mud.Mob{mud.Mob{UID: "_:erik"}},
+	}))
 }
 
 func (world *worldSeed) gates() {
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:iridium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "iridium_gate",
-		Name:    "Iridium Gate",
-		Desc:    "Iridium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   -4,
-		CoorY:   6,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Iridium Gate",
+		desc: "Iridium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		x:    -4,
+		y:    6,
+		exits: []mud.Exit{
+			mud.NewExit("_:iridium_street_1", "s"),
 		},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:rhodium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "rhodium_gate",
-		Name:    "Rhodium Gate",
-		Desc:    "Rhodium Gate is an impressive silvery-white walled portal between Forwell and the world beyond. An iron portcullis is closed preventing people from passing through.",
-		CoorX:   1,
-		CoorY:   6,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Rhodium Gate",
+		desc: "Rhodium Gate is an impressive silvery-white walled portal between Forwell and the world beyond. An iron portcullis is closed preventing people from passing through.",
+		x:    1,
+		y:    6,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Palladium Gate",
+		desc: "Palladium Gate consists of gleaming silvery-white walls. When it's open, its a portal between Forwell and the world beyond. Unfortunately, the iron portcullis is closed preventing people from passing through.",
+		x:    6,
+		y:    0,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Tungston Gate",
+		desc: "Tungston Gate is an impressive portal between Forwell and the world beyond. Though the walls are naturally gray, they are covered in lustrous green, yellow, and violet paint. The iron portcullis is closed preventing people from passing through.",
+		x:    6,
+		y:    -6,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Ruthenium Gate",
+		desc: "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		x:    5,
+		y:    -9,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Rhenium Gate",
+		desc: "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
+		x:    0,
+		y:    -11,
+		exits: []mud.Exit{
+			mud.NewExit("_:central_street_10", "n"),
 		},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:palladium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "palladium_gate",
-		Name:    "Palladium Gate",
-		Desc:    "Palladium Gate consists of gleaming silvery-white walls. When it's open, its a portal between Forwell and the world beyond. Unfortunately, the iron portcullis is closed preventing people from passing through.",
-		CoorX:   6,
-		CoorY:   0,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Indium Gate",
+		desc: "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		x:    -6,
+		y:    -11,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Platinum Gate",
+		desc: "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		x:    -7,
+		y:    -4,
+	}))
+
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name: "Scandium Gate",
+		desc: "Scandium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		x:    -7,
+		y:    1,
+		exits: []mud.Exit{
+			mud.NewExit("_:scandium_street_1", "e"),
 		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:tungston_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "tungston_gate",
-		Name:    "Tungston Gate",
-		Desc:    "Tungston Gate is an impressive portal between Forwell and the world beyond. Though the walls are naturally gray, they are covered in lustrous green, yellow, and violet paint. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   6,
-		CoorY:   -6,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:ruthenium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "ruthenium_gate",
-		Name:    "Ruthenium Gate",
-		Desc:    "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   5,
-		CoorY:   -9,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:rhenium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "rhenium_gate",
-		Name:    "Rhenium Gate",
-		Desc:    "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   0,
-		CoorY:   -11,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:indium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "indium_gate",
-		Name:    "Indium Gate",
-		Desc:    "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		CoorX:   -6,
-		CoorY:   -11,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:platinum_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "platinum_gate",
-		Name:    "Platinum Gate",
-		Desc:    "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
-		CoorX:   -7,
-		CoorY:   -4,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:scandium_gate",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "scandium_gate",
-		Name:    "Scandium Gate",
-		Desc:    "Scandium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
-		CoorX:   -7,
-		CoorY:   -1,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareSE", "w"),
-		},
-	})
-}
-
-func (world *worldSeed) generalStore() {
-	room := mud.Room{
-		UID:     "_:general_store",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_general_store"},
-		Terrain: mud.Terrain{UID: "_:t_shop"},
-		Slug:    "general_store",
-		Name:    "General Store",
-		Desc:    "General Store",
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareSE", "w"),
-		},
-	}
-
-	world.Rooms = append(world.Rooms, room)
+	}))
 }
 
 func (world *worldSeed) inn() {
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:northRoom",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_inn"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "forwell_inn_north_room",
-		Name:    "North Room",
-		Desc:    "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room.",
-		Smell:   "The smell of burning charcoal and wood permeate the room.",
-		Listen:  "The sounds of people laughing and chatting can be heard.",
-		Env: []string{"The logs burn softly in the pit.",
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:   "Forwell Inn North Room",
+		desc:   "You are at a small room north of the inn's common room. A large firepit is the dominating feature here, casting warmth and powerful shadows across the tables and chairs arranged around the room.",
+		region: "_:region_inn",
+		env: []string{"The logs burn softly in the pit.",
 			"The fire crackles and sends up a few sparks.",
 			"Warm embers glow in the firepit.",
 			"Orange and red flames flicker causing shadows to dance around the room."},
-		PointsOfInterest: []mud.PointOfInterest{
+		smell:  "The smell of burning charcoal and wood permeate the room.",
+		listen: "The sounds of people laughing and chatting can be heard.",
+		poi: []mud.PointOfInterest{
 			{
 				Name:   "large firepit",
 				Desc:   "The firepit is set halfway into the northern wall, spreading warmth throughout the inn.",
@@ -227,22 +134,17 @@ func (world *worldSeed) inn() {
 				Type:  "PointOfInterest",
 			},
 		},
-		Exits: []mud.Exit{
-			mud.NewExit("_:inn_common", "s"),
+		exits: []mud.Exit{
+			mud.NewExit("_:forwell_inn_common_room", "s"),
 		},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:inn_common",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_inn"},
-		Terrain: mud.Terrain{UID: "_:t_building"},
-		Slug:    "forwell_inn_common_room",
-		Name:    "Common Room",
-		Desc:    "You're in the common room of the inn where many start their adventures. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
-		Smell:   "The smell of rustic wood enters your nose.",
-		Listen:  "The sounds of people chatting and discussing their travels can be heard.",
-		PointsOfInterest: []mud.PointOfInterest{
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:   "Forwell Inn Common Room",
+		desc:   "You're in the common room of the inn where many start their adventures. There are a number of chairs and tables scattered around the room. There is a large desk at the north end of the room, over which hangs an ornate clock. A doorway leads south into the world of Wergild and the adventure it has to offer.",
+		smell:  "The smell of rustic wood enters your nose.",
+		listen: "The sounds of people chatting and discussing their travels can be heard.",
+		poi: []mud.PointOfInterest{
 			{
 				Name:  "oak chairs",
 				Desc:  "The chairs are sturdy, and made from oak. They complement the other furnishings nicely.",
@@ -288,271 +190,126 @@ func (world *worldSeed) inn() {
 				Type:   "PointOfInterest",
 			},
 		},
-		Exits: []mud.Exit{
-			mud.NewExit("_:northRoom", "n"),
-			mud.NewExit("_:open_squareN", "s"),
+		exits: []mud.Exit{
+			mud.NewExit("_:forwell_inn_north_room", "n"),
+			mud.NewExit("_:central_courtyard_n", "s"),
 		},
-	})
+	}))
 }
 
-func (world *worldSeed) magicShop() {
-	room := mud.Room{
-		UID:     "_:magic_shop",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_magic_shop"},
-		Terrain: mud.Terrain{UID: "_:t_shop"},
-		Slug:    "magic_shop",
-		Name:    "Magic Shop",
-		Desc:    "Magic Shop",
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareE", "w"),
+func (world *worldSeed) shops() {
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		region:  "_:region_general_store",
+		terrain: "_:t_shop",
+		name:    "General Store",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyard_se", "w"),
 		},
-	}
+	}))
 
-	world.Rooms = append(world.Rooms, room)
-}
-
-func (world *worldSeed) mapShop() {
-	room := mud.Room{
-		UID:     "_:map_shop",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_map_shop"},
-		Terrain: mud.Terrain{UID: "_:t_shop"},
-		Slug:    "map_shop",
-		Name:    "Map Shop",
-		Desc:    "Map Shop",
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareNE", "s"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		region:  "_:region_magic_shop",
+		terrain: "_:t_shop",
+		name:    "Magic Shop",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyard_e", "w"),
 		},
-	}
+	}))
 
-	world.Rooms = append(world.Rooms, room)
-}
-
-func (world *worldSeed) openSquare() {
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareNW",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_nw",
-		Name:    "Open Square, Northwest",
-		Desc:    "Open Square, Northwest",
-		CoorX:   -1,
-		CoorY:   1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:blacksmith", "n"),
-			mud.NewExit("_:open_squareN", "e"),
-			mud.NewExit("_:open_squareW", "s"),
-			// mud.NewExit("_:well3", "w"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		region:  "_:region_map_shop",
+		terrain: "_:t_shop",
+		name:    "Map Shop",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyardNE", "s"),
 		},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareN",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_n",
-		Name:    "Open Square, North",
-		Desc:    "Open Square, North",
-		CoorX:   0,
-		CoorY:   1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:inn_common", "n"),
-			mud.NewExit("_:open_squareNE", "e"),
-			mud.NewExit("_:open_squareC", "s"),
-			mud.NewExit("_:open_squareNW", "w"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:    "Trading Post",
+		terrain: "_:t_shop",
+		region:  "_:region_trading_post",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyard_ne", "w"),
 		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareNE",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_ne",
-		Name:    "Open Square, Northeast",
-		Desc:    "Open Square, Northeast",
-		CoorX:   1,
-		CoorY:   1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:map_shop", "n"),
-			mud.NewExit("_:trading_post", "e"),
-			mud.NewExit("_:open_squareE", "s"),
-			mud.NewExit("_:open_squareN", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareW",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_w",
-		Name:    "Open Square, West",
-		Desc:    "Open Square, West",
-		CoorX:   -1,
-		CoorY:   0,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareNW", "n"),
-			mud.NewExit("_:open_squareC", "e"),
-			mud.NewExit("_:open_squareSW", "s"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareC",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_c",
-		Name:    "Open Square, Central",
-		Desc:    "Open Square, Central",
-		CoorX:   0,
-		CoorY:   0,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareN", "n"),
-			mud.NewExit("_:open_squareE", "e"),
-			mud.NewExit("_:open_squareS", "s"),
-			mud.NewExit("_:open_squareW", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareE",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_e",
-		Name:    "Open Square, East",
-		Desc:    "Open Square, East",
-		CoorX:   1,
-		CoorY:   0,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareNE", "n"),
-			mud.NewExit("_:magic_shop", "e"),
-			mud.NewExit("_:open_squareSE", "s"),
-			mud.NewExit("_:open_squareC", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareSW",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_sw",
-		Name:    "Open Square, Southwest",
-		Desc:    "Open Square, Southwest",
-		CoorX:   -1,
-		CoorY:   -1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareW", "n"),
-			mud.NewExit("_:open_squareS", "e"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareS",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_s",
-		Name:    "Open Square, South",
-		Desc:    "Open Square, South",
-		CoorX:   0,
-		CoorY:   -1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareC", "n"),
-			mud.NewExit("_:open_squareSE", "e"),
-			// mud.NewExit("_:south_road", "s"), // name this road
-			mud.NewExit("_:open_squareSW", "w"),
-		},
-	})
-
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:open_squareSE",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_street"},
-		Slug:    "forwell_open_square_se",
-		Name:    "Open Square, Southeast",
-		Desc:    "Open Square, Southeast",
-		CoorX:   1,
-		CoorY:   -1,
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareE", "n"),
-			mud.NewExit("_:general_store", "e"),
-			mud.NewExit("_:open_squareS", "w"),
-		},
-	})
-}
-
-func (world *worldSeed) streets() {
-}
-
-func (world *worldSeed) tradingPost() {
-	room := mud.Room{
-		UID:     "_:trading_post",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_trading_post"},
-		Terrain: mud.Terrain{UID: "_:t_shop"},
-		Slug:    "trading_post",
-		Name:    "Trading Post",
-		Desc:    "Trading Post",
-		Exits: []mud.Exit{
-			mud.NewExit("_:open_squareNE", "w"),
-		},
-	}
-
-	world.Rooms = append(world.Rooms, room)
+	}))
 }
 
 func (world *worldSeed) wells() {
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:well2",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_poi"},
-		Slug:    "well2",
-		Name:    "Well 2",
-		Desc:    "Well 2",
-		CoorX:   0,
-		CoorY:   -6,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareNW", "s"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:    "Well 2",
+		x:       0,
+		y:       -6,
+		terrain: "_:t_poi",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_street_5", "n"),
+			mud.NewExit("_:central_street_7", "s"),
 		},
-		Mobs: []mud.Mob{mud.Mob{UID: "_:william"}},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:well3",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_poi"},
-		Slug:    "well3",
-		Name:    "Well 3",
-		Desc:    "Well 3",
-		CoorX:   -2,
-		CoorY:   1,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareNW", "s"),
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:    "Well 3",
+		x:       -2,
+		y:       1,
+		terrain: "_:t_poi",
+		exits: []mud.Exit{
+			mud.NewExit("_:central_courtyard_nw", "e"),
+			mud.NewExit("_:scandium_street_4", "w"),
 		},
-	})
+	}))
 
-	world.Rooms = append(world.Rooms, mud.Room{
-		UID:     "_:well4",
-		Type:    "Room",
-		Region:  mud.Region{UID: "_:region_forwell"},
-		Terrain: mud.Terrain{UID: "_:t_poi"},
-		Slug:    "well4",
-		Name:    "Well 4",
-		Desc:    "Well 4",
-		CoorX:   -2,
-		CoorY:   -5,
-		Exits:   []mud.Exit{
-			// mud.NewExit("_:open_squareNW", "s"),
-		},
-	})
+	world.Rooms = append(world.Rooms, newRoom(quickRoom{
+		name:    "Well 4",
+		x:       -2,
+		y:       -5,
+		terrain: "_:t_poi",
+	}))
+}
+
+type quickRoom struct {
+	name    string
+	desc    string
+	region  string
+	terrain string
+	x       int
+	y       int
+	exits   []mud.Exit
+	env     []string
+	mobs    []mud.Mob
+	poi     []mud.PointOfInterest
+	smell   string
+	listen  string
+}
+
+func newRoom(quick quickRoom) mud.Room {
+	if quick.desc == "" {
+		quick.desc = quick.name
+	}
+
+	if quick.region == "" {
+		quick.region = "_:region_forwell"
+	}
+
+	if quick.terrain == "" {
+		quick.terrain = "_:t_building"
+	}
+
+	slug := mud.ToSlug(quick.name)
+
+	return mud.Room{
+		UID:              "_:" + slug,
+		Type:             "Room",
+		Region:           mud.Region{UID: quick.region},
+		Terrain:          mud.Terrain{UID: quick.terrain},
+		Name:             quick.name,
+		Slug:             slug,
+		Desc:             quick.desc,
+		CoorX:            quick.x,
+		CoorY:            quick.y,
+		Exits:            quick.exits,
+		PointsOfInterest: quick.poi,
+		Smell:            quick.smell,
+		Listen:           quick.listen,
+		Mobs:             quick.mobs,
+	}
 }

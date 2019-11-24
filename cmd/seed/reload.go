@@ -26,10 +26,10 @@ type worldSeed struct {
 func NewWorld() worldSeed {
 	return worldSeed{
 		Regions: make([]mud.Region, 10),
-		Rooms:   make([]mud.Room, 10),
+		Rooms:   make([]mud.Room, 100),
 		Mobs:    make([]mud.Mob, 10),
 		Users:   make([]login.User, 10),
-		Terrain: make([]mud.Terrain, 10),
+		Terrain: make([]mud.Terrain, 15),
 	}
 }
 
