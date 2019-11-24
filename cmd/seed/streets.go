@@ -61,6 +61,7 @@ func (world *worldSeed) streets() {
 		exits: []mud.Exit{
 			mud.NewExit("_:central_street_7", "n"),
 			mud.NewExit("_:central_street_9", "s"),
+			mud.NewExit("_:hafnium_avenue_4", "w"),
 		},
 	}))
 
@@ -70,6 +71,7 @@ func (world *worldSeed) streets() {
 		y:    -9,
 		exits: []mud.Exit{
 			mud.NewExit("_:central_street_8", "n"),
+			mud.NewExit("_:iron_way_1", "e"),
 			mud.NewExit("_:central_street_10", "s"),
 		},
 	}))
@@ -166,21 +168,21 @@ func (world *worldSeed) streets() {
 		x:    0,
 		y:    3,
 		exits: []mud.Exit{
-			mud.NewExit("_:ruthenium_street_3", "e"),
+			mud.NewExit("_:ruthenium_road_3", "e"),
 			mud.NewExit("_:scandium_street_8", "w"),
 		},
 	}))
 
-	// Ruthenium Street
+	// Ruthenium Road
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Ruthenium Street 1",
+		name: "Ruthenium Road 1",
 		x:    1,
 		y:    5,
 		exits: []mud.Exit{
 			mud.NewExit("_:ruthenium_gate", "n"),
 			mud.NewExit("_:rhodium_street_7", "w"),
-			// mud.NewExit("_:ruthenium_street_2", "s"),
+			// mud.NewExit("_:ruthenium_road_2", "s"),
 		},
 	}))
 
@@ -241,7 +243,7 @@ func (world *worldSeed) streets() {
 		x:    0,
 		y:    5,
 		exits: []mud.Exit{
-			mud.NewExit("_:ruthenium_street_1", "e"),
+			mud.NewExit("_:ruthenium_road_1", "e"),
 			mud.NewExit("_:rhodium_street_6", "w"),
 		},
 	}))
@@ -658,6 +660,49 @@ func (world *worldSeed) streets() {
 		exits: []mud.Exit{
 			mud.NewExit("_:central_street_8", "e"),
 			mud.NewExit("_:iridium_and_hafnium", "w"),
+		},
+	}))
+
+	// Iron Way
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "Iron Way 1",
+		x:    1,
+		y:    -9,
+		exits: []mud.Exit{
+			mud.NewExit("_:iron_way_2", "e"),
+			mud.NewExit("_:central_street_9", "w"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "Iron Way 2",
+		x:    2,
+		y:    -9,
+		exits: []mud.Exit{
+			mud.NewExit("_:iron_way_3", "e"),
+			mud.NewExit("_:iron_way_1", "w"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "Iron Way 3",
+		x:    3,
+		y:    -9,
+		exits: []mud.Exit{
+			mud.NewExit("_:ruthenium_road_16", "n"),
+			mud.NewExit("_:iron_way_4", "e"),
+			mud.NewExit("_:iron_way_2", "w"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "Iron Way 4",
+		x:    4,
+		y:    -9,
+		exits: []mud.Exit{
+			mud.NewExit("_:ruthenium_gate", "e"),
+			mud.NewExit("_:iron_way_3", "w"),
 		},
 	}))
 }
