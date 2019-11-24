@@ -499,7 +499,7 @@ func (world *worldSeed) streets() {
 			mud.NewExit("_:indium_street_10", "n"),
 			mud.NewExit("_:platinum_street_2", "e"),
 			mud.NewExit("_:indium_street_12", "s"),
-			mud.NewExit("_:platinum_gate", "e"),
+			mud.NewExit("_:platinum_gate", "w"),
 		},
 	}))
 
