@@ -34,7 +34,7 @@ func (world *worldSeed) gates() {
 		x:    -4,
 		y:    6,
 		exits: []mud.Exit{
-			mud.NewExit("_:iridium_street_1", "s"),
+			mud.NewExit("_:iridium_and_rhodium", "s"),
 		},
 	}))
 
@@ -64,6 +64,9 @@ func (world *worldSeed) gates() {
 		desc: "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
 		x:    5,
 		y:    -9,
+		exits: []mud.Exit{
+			mud.NewExit("_:ruthenium_street_1", "s"),
+		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
@@ -81,6 +84,9 @@ func (world *worldSeed) gates() {
 		desc: "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
 		x:    -6,
 		y:    -11,
+		exits: []mud.Exit{
+			mud.NewExit("_:indium_street_16", "n"),
+		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
@@ -88,6 +94,9 @@ func (world *worldSeed) gates() {
 		desc: "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
 		x:    -7,
 		y:    -4,
+		exits: []mud.Exit{
+			mud.NewExit("_:indium_and_platinum", "e"),
+		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
@@ -96,7 +105,7 @@ func (world *worldSeed) gates() {
 		x:    -7,
 		y:    1,
 		exits: []mud.Exit{
-			mud.NewExit("_:scandium_street_1", "e"),
+			mud.NewExit("_:indium_and_scandium", "e"),
 		},
 	}))
 }
