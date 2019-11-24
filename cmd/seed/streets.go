@@ -193,7 +193,7 @@ func (world *worldSeed) streets() {
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 8",
 		x:    -4,
-		y:    -1,
+		y:    -2,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_7", "n"),
 			mud.NewExit("_:iridium_street_9", "e"),
@@ -202,8 +202,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 9",
-		x:    -4,
-		y:    -1,
+		x:    -3,
+		y:    -2,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_8", "w"),
 			mud.NewExit("_:iridium_street_10", "e"),
@@ -212,8 +212,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 10",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -2,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_11", "s"),
 			mud.NewExit("_:iridium_street_9", "w"),
@@ -222,8 +222,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 11",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -3,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_10", "n"),
 			mud.NewExit("_:iridium_street_12", "s"),
@@ -232,8 +232,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 12",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -4,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_11", "n"),
 			mud.NewExit("_:iridium_and_osmium", "s"),
@@ -242,8 +242,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium and Osmium",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -5,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_12", "n"),
 			mud.NewExit("_:iridium_street_14", "s"),
@@ -252,8 +252,8 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 14",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -6,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_and_osmium", "n"),
 			mud.NewExit("_:iridium_street_15", "s"),
@@ -262,11 +262,20 @@ func (world *worldSeed) streets() {
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
 		name: "Iridium Street 15",
-		x:    -4,
-		y:    -1,
+		x:    -2,
+		y:    -7,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_street_14", "n"),
-			// goes sw and se once those are options
+			mud.NewExit("_:iridium_street_16", "n"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "Iridium Street 16",
+		x:    -2,
+		y:    -8,
+		exits: []mud.Exit{
+			mud.NewExit("_:iridium_street_15", "n"),
 		},
 	}))
 }
