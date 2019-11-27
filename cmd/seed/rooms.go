@@ -65,7 +65,7 @@ func (world *worldSeed) gates() {
 		x:    5,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:ruthenium_street_1", "s"),
+			mud.NewExit("_:500_n_ruthenium_road", "s"),
 		},
 	}))
 
@@ -75,7 +75,7 @@ func (world *worldSeed) gates() {
 		x:    0,
 		y:    -11,
 		exits: []mud.Exit{
-			mud.NewExit("_:central_street_10", "n"),
+			mud.NewExit("_:1000_s_central_street", "n"),
 		},
 	}))
 
@@ -246,24 +246,25 @@ func (world *worldSeed) shops() {
 
 func (world *worldSeed) wells() {
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name:    "Well 2",
+		name:    "South Well",
 		x:       0,
 		y:       -6,
 		terrain: "_:t_poi",
 		exits: []mud.Exit{
-			mud.NewExit("_:central_street_5", "n"),
-			mud.NewExit("_:central_street_7", "s"),
+			mud.NewExit("_:500_s_central_street", "n"),
+			mud.NewExit("_:700_s_central_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name:    "Well 3",
+		name:    "Scandium Well",
 		x:       -2,
 		y:       1,
 		terrain: "_:t_poi",
 		exits: []mud.Exit{
+			mud.NewExit("_:200_n_scandium_street", "n"),
 			mud.NewExit("_:central_courtyard_nw", "e"),
-			mud.NewExit("_:scandium_street_4", "w"),
+			mud.NewExit("_:300_w_scandium_street", "w"),
 		},
 	}))
 
