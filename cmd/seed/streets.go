@@ -61,7 +61,7 @@ func (world *worldSeed) streets() {
 		exits: []mud.Exit{
 			mud.NewExit("_:700_s_central_street", "n"),
 			mud.NewExit("_:900_s_central_street", "s"),
-			mud.NewExit("_:hafnium_avenue_4", "w"),
+			mud.NewExit("_:300_w_hafnium_avenue", "w"),
 		},
 	}))
 
@@ -71,7 +71,7 @@ func (world *worldSeed) streets() {
 		y:    -9,
 		exits: []mud.Exit{
 			mud.NewExit("_:800_s_central_street", "n"),
-			mud.NewExit("_:iron_way_1", "e"),
+			mud.NewExit("_:100_e_iron_way", "e"),
 			mud.NewExit("_:1000_s_central_street", "s"),
 		},
 	}))
@@ -83,7 +83,7 @@ func (world *worldSeed) streets() {
 		exits: []mud.Exit{
 			mud.NewExit("_:900_s_central_street", "n"),
 			mud.NewExit("_:rhenium_gate", "s"),
-			mud.NewExit("_:rhenium_road_6", "w"),
+			mud.NewExit("_:100_w_rhenium_road", "w"),
 		},
 	}))
 
@@ -94,9 +94,9 @@ func (world *worldSeed) streets() {
 		x:    -6,
 		y:    1,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_5", "n"),
+			mud.NewExit("_:200_n_indium_street", "n"),
 			mud.NewExit("_:500_w_scandium_street", "e"),
-			mud.NewExit("_:indium_street_7", "s"),
+			mud.NewExit("_:mid_indium_street", "s"),
 			mud.NewExit("_:scandium_gate", "w"),
 		},
 	}))
@@ -389,7 +389,9 @@ func (world *worldSeed) streets() {
 		y:    -5,
 		exits: []mud.Exit{
 			mud.NewExit("_:400_s_iridium_street", "n"),
+			mud.NewExit("_:100_w_platinum_street", "e"),
 			mud.NewExit("_:600_s_iridium_street", "s"),
+			mud.NewExit("_:platinum_well", "w"),
 		},
 	}))
 
@@ -419,8 +421,8 @@ func (world *worldSeed) streets() {
 		y:    -8,
 		exits: []mud.Exit{
 			mud.NewExit("_:700_s_iridium_street", "n"),
-			mud.NewExit("_:hafnium_avenue_4", "e"),
-			mud.NewExit("_:hafnium_avenue_2", "w"),
+			mud.NewExit("_:100_w_hafnium_avenue", "e"),
+			mud.NewExit("_:300_w_hafnium_avenue", "w"),
 		},
 	}))
 
@@ -432,86 +434,86 @@ func (world *worldSeed) streets() {
 		y:    5,
 		exits: []mud.Exit{
 			mud.NewExit("_:600_w_rhodium_street", "e"),
-			mud.NewExit("_:indium_street_2", "s"),
+			mud.NewExit("_:400_n_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 2",
+		name: "400 N Indium Street",
 		x:    -7,
 		y:    4,
 		exits: []mud.Exit{
 			mud.NewExit("_:500_n_indium_street", "n"),
-			mud.NewExit("_:indium_street_3", "s"),
+			mud.NewExit("_:300_n_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 3",
+		name: "300 N Indium Street",
 		x:    -7,
 		y:    3,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_2", "n"),
-			mud.NewExit("_:indium_street_4", "e"),
+			mud.NewExit("_:400_n_indium_street", "n"),
+			mud.NewExit("_:600_w_indium_street", "e"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 4",
+		name: "600 W Indium Street",
 		x:    -6,
 		y:    3,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_5", "s"),
-			mud.NewExit("_:indium_street_3", "w"),
+			mud.NewExit("_:200_n_indium_street", "s"),
+			mud.NewExit("_:300_n_indium_street", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 5",
+		name: "200 N Indium Street",
 		x:    -6,
 		y:    2,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_4", "n"),
+			mud.NewExit("_:600_w_indium_street", "n"),
 			mud.NewExit("_:indium_and_scandium", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 7",
+		name: "Mid Indium Street",
 		x:    -6,
 		y:    0,
 		exits: []mud.Exit{
 			mud.NewExit("_:indium_and_scandium", "n"),
-			mud.NewExit("_:indium_street_8", "s"),
+			mud.NewExit("_:100_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 8",
+		name: "100 S Indium Street",
 		x:    -6,
 		y:    -1,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_7", "n"),
-			mud.NewExit("_:indium_street_9", "s"),
+			mud.NewExit("_:mid_indium_street", "n"),
+			mud.NewExit("_:200_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 9",
+		name: "200 S Indium Street",
 		x:    -6,
 		y:    -2,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_8", "n"),
-			mud.NewExit("_:indium_street_10", "s"),
+			mud.NewExit("_:100_s_indium_street", "n"),
+			mud.NewExit("_:300_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 10",
+		name: "300 S Indium Street",
 		x:    -6,
 		y:    -3,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_9", "n"),
+			mud.NewExit("_:200_s_indium_street", "n"),
 			mud.NewExit("_:indium_and_platinum", "s"),
 		},
 	}))
@@ -521,70 +523,70 @@ func (world *worldSeed) streets() {
 		x:    -6,
 		y:    -4,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_10", "n"),
-			mud.NewExit("_:platinum_street_2", "e"),
-			mud.NewExit("_:indium_street_12", "s"),
+			mud.NewExit("_:300_s_indium_street", "n"),
+			mud.NewExit("_:500_w_platinum_street", "e"),
+			mud.NewExit("_:500_s_indium_street", "s"),
 			mud.NewExit("_:platinum_gate", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 12",
+		name: "500 S Indium Street",
 		x:    -6,
 		y:    -5,
 		exits: []mud.Exit{
 			mud.NewExit("_:indium_and_platinum", "n"),
-			mud.NewExit("_:indium_street_13", "s"),
+			mud.NewExit("_:600_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 13",
+		name: "600 S Indium Street",
 		x:    -6,
 		y:    -6,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_12", "n"),
-			mud.NewExit("_:indium_street_14", "s"),
+			mud.NewExit("_:500_s_indium_street", "n"),
+			mud.NewExit("_:700_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 14",
+		name: "700 S Indium Street",
 		x:    -6,
 		y:    -7,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_13", "n"),
-			mud.NewExit("_:indium_street_15", "s"),
+			mud.NewExit("_:600_s_indium_street", "n"),
+			mud.NewExit("_:800_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 15",
+		name: "800 S Indium Street",
 		x:    -6,
 		y:    -8,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_14", "n"),
-			mud.NewExit("_:indium_street_16", "s"),
+			mud.NewExit("_:700_s_indium_street", "n"),
+			mud.NewExit("_:900_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 16",
+		name: "900 S Indium Street",
 		x:    -6,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_15", "n"),
-			mud.NewExit("_:rhenium_road_1", "e"),
-			mud.NewExit("_:indium_street_17", "s"),
+			mud.NewExit("_:800_s_indium_street", "n"),
+			mud.NewExit("_:500_w_rhenium_road", "e"),
+			mud.NewExit("_:1000_s_indium_street", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Indium Street 17",
+		name: "1000 S Indium Street",
 		x:    -6,
 		y:    -10,
 		exits: []mud.Exit{
-			mud.NewExit("_:indium_street_16", "n"),
+			mud.NewExit("_:900_s_indium_street", "n"),
 			mud.NewExit("_:indium_gate", "s"),
 		},
 	}))
@@ -592,90 +594,90 @@ func (world *worldSeed) streets() {
 	// Rhenium Street
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 1",
+		name: "500 W Rhenium Road",
 		x:    -5,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:rhenium_road_2", "e"),
-			mud.NewExit("_:indium_street_16", "w"),
+			mud.NewExit("_:400_w_rhenium_road", "e"),
+			mud.NewExit("_:900_s_indium_street", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 2",
+		name: "400 W Rhenium Road",
 		x:    -4,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:hafnium_street_1", "n"),
-			mud.NewExit("_:rhenium_road_3", "s"),
-			mud.NewExit("_:rhenium_road_1", "w"),
+			mud.NewExit("_:400_w_hafnium_street", "n"),
+			mud.NewExit("_:1000_s_rhenium_road", "s"),
+			mud.NewExit("_:500_w_rhenium_road", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 3",
+		name: "1000 S Rhenium Road",
 		x:    -4,
 		y:    -10,
 		exits: []mud.Exit{
-			mud.NewExit("_:rhenium_road_2", "n"),
-			mud.NewExit("_:rhenium_road_4", "e"),
+			mud.NewExit("_:400_w_rhenium_road", "n"),
+			mud.NewExit("_:300_w_rhenium_road", "e"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 4",
+		name: "300 W Rhenium Road",
 		x:    -3,
 		y:    -10,
 		exits: []mud.Exit{
-			mud.NewExit("_:rhenium_road_5", "e"),
-			mud.NewExit("_:rhenium_road_3", "w"),
+			mud.NewExit("_:200_w_rhenium_road", "e"),
+			mud.NewExit("_:1000_s_rhenium_road", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 5",
+		name: "200 W Rhenium Road",
 		x:    -2,
 		y:    -10,
 		exits: []mud.Exit{
-			mud.NewExit("_:rhenium_road_6", "e"),
-			mud.NewExit("_:rhenium_road_4", "w"),
+			mud.NewExit("_:100_w_rhenium_road", "e"),
+			mud.NewExit("_:300_w_rhenium_road", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Rhenium Road 6",
+		name: "100 W Rhenium Road",
 		x:    -1,
 		y:    -10,
 		exits: []mud.Exit{
 			mud.NewExit("_:1000_s_central_street", "e"),
-			mud.NewExit("_:rhenium_road_4", "w"),
+			mud.NewExit("_:200_w_rhenium_road", "w"),
 		},
 	}))
 
 	// Hafnium Avenue
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Hafnium Avenue 1",
+		name: "400 W Hafnium Avenue",
 		x:    -4,
 		y:    -8,
 		exits: []mud.Exit{
-			mud.NewExit("_:hafnium_avenue_2", "e"),
-			mud.NewExit("_:rhenium_road_2", "s"),
+			mud.NewExit("_:300_w_hafnium_avenue", "e"),
+			mud.NewExit("_:400_w_rhenium_road", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Hafnium Avenue 2",
+		name: "300 W Hafnium Avenue",
 		x:    -3,
 		y:    -8,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_and_hafnium", "e"),
-			mud.NewExit("_:hafnium_avenue_1", "w"),
+			mud.NewExit("_:400_w_hafnium_avenue", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Hafnium Avenue 4",
+		name: "100 W Hafnium Avenue",
 		x:    -1,
 		y:    -8,
 		exits: []mud.Exit{
@@ -687,43 +689,85 @@ func (world *worldSeed) streets() {
 	// Iron Way
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Iron Way 1",
+		name: "100 E Iron Way",
 		x:    1,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:iron_way_2", "e"),
+			mud.NewExit("_:200_e_iron_way", "e"),
 			mud.NewExit("_:900_s_central_street", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Iron Way 2",
+		name: "200 E Iron Way",
 		x:    2,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:iron_way_3", "e"),
-			mud.NewExit("_:iron_way_1", "w"),
+			mud.NewExit("_:300_e_iron_way", "e"),
+			mud.NewExit("_:100_e_iron_way", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Iron Way 3",
+		name: "300 E Iron Way",
 		x:    3,
 		y:    -9,
 		exits: []mud.Exit{
-			mud.NewExit("_:ruthenium_road_16", "n"),
-			mud.NewExit("_:iron_way_4", "e"),
-			mud.NewExit("_:iron_way_2", "w"),
+			mud.NewExit("_:800_s_ruthenium_road", "n"),
+			mud.NewExit("_:400_e_iron_way", "e"),
+			mud.NewExit("_:200_e_iron_way", "w"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newStreet(quickRoom{
-		name: "Iron Way 4",
+		name: "400 E Iron Way",
 		x:    4,
 		y:    -9,
 		exits: []mud.Exit{
 			mud.NewExit("_:ruthenium_gate", "e"),
-			mud.NewExit("_:iron_way_3", "w"),
+			mud.NewExit("_:300_e_iron_way", "w"),
+		},
+	}))
+
+	// Platinum Street
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "500 W Platinum Street",
+		x:    -5,
+		y:    -4,
+		exits: []mud.Exit{
+			mud.NewExit("_:400_w_platinum_way", "e"),
+			mud.NewExit("_:indium_and_platinum", "w"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "400 W Platinum Street",
+		x:    -4,
+		y:    -4,
+		exits: []mud.Exit{
+			mud.NewExit("_:500_s_platinum_way", "s"),
+			mud.NewExit("_:500_w_platinum_way", "w"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "500 S Platinum Street",
+		x:    -4,
+		y:    -5,
+		exits: []mud.Exit{
+			mud.NewExit("_:400_w_platinum_way", "n"),
+			mud.NewExit("_:platinum_well", "e"),
+		},
+	}))
+
+	world.Rooms = append(world.Rooms, newStreet(quickRoom{
+		name: "100 W Platinum Street",
+		x:    -1,
+		y:    -5,
+		exits: []mud.Exit{
+			mud.NewExit("_:iridium_and_platinum", "w"),
+			mud.NewExit("_:500_s_central_street", "e"),
 		},
 	}))
 }

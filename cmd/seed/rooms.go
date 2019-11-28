@@ -269,10 +269,14 @@ func (world *worldSeed) wells() {
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name:    "Well 4",
+		name:    "Platinum Well",
 		x:       -2,
 		y:       -5,
 		terrain: "_:t_poi",
+		exits: []mud.Exit{
+			mud.NewExit("_:iridium_and_platinum", "e"),
+			mud.NewExit("_:500_s_platinum_street", "w"),
+		},
 	}))
 }
 
