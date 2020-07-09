@@ -25,7 +25,7 @@ func (world *worldSeed) commonBuildings() {
 		exits: []mud.Exit{
 			mud.NewExit("_:central_courtyard_nw", "s"),
 		},
-		mobs: []mud.Mob{mud.Mob{UID: "_:erik"}},
+		mobs: []mud.Mob{{UID: "_:erik"}},
 	}))
 }
 

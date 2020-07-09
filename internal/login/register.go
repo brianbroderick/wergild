@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/logit"
 	"github.com/dgraph-io/dgo/v200/protos/api"
 )
 
@@ -98,7 +99,7 @@ func saveUser(c *agora.DgraphConn, u User) (User, error) {
 
 func UpdateUser(u User) {
 	if u.UID == "" {
-		fmt.Println("Didn't find UID to update User: ", u.Name)
+		logit.Info("Didn't find UID to update User: ", u.Name)
 		return
 	}
 

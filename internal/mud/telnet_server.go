@@ -1,10 +1,10 @@
 package mud
 
 import (
-	"fmt"
 	"net"
 	"time"
 
+	"github.com/brianbroderick/logit"
 	"github.com/brianbroderick/wergild/internal/login"
 )
 
@@ -18,7 +18,7 @@ func (server *Server) AddConnection(connection net.Conn) {
 	newConnection := Connection{conn: connection, timeConnected: time.Now(), user: login.User{}}
 	go newConnection.listen()
 
-	fmt.Println("[CONN] Received")
+	logit.Info("[CONN] Received")
 }
 
 func (server *Server) onPlayerAuthenticated(connection *Connection) {
@@ -47,7 +47,7 @@ func (server *Server) onPlayerAuthenticated(connection *Connection) {
 	server.mobs[name] = &m
 	server.users[name] = &m
 	connection.state = STATE_PLAYING
-	fmt.Printf("[AUTH] There are %d connected sessions.\n", server.usersCount())
+	logit.Info("[AUTH] There are %d connected sessions.\n", server.usersCount())
 
 	server.onCommandReceived(connection, "look")
 	WorldInstance.roomList[roomUID].enterRoom(&m)
@@ -83,7 +83,7 @@ func (server *Server) onClientConnectionClosed(connnection *Connection, err erro
 	connnection.conn.Close()
 	delete(server.mobs, connnection.user.Name)
 	delete(server.users, connnection.user.Name)
-	fmt.Printf("[DISC] There are %d connected sessions.\n", server.usersCount())
+	logit.Info("[DISC] There are %d connected sessions.\n", server.usersCount())
 }
 
 func (server *Server) usersCount() int {
@@ -91,7 +91,7 @@ func (server *Server) usersCount() int {
 }
 
 func (server *Server) Start() {
-	fmt.Println("[SERVER] Ticker Started")
+	logit.Info("[SERVER] Ticker Started")
 	server.ticker = time.NewTicker(time.Millisecond * 8000)
 
 	go func() {

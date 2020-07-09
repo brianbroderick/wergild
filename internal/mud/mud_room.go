@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/logit"
 )
 
 /**
@@ -155,6 +156,9 @@ func queryAllRooms() []Room {
 	}
 
 	rooms := r.Rooms
+	if len(r.Rooms) == 0 {
+		return []Room{}
+	}
 	// Populate ExitMap
 	for i, room := range rooms {
 		if rooms[i].ExitMap == nil {
@@ -162,8 +166,13 @@ func queryAllRooms() []Room {
 		}
 
 		for _, e := range room.Exits {
-			rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
+			if len(e.Dest) > 0 {
+				rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
+			} else {
+				logit.Info("Did not find exit destination for room %d", i)
+			}
 		}
+
 	}
 	return rooms
 }

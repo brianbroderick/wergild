@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"net"
 	"os"
 
+	"github.com/brianbroderick/logit"
 	"github.com/brianbroderick/wergild/internal/mud"
 )
 
@@ -35,7 +35,7 @@ func listenForConnections(listener *net.TCPListener) {
 
 func checkError(err error) {
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
+		logit.Fatal("Fatal error: %s", err.Error())
 		os.Exit(1)
 	}
 }
