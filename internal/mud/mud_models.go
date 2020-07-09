@@ -81,27 +81,13 @@ type Mob struct {
 	Rank          string         `json:"mobRank,omitempty"`
 	Desc          string         `json:"mobDesc,omitempty"`
 	Slug          string         `json:"mobSlug,omitempty"`
-	Age           int            `json:"age,omitempty"`
-	Lang          string         `json:"lang,omitempty"`
-	Gender        string         `json:"gender,omitempty"`
 	Level         int            `json:"level,omitempty"`
 	Exp           int            `json:"exp,omitempty"`
 	Coins         int            `json:"coins,omitempty"`
-	BankCoins     int            `json:"bankCoins,omitempty"`
 	Hp            int            `json:"hp,omitempty"`
 	HpMax         int            `json:"hpMax,omitempty"`
 	Ap            int            `json:"ap,omitempty"`
 	ApMax         int            `json:"apMax,omitempty"`
-	Wimpy         int            `json:"wimpy,omitempty"`
-	WimpyDir      string         `json:"wimpyDir,omitempty"`
-	Encumb        int            `json:"encumb,omitempty"`
-	Sober         int            `json:"sober,omitempty"`
-	Thirst        int            `json:"thirst,omitempty"`
-	Hunger        int            `json:"hunger,omitempty"`
-	Poison        int            `json:"poison,omitempty"`
-	Defend        string         `json:"defend,omitempty"`
-	Aim           string         `json:"aim,omitempty"`
-	Attack        string         `json:"attack,omitempty"`
 	Str           int            `json:"str,omitempty"`
 	Agl           int            `json:"agl,omitempty"`
 	Intl          int            `json:"intl,omitempty"`
