@@ -1,8 +1,9 @@
 package mud
 
 import (
-	"fmt"
 	"io/ioutil"
+
+	"github.com/brianbroderick/logit"
 )
 
 var (
@@ -35,7 +36,7 @@ func (world *World) BuildWorld() {
 	}
 
 	// 3. Load in the rooms
-	fmt.Println("[CONFIG] Loading rooms")
+	logit.Info("[CONFIG] Loading rooms")
 	world.roomList = loadRooms()
 }
 

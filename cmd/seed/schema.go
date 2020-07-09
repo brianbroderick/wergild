@@ -59,7 +59,7 @@ func schemaString() string {
 		portal:    string # is there a door?
 	}
 
-	dest: uid  .
+	dest: [uid]  .
 	direction: string @index(exact) .
 	portal: string .
 		
