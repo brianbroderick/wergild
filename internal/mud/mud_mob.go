@@ -12,11 +12,9 @@ import (
 func queryMob(slug string) (Mob, error) {
 	query := `query Mob($slug: string){
 		mobs(first:1, func: eq(mobSlug, $slug)) {
-			uid mobName mobDesc mobSlug mobTitle mobRank age lang gender 
-			level exp coins bankCoins 
-			hp hpMax ap apMax wimpy wimpyDir 
-			encumb sober thirst hunger poison 
-			defend aim attack 
+			uid mobName mobDesc mobSlug mobTitle mobRank 
+			level exp coins 
+			hp hpMax ap apMax 
 			str agl intl tgh per 
 			user { userName }
 		}
@@ -133,7 +131,6 @@ func NewMob() Mob {
 		UID:   "_:mob",
 		Type:  "Mob",
 		Title: "the utter novice",
-		Lang:  "common",
 		Level: 1,
 		Hp:    50,
 		HpMax: 50,
