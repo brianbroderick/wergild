@@ -20,6 +20,8 @@ func (world *worldSeed) commonBuildings() {
 			"Hot embers glow in the forge.",
 			"Orange and red flames flicker causing shadows to dance around the room."},
 		region: "_:region_blacksmith",
+		smell:  "A stong oil smell permeates the room.",
+		listen: "Clanking of tools hitting metal surrounds you.",
 		exits: []mud.Exit{
 			mud.NewExit("_:central_courtyard_nw", "s"),
 		},
@@ -29,81 +31,99 @@ func (world *worldSeed) commonBuildings() {
 
 func (world *worldSeed) gates() {
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Iridium Gate",
-		desc: "Iridium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		x:    -4,
-		y:    6,
+		name:   "Iridium Gate",
+		desc:   "Iridium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      -4,
+		y:      6,
 		exits: []mud.Exit{
 			mud.NewExit("_:iridium_and_rhodium", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Rhodium Gate",
-		desc: "Rhodium Gate is an impressive silvery-white walled portal between Forwell and the world beyond. An iron portcullis is closed preventing people from passing through.",
-		x:    1,
-		y:    6,
+		name:   "Rhodium Gate",
+		desc:   "Rhodium Gate is an impressive silvery-white walled portal between Forwell and the world beyond. An iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      1,
+		y:      6,
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Palladium Gate",
-		desc: "Palladium Gate consists of gleaming silvery-white walls. When it's open, its a portal between Forwell and the world beyond. Unfortunately, the iron portcullis is closed preventing people from passing through.",
-		x:    6,
-		y:    0,
+		name:   "Palladium Gate",
+		desc:   "Palladium Gate consists of gleaming silvery-white walls. When it's open, its a portal between Forwell and the world beyond. Unfortunately, the iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      6,
+		y:      0,
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Tungston Gate",
-		desc: "Tungston Gate is an impressive portal between Forwell and the world beyond. Though the walls are naturally gray, they are covered in lustrous green, yellow, and violet paint. The iron portcullis is closed preventing people from passing through.",
-		x:    6,
-		y:    -6,
+		name:   "Tungston Gate",
+		desc:   "Tungston Gate is an impressive portal between Forwell and the world beyond. Though the walls are naturally gray, they are covered in lustrous green, yellow, and violet paint. The iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      6,
+		y:      -6,
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Ruthenium Gate",
-		desc: "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		x:    5,
-		y:    -9,
+		name:   "Ruthenium Gate",
+		desc:   "Ruthenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      5,
+		y:      -9,
 		exits: []mud.Exit{
 			mud.NewExit("_:500_n_ruthenium_road", "s"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Rhenium Gate",
-		desc: "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
-		x:    0,
-		y:    -11,
+		name:   "Rhenium Gate",
+		desc:   "Rhenium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-gray. The iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      0,
+		y:      -11,
 		exits: []mud.Exit{
 			mud.NewExit("_:1000_s_central_street", "n"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Indium Gate",
-		desc: "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
-		x:    -6,
-		y:    -11,
+		name:   "Indium Gate",
+		desc:   "Indium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white. The iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      -6,
+		y:      -11,
 		exits: []mud.Exit{
 			mud.NewExit("_:indium_street_16", "n"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Platinum Gate",
-		desc: "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
-		x:    -7,
-		y:    -4,
+		name:   "Platinum Gate",
+		desc:   "Platinum Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      -7,
+		y:      -4,
 		exits: []mud.Exit{
 			mud.NewExit("_:indium_and_platinum", "e"),
 		},
 	}))
 
 	world.Rooms = append(world.Rooms, newRoom(quickRoom{
-		name: "Scandium Gate",
-		desc: "Scandium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
-		x:    -7,
-		y:    1,
+		name:   "Scandium Gate",
+		desc:   "Scandium Gate is an impressive portal between Forwell and the world beyond. The walls are painted silvery-white though the iron portcullis is closed preventing people from passing through.",
+		listen: "A constant white noise of people going about their day can be heard",
+		smell:  "Random scents of the city drift past your nose",
+		x:      -7,
+		y:      1,
 		exits: []mud.Exit{
 			mud.NewExit("_:indium_and_scandium", "e"),
 		},

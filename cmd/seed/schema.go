@@ -11,7 +11,7 @@ func schemaString() string {
 	}
 
 	partOf: uid @reverse .
-	regionName: string @index(exact) . # world, building, dungeon, etc
+	regionName: string @index(exact) . 
 
 	type Room {
 		region: Region
@@ -33,6 +33,12 @@ func schemaString() string {
 		mobs: [Mob]
 	}
 
+	roomName: string .
+	roomDesc: string .
+	roomListen: string .
+	roomSmell: string .
+	lightLevel: int .
+
 	region: uid @reverse .
 	coorX: int @index(int) .
 	coorY: int @index(int) .
@@ -53,7 +59,9 @@ func schemaString() string {
 		portal:    string # is there a door?
 	}
 
+	dest: uid  .
 	direction: string @index(exact) .
+	portal: string .
 		
 	type PointOfInterest {
 		poiName: string
@@ -65,10 +73,17 @@ func schemaString() string {
 	}	
 
 	poiName: string @index(fulltext) .
+	poiDesc: string .
+	poiListen: string .
+	poiSmell: string .
+	poiTouch: string .
+	search: [uid] .
 
 	type Terrain {
 		terrainName: string
 	}
+
+	terrainName: string .
 
 	type User {
 		userName: string
@@ -79,6 +94,7 @@ func schemaString() string {
 	userName: string @index(exact) @upsert .
 	pass: password .
 	mob: uid @reverse .
+	email: string .
 
 	type Mob {
 		user: User
@@ -87,27 +103,13 @@ func schemaString() string {
 		mobSlug: string
 		mobTitle: string # prince, duke
 		mobRank: string # the bold, the brave, etc
-		age: int 
-		lang: string
-		gender: string
 		level: int 
 		exp: int 
 		coins: int 
-		bankCoins: int 
 		hp: int
 		hpMax: int
 		ap: int
 		apMax: int
-		wimpy: int
-		wimpyDir: string
-		encumb: int
-		sober: int
-		thirst: int
-		hunger: int
-		poison: int
-		defend: string
-		aim: string
-		attack: string
 		str: int
 		agl: int
 		intl: int
@@ -117,10 +119,25 @@ func schemaString() string {
 		items: [Item]
 		conversations: [Conversation]
 	}
+
+	mobName: string .
+	mobDesc: string .
+	mobSlug: string .
+	mobTitle: string .
+	mobRank: string .
+	hp: int .
+	hpMax: int .
+	ap: int .
+	apMax: int .
+	str: int .
+	agl: int .
+	intl: int .
+	tgh: int .
+	per: int .
+	conversations: [uid] .
 	
 	user: uid @reverse .
 	mobSlug: string @index(exact) @upsert . 
-	age: int @index(int) .
 	level: int @index(int) .
 	exp: int @index(int) .
 	coins: int @index(int) .
@@ -131,6 +148,9 @@ func schemaString() string {
 		trigger: string 
 		say:     string 
 	}
+
+	trigger: string .
+	say: string .
 
 	type Item {
 		itemHash: string
@@ -146,6 +166,12 @@ func schemaString() string {
 
 	itemName: string @index(fulltext) .
 	itemHash: string @index(exact) @upsert . 
+	itemDesc: string .
+	itemListen: string .
+	itemSmell: string .
+	itemTouch: string .
+	coinValue: int .
+	weight: int .
 
 	type mobClass {
 		className: string

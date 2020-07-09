@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/brianbroderick/agora"
-	"github.com/brianbroderick/dgo/v2/protos/api"
+	"github.com/dgraph-io/dgo/v200/protos/api"
 )
 
 func CreateUser(name string, pass string) (User, error) {

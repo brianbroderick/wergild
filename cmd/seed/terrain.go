@@ -35,6 +35,11 @@ func (world *worldSeed) setTerrain() {
 			Type: "Terrain",
 		},
 		mud.Terrain{
+			UID:  "_:t_jungle",
+			Name: "Jungle",
+			Type: "Terrain",
+		},
+		mud.Terrain{
 			UID:  "_:t_poi",
 			Name: "Point of Interest",
 			Type: "Terrain",

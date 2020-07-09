@@ -12,7 +12,7 @@ import (
 func reloadData() {
 	agora.DropAll()
 	agora.SetSchema(schemaString())
-	loadSeed()
+	// loadSeed()
 }
 
 type worldSeed struct {
