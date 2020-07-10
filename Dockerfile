@@ -1,6 +1,6 @@
 FROM golang:1.13-alpine as builder
 RUN apk update && apk upgrade && \
-    apk add --no-cache git openssh
+  apk add --no-cache git openssh
 
 WORKDIR /go/src/github.com/brianbroderick/wergild
 COPY go.mod .
@@ -21,4 +21,4 @@ COPY --from=builder /go/src/github.com/brianbroderick/wergild/cmd/wergild/welcom
 COPY --from=builder /go/bin/wergild .
 
 EXPOSE 2222
-CMD ["./wergild"]
+# CMD ["./wergild"]

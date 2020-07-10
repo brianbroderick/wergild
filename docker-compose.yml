@@ -6,7 +6,14 @@
 # Run `docker-compose up` to start Dgraph.
 
 version: "3.2"
-services:       
+services:   
+  wergild:
+    build: .
+    environment:
+      DGRAPH_HOST: alpha:9080
+    ports: 
+      - 2222:2222 
+    command: ./wergild   
   zero:
     image: dgraph/dgraph:latest
     volumes:
