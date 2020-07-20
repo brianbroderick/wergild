@@ -34,6 +34,8 @@ func (s *Scanner) Scan() (tok Token, pos Pos, lit string) {
 	} else if isLetter(ch0) || ch0 == '_' {
 		s.r.unread()
 		return s.scanIdent(true)
+	} else if ch0 == '\'' || ch0 == ':' {
+
 	} else if isDigit(ch0) {
 		return s.scanNumber()
 	}

@@ -1,6 +1,8 @@
 package mud
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var Language = &ParseTree{}
 
