@@ -86,6 +86,72 @@ func TestParser_ParseStatement(t *testing.T) {
 			p:   "SAY",
 		},
 
+		{
+			s:   "tell brian hi there",
+			obj: &TellStatement{Token: SENTENCE, Object: "brian", Sentence: "hi there"},
+			p:   "TELL",
+		},
+
+		{
+			s:   "tell brian watch out!",
+			obj: &TellStatement{Token: EXCLAIM, Object: "brian", Sentence: "watch out!"},
+			p:   "TELL",
+		},
+
+		{
+			s:   "tell brian going my way?",
+			obj: &TellStatement{Token: QUESTION, Object: "brian", Sentence: "going my way?"},
+			p:   "TELL",
+		},
+
+		{
+			s:   "tell brian hi",
+			obj: &TellStatement{Token: SENTENCE, Object: "brian", Sentence: "hi"},
+			p:   "TELL",
+		},
+
+		{
+			s:   "tell brian hi!",
+			obj: &TellStatement{Token: EXCLAIM, Object: "brian", Sentence: "hi!"},
+			p:   "TELL",
+		},
+
+		{
+			s:   "shout hello everyone",
+			obj: &ShoutStatement{Token: SENTENCE, Sentence: "hello everyone"},
+			p:   "SHOUT",
+		},
+
+		{
+			s:   "shout The world is full of darkness!",
+			obj: &ShoutStatement{Token: EXCLAIM, Sentence: "The world is full of darkness!"},
+			p:   "SHOUT",
+		},
+
+		{
+			s:   "shout Where is everyone?",
+			obj: &ShoutStatement{Token: QUESTION, Sentence: "Where is everyone?"},
+			p:   "SHOUT",
+		},
+
+		{
+			s:   "emote stared at the roses.",
+			obj: &EmoteStatement{Token: SENTENCE, Sentence: "stared at the roses."},
+			p:   "EMOTE",
+		},
+
+		{
+			s:   "emote wonders, where are you?",
+			obj: &EmoteStatement{Token: QUESTION, Sentence: "wonders, where are you?"},
+			p:   "EMOTE",
+		},
+
+		{
+			s:   "emote thinks, I exist!",
+			obj: &EmoteStatement{Token: EXCLAIM, Sentence: "thinks, I exist!"},
+			p:   "EMOTE",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,

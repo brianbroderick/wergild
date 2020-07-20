@@ -63,9 +63,9 @@ func (p *Parser) parseSayStatement() (*SayStatement, error) {
 
 // TellStatement allows you to converse with others in the same room
 type TellStatement struct {
-	sentence string
-	token    Token
-	object   string // mob telling something to
+	Sentence string
+	Token    Token
+	Object   string // mob telling something to
 }
 
 // TODO: Finish writing options
@@ -76,6 +76,10 @@ func (s *TellStatement) String() string {
 	return buf.String()
 }
 
+func (s *TellStatement) KeyTok() Token {
+	return TELL
+}
+
 // parseTellStatement parses a look command and returns a Statement AST object.
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseTellStatement() (*TellStatement, error) {
@@ -83,12 +87,12 @@ func (p *Parser) parseTellStatement() (*TellStatement, error) {
 	tok, _, lit := p.ScanIgnoreWhitespace()
 	switch tok {
 	case IDENT:
-		stmt.object = lit
+		stmt.Object = lit
 	case EOF:
 		return stmt, nil
 	}
 
-	stmt.token, _, stmt.sentence = p.ScanSentence()
+	stmt.Token, _, stmt.Sentence = p.ScanSentence()
 
 	return stmt, nil
 }
@@ -99,8 +103,8 @@ func (p *Parser) parseTellStatement() (*TellStatement, error) {
 
 // ShoutStatement allows you to converse with others in the same room
 type ShoutStatement struct {
-	sentence string
-	token    Token
+	Sentence string
+	Token    Token
 }
 
 // TODO: Finish writing options
@@ -111,11 +115,15 @@ func (s *ShoutStatement) String() string {
 	return buf.String()
 }
 
+func (s *ShoutStatement) KeyTok() Token {
+	return SHOUT
+}
+
 // parseShoutStatement parses a look command and returns a Statement AST object.
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseShoutStatement() (*ShoutStatement, error) {
 	stmt := &ShoutStatement{}
-	stmt.token, _, stmt.sentence = p.ScanSentence()
+	stmt.Token, _, stmt.Sentence = p.ScanSentence()
 
 	return stmt, nil
 }
@@ -126,8 +134,8 @@ func (p *Parser) parseShoutStatement() (*ShoutStatement, error) {
 
 // EmoteStatement allows you to converse with others in the same room
 type EmoteStatement struct {
-	sentence string
-	token    Token
+	Sentence string
+	Token    Token
 }
 
 // TODO: Finish writing options
@@ -138,11 +146,15 @@ func (s *EmoteStatement) String() string {
 	return buf.String()
 }
 
+func (s *EmoteStatement) KeyTok() Token {
+	return EMOTE
+}
+
 // parseEmoteStatement parses a look command and returns a Statement AST object.
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseEmoteStatement() (*EmoteStatement, error) {
 	stmt := &EmoteStatement{}
-	stmt.token, _, stmt.sentence = p.ScanSentence()
+	stmt.Token, _, stmt.Sentence = p.ScanSentence()
 
 	return stmt, nil
 }

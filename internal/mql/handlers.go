@@ -20,6 +20,18 @@ func init() {
 	Language.Handle(SAY, func(p *Parser) (Statement, error) {
 		return p.parseSayStatement()
 	})
+
+	Language.Handle(TELL, func(p *Parser) (Statement, error) {
+		return p.parseTellStatement()
+	})
+
+	Language.Handle(SHOUT, func(p *Parser) (Statement, error) {
+		return p.parseShoutStatement()
+	})
+
+	Language.Handle(EMOTE, func(p *Parser) (Statement, error) {
+		return p.parseEmoteStatement()
+	})
 }
 
 // Handle registers a handler to be invoked when seeing the given token.
