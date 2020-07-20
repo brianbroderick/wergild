@@ -75,31 +75,31 @@ func (s *Scanner) ScanSentence() (tok Token, pos Pos, lit string) {
 
 	str := strings.TrimSpace(buf.String())
 
-	// if len(str) == 0 {
-	return SENTENCE, pos, str
-	// }
+	if len(str) == 0 {
+		return SENTENCE, pos, str
+	}
 
-	// cPos := pos.Char
-	// // Find last non whitespace run.
-	// // ? == QUESTION
-	// // ! == EXCLAIM
-	// for {
-	// 	cPos--
-	// 	if cPos <= 0 {
-	// 		return SENTENCE, pos, str
-	// 	}
+	cPos := pos.Char
+	// Find last non whitespace run.
+	// ? == QUESTION
+	// ! == EXCLAIM
+	for {
+		cPos--
+		if cPos <= 0 {
+			return SENTENCE, pos, str
+		}
 
-	// 	s.unread()
-	// 	ch, pos = s.curr()
-	// 	switch {
-	// 	case ch == '!':
-	// 		return EXCLAIM, pos, str
-	// 	case ch == '?':
-	// 		return QUESTION, pos, str
-	// 	case isIdentChar(ch):
-	// 		return SENTENCE, pos, str
-	// 	}
-	// }
+		s.unread()
+		ch, pos = s.curr()
+		switch {
+		case ch == '!':
+			return EXCLAIM, pos, str
+		case ch == '?':
+			return QUESTION, pos, str
+		case isIdentChar(ch):
+			return SENTENCE, pos, str
+		}
+	}
 }
 
 // curr returns the last read character and position.

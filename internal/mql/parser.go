@@ -102,11 +102,25 @@ func (p *Parser) ScanIgnoreWhitespace() (tok Token, pos Pos, lit string) {
 
 // UnscanIgnoreWhitespace backs up to the previous non-whitespace token.
 func (p *Parser) UnscanIgnoreWhitespace() (tok Token, pos Pos, lit string) {
-	tok, pos, lit = p.t.Curr()
+	return p.UnscanIgnore(WS)
+}
 
+// UnscanTo backs up to the first occurance of the Token in question.
+func (p *Parser) UnscanIgnore(ignore Token) (tok Token, pos Pos, lit string) {
 	for {
 		tok, pos, lit = p.UnscanAndReturn()
-		if tok == WS {
+		if tok == ignore {
+			continue
+		}
+		return tok, pos, lit
+	}
+}
+
+// UnscanTo backs up to the first occurance of the Token in question.
+func (p *Parser) UnscanTo(stop Token) (tok Token, pos Pos, lit string) {
+	for {
+		tok, pos, lit = p.UnscanAndReturn()
+		if tok != stop {
 			continue
 		}
 		return tok, pos, lit
@@ -121,15 +135,15 @@ func (p *Parser) UnscanAndReturn() (tok Token, pos Pos, lit string) { return p.t
 func (p *Parser) ScanSentence() (tok Token, pos Pos, lit string) {
 	var words []string
 	for p.t.n > 0 {
-		_, _, lit = p.ScanIgnoreWhitespace()
+		tok, _, lit = p.Scan()
 		words = append(words, lit)
 	}
 	tok, pos, lit = p.t.s.ScanSentence()
-	if lit != "" {
-		words = append(words, lit)
-	}
+	// if lit != "" {
+	// 	words = append(words, lit)
+	// }
 
-	return tok, pos, strings.Join(words, " ")
+	return tok, pos, strings.Join(words, " ") + lit
 }
 
 // Unscan pushes the previously token back onto the underlying buffer.

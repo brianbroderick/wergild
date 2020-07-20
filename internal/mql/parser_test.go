@@ -51,20 +51,38 @@ func TestParser_ParseStatement(t *testing.T) {
 		},
 
 		{
-			s:   "say hi",
-			obj: &SayStatement{Token: SENTENCE, Sentence: "hi"},
-			p:   "SAY",
-		},
-
-		{
 			s:   "say hi there",
 			obj: &SayStatement{Token: SENTENCE, Sentence: "hi there"},
 			p:   "SAY",
 		},
 
 		{
+			s:   "say hi",
+			obj: &SayStatement{Token: SENTENCE, Sentence: "hi"},
+			p:   "SAY",
+		},
+
+		{
 			s:   "say to brian hi there",
 			obj: &SayStatement{Token: SENTENCE, Sentence: "hi there", Object: "brian"},
+			p:   "SAY",
+		},
+
+		{
+			s:   "say How are you?",
+			obj: &SayStatement{Token: QUESTION, Sentence: "How are you?"},
+			p:   "SAY",
+		},
+
+		{
+			s:   "say I am doing fine!",
+			obj: &SayStatement{Token: EXCLAIM, Sentence: "I am doing fine!"},
+			p:   "SAY",
+		},
+
+		{
+			s:   "say I'm doing fine!",
+			obj: &SayStatement{Token: EXCLAIM, Sentence: "I'm doing fine!"},
 			p:   "SAY",
 		},
 

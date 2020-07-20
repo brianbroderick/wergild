@@ -32,18 +32,27 @@ func (s *SayStatement) KeyTok() Token {
 func (p *Parser) parseSayStatement() (*SayStatement, error) {
 	stmt := &SayStatement{}
 
-	tok, _, _ := p.ScanIgnoreWhitespace()
+	tok, _, lit := p.ScanIgnoreWhitespace()
 	if tok == TO {
 		obj, err := p.ParseIdent()
 		if err != nil {
 			return nil, err
 		}
 		stmt.Object = obj
-	} else {
-		p.UnscanIgnoreWhitespace()
 	}
 
 	stmt.Token, _, stmt.Sentence = p.ScanSentence()
+
+	// Add first token back
+	if tok != TO {
+		if len(stmt.Sentence) > 0 && stmt.Sentence[0] == '\'' {
+			stmt.Sentence = lit + stmt.Sentence
+		} else if len(stmt.Sentence) == 0 {
+			stmt.Sentence = lit
+		} else {
+			stmt.Sentence = lit + " " + stmt.Sentence
+		}
+	}
 
 	return stmt, nil
 }
