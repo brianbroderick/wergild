@@ -158,6 +158,18 @@ func TestParser_ParseStatement(t *testing.T) {
 			p:   "NORTH",
 		},
 
+		{
+			s:   "laugh",
+			obj: &FeelingStatement{Ident: "laugh"},
+			p:   "laugh",
+		},
+
+		{
+			s:   "laugh at steve",
+			obj: &FeelingStatement{Ident: "laugh", Object: "steve"},
+			p:   "laugh",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,

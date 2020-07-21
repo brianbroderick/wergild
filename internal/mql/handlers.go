@@ -12,6 +12,11 @@ type ParseTree struct {
 }
 
 func init() {
+	// Catch all - usually represents feelings
+	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
+		return p.parseFeelingStatement()
+	})
+
 	// Look at stuff.
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
