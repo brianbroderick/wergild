@@ -12,16 +12,29 @@ type ParseTree struct {
 }
 
 func init() {
-	// Catch all - usually represents feelings
-	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
-		return p.parseFeelingStatement()
+	// Iterate INTEGER times over rest of the command
+	Language.Handle(INTEGER, func(p *Parser) (Statement, error) {
+		return p.parseLoopStatement()
 	})
 
-	// Look at stuff.
+	// Interact with the Environment
 	Language.Handle(LOOK, func(p *Parser) (Statement, error) {
 		return p.parseLookStatement()
 	})
 
+	Language.Handle(LISTEN, func(p *Parser) (Statement, error) {
+		return p.parseListenStatement()
+	})
+
+	Language.Handle(SMELL, func(p *Parser) (Statement, error) {
+		return p.parseSmellStatement()
+	})
+
+	Language.Handle(TOUCH, func(p *Parser) (Statement, error) {
+		return p.parseTouchStatement()
+	})
+
+	// Communicate
 	Language.Handle(SAY, func(p *Parser) (Statement, error) {
 		return p.parseSayStatement()
 	})
@@ -62,6 +75,21 @@ func init() {
 
 	Language.Handle(DOWN, func(p *Parser) (Statement, error) {
 		return p.parseDirectionStatement()
+	})
+
+	// Admin
+
+	Language.Handle(SCORE, func(p *Parser) (Statement, error) {
+		return p.parseScoreStatement()
+	})
+
+	Language.Handle(QUIT, func(p *Parser) (Statement, error) {
+		return p.parseQuitStatement()
+	})
+
+	// Catch all - usually represents feelings
+	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
+		return p.parseFeelingStatement()
 	})
 }
 

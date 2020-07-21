@@ -81,8 +81,8 @@ func (s *LookStatement) String() string {
 
 // ListenStatement represents a command for listening to a room or object.
 type ListenStatement struct {
-	ident string // object that is being listened to, ex: `clock` in `listen to clock`
-	token Token  // usually a direction. i.e. `north` in `listen north`
+	Ident string // object that is being listened to, ex: `clock` in `listen to clock`
+	Token Token  // usually a direction. i.e. `north` in `listen north`
 }
 
 // parseListenStatement parses a listen command and returns a Statement AST object.
@@ -96,23 +96,23 @@ func (p *Parser) parseListenStatement() (*ListenStatement, error) {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if tok == direction {
-			stmt.token = tok
+			stmt.Token = tok
 			return stmt, nil
 		}
 	}
 
 	switch tok {
 	case TO, IN:
-		stmt.token = tok
+		stmt.Token = tok
 	case EOF:
-		stmt.token = EOF
+		stmt.Token = EOF
 		return stmt, nil
 	default:
-		stmt.token = NIL
+		stmt.Token = NIL
 		return stmt, nil
 	}
 
-	stmt.ident, err = p.ParseIdent()
+	stmt.Ident, err = p.ParseIdent()
 	if err != nil {
 		return nil, err
 	}
@@ -130,17 +130,17 @@ func (s *ListenStatement) String() string {
 
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
-		if s.token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.token])
+		if s.Token == direction {
+			_, _ = buf.WriteString(" " + tokens[s.Token])
 		}
 	}
 
-	switch s.token {
+	switch s.Token {
 	case TO, IN:
-		_, _ = buf.WriteString(" " + tokens[s.token] + " ")
-		_, _ = buf.WriteString(s.ident)
+		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(s.Ident)
 	case NIL:
-		_, _ = buf.WriteString(s.ident)
+		_, _ = buf.WriteString(s.Ident)
 	}
 
 	return buf.String()
@@ -152,8 +152,8 @@ func (s *ListenStatement) String() string {
 
 // SmellStatement represents a command for smelling a room or object.
 type SmellStatement struct {
-	ident string // object that is being smelled, ex: `chair` in `smell chair`
-	token Token  // usually not used, but you might try to `smell north`
+	Ident string // object that is being smelled, ex: `chair` in `smell chair`
+	Token Token  // usually not used, but you might try to `smell north`
 }
 
 // parseSmellStatement parses a look command and returns a Statement AST object.
@@ -167,24 +167,24 @@ func (p *Parser) parseSmellStatement() (*SmellStatement, error) {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if tok == direction {
-			stmt.token = tok
+			stmt.Token = tok
 			return stmt, nil
 		}
 	}
 
 	switch tok {
 	case IN:
-		stmt.token = tok
+		stmt.Token = tok
 	case EOF:
-		stmt.token = EOF
+		stmt.Token = EOF
 		return stmt, nil
 	default:
-		stmt.token = NIL
-		stmt.ident = lit
+		stmt.Token = IDENT
+		stmt.Ident = lit
 		return stmt, nil
 	}
 
-	stmt.ident, err = p.ParseIdent()
+	stmt.Ident, err = p.ParseIdent()
 	if err != nil {
 		return nil, err
 	}
@@ -202,17 +202,17 @@ func (s *SmellStatement) String() string {
 
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
-		if s.token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.token])
+		if s.Token == direction {
+			_, _ = buf.WriteString(" " + tokens[s.Token])
 		}
 	}
 
-	switch s.token {
-	case AT, ON, IN:
-		_, _ = buf.WriteString(" " + tokens[s.token] + " ")
-		_, _ = buf.WriteString(s.ident)
-	case NIL:
-		_, _ = buf.WriteString(s.ident)
+	switch s.Token {
+	case IN:
+		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(s.Ident)
+	case IDENT:
+		_, _ = buf.WriteString(" " + s.Ident)
 	}
 
 	return buf.String()
@@ -224,8 +224,8 @@ func (s *SmellStatement) String() string {
 
 // TouchStatement represents a command for touching an object.
 type TouchStatement struct {
-	ident string // object that is being touched, ex: `chair` in `touch chair`
-	token Token  // usually not used, but you might try to `touch north`
+	Ident string // object that is being touched, ex: `chair` in `touch chair`
+	Token Token  // usually not used, but you might try to `touch north`
 }
 
 func (s *TouchStatement) KeyTok() Token {
@@ -238,24 +238,24 @@ func (s *TouchStatement) String() string {
 
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
-		if s.token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.token])
+		if s.Token == direction {
+			_, _ = buf.WriteString(" " + tokens[s.Token])
 		}
 	}
 
-	switch s.token {
+	switch s.Token {
 	case IN:
-		_, _ = buf.WriteString(" " + tokens[s.token] + " ")
-		_, _ = buf.WriteString(s.ident)
-	case NIL:
-		_, _ = buf.WriteString(s.ident)
+		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(s.Ident)
+	case IDENT:
+		_, _ = buf.WriteString(" " + s.Ident)
 	}
 
 	return buf.String()
 }
 
 // parseTouchStatement parses a look command and returns a Statement AST object.
-// This function assumes the Smell token has already been consumed.
+// This function assumes the Touch token has already been consumed.
 func (p *Parser) parseTouchStatement() (*TouchStatement, error) {
 	stmt := &TouchStatement{}
 	var err error
@@ -265,24 +265,24 @@ func (p *Parser) parseTouchStatement() (*TouchStatement, error) {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if tok == direction {
-			stmt.token = tok
+			stmt.Token = tok
 			return stmt, nil
 		}
 	}
 
 	switch tok {
 	case IN:
-		stmt.token = tok
+		stmt.Token = tok
 	case EOF:
-		stmt.token = EOF
+		stmt.Token = EOF
 		return stmt, nil
 	default:
-		stmt.token = NIL
-		stmt.ident = lit
+		stmt.Token = IDENT
+		stmt.Ident = lit
 		return stmt, nil
 	}
 
-	stmt.ident, err = p.ParseIdent()
+	stmt.Ident, err = p.ParseIdent()
 	if err != nil {
 		return nil, err
 	}

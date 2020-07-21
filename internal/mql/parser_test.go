@@ -12,7 +12,7 @@ func init() {
 	os.Setenv("PLATFORM_ENV", "test")
 }
 
-func TestParser_ParseStatement(t *testing.T) {
+func TestParserParseStatement(t *testing.T) {
 	var tests = []struct {
 		s   string
 		obj Statement
@@ -48,6 +48,66 @@ func TestParser_ParseStatement(t *testing.T) {
 			s:   `look up`,
 			obj: &LookStatement{Token: UP, Ident: ""},
 			p:   `LOOK UP`,
+		},
+
+		{
+			s:   `smell`,
+			obj: &SmellStatement{Token: EOF},
+			p:   `SMELL`,
+		},
+
+		{
+			s:   `smell north`,
+			obj: &SmellStatement{Token: NORTH},
+			p:   `SMELL NORTH`,
+		},
+
+		{
+			s:   `smell dog`,
+			obj: &SmellStatement{Token: IDENT, Ident: "dog"},
+			p:   `SMELL dog`,
+		},
+
+		{
+			s:   `listen`,
+			obj: &ListenStatement{Token: EOF},
+			p:   `LISTEN`,
+		},
+
+		{
+			s:   `listen south`,
+			obj: &ListenStatement{Token: SOUTH},
+			p:   `LISTEN SOUTH`,
+		},
+
+		{
+			s:   `listen to bob`,
+			obj: &ListenStatement{Token: TO, Ident: "bob"},
+			p:   `LISTEN TO bob`,
+		},
+
+		{
+			s:   `touch`,
+			obj: &TouchStatement{Token: EOF, Ident: ""},
+			p:   `TOUCH`,
+		},
+
+		{
+			s:   `touch bob`,
+			obj: &TouchStatement{Token: IDENT, Ident: "bob"},
+			p:   `TOUCH bob`,
+		},
+
+		{
+			s:   `touch in dresser`,
+			obj: &TouchStatement{Token: IN, Ident: "dresser"},
+			p:   `TOUCH IN dresser`,
+		},
+
+		{
+			s:   `touch west`,
+			obj: &TouchStatement{Token: WEST},
+			p:   `TOUCH WEST`,
 		},
 
 		{
@@ -170,6 +230,18 @@ func TestParser_ParseStatement(t *testing.T) {
 			p:   "laugh",
 		},
 
+		{
+			s:   "score",
+			obj: &ScoreStatement{},
+			p:   "SCORE",
+		},
+
+		{
+			s:   "quit",
+			obj: &QuitStatement{},
+			p:   "QUIT",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,
@@ -184,4 +256,13 @@ func TestParser_ParseStatement(t *testing.T) {
 		assert.Equal(t, tt.obj, obj)
 		assert.Equal(t, tt.p, tt.obj.String())
 	}
+}
+
+func TestParserLoop(t *testing.T) {
+	str := "10 look"
+	p := "10"
+
+	obj, err := NewParser(strings.NewReader(str)).ParseStatement()
+	assert.NoError(t, err)
+	assert.Equal(t, p, obj.String())
 }
