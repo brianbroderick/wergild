@@ -32,6 +32,32 @@ func init() {
 	Language.Handle(EMOTE, func(p *Parser) (Statement, error) {
 		return p.parseEmoteStatement()
 	})
+
+	// Directions
+
+	Language.Handle(NORTH, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(SOUTH, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(EAST, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(WEST, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(UP, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
+
+	Language.Handle(DOWN, func(p *Parser) (Statement, error) {
+		return p.parseDirectionStatement()
+	})
 }
 
 // Handle registers a handler to be invoked when seeing the given token.

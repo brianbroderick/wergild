@@ -18,6 +18,8 @@ const (
 	QUESTION
 	EXCLAIM
 
+	DIRECTION
+
 	literalBeg
 	// Literals
 	IDENT     // main
@@ -92,6 +94,8 @@ var tokens = [...]string{
 	SENTENCE: "SENTENCE",
 	QUESTION: "QUESTION",
 	EXCLAIM:  "EXCLAIM",
+
+	DIRECTION: "DIRECTION",
 
 	IDENT:     "IDENT",
 	NUMBER:    "NUMBER",

@@ -152,6 +152,12 @@ func TestParser_ParseStatement(t *testing.T) {
 			p:   "EMOTE",
 		},
 
+		{
+			s:   "north",
+			obj: &DirectionStatement{Token: NORTH},
+			p:   "NORTH",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,
