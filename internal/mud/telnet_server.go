@@ -70,7 +70,7 @@ func (server *Server) Command(k string) {
 			return
 		}
 
-		server.mobs[k].do(msg)
+		server.mobs[k].Do(msg)
 		server.mobs[k].sendPrompt()
 
 	default:

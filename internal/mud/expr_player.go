@@ -1,26 +1,11 @@
 package mud
 
-import "bytes"
-
 // ScoreStatement represents a command for looking at a room or object.
 type ScoreStatement struct {
 	mob *Mob
 }
 
-func (s *ScoreStatement) String() string {
-	var buf bytes.Buffer
-	_, _ = buf.WriteString("SCORE")
-
-	return buf.String()
-}
-
-// parseScoreStatement parses a look command and returns a Statement AST object.
-// This function assumes the Score token has already been consumed.
-func (p *Parser) parseScoreStatement() (*ScoreStatement, error) {
-	return &ScoreStatement{}, nil
-}
-
-func (s *ScoreStatement) execute() {
+func (s *ScoreStatement) Execute() {
 	s.mob.conn.Write(`Hamanu the Brave Warrior of the Black Bear (neutral)
 
 Str: 16 (16)    Race : Dwarf (male)          Exp    : 4,314,431
@@ -83,7 +68,3 @@ Dir  : Random      Hunted by: No one         You are: Unpoisoned
 // 	tghMod  int
 // 	wisMod  int
 // }
-
-func (s *ScoreStatement) setMob(mob *Mob) {
-	s.mob = mob
-}

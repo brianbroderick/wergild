@@ -25,7 +25,7 @@ func (s *DirectionStatement) KeyTok() Token {
 
 func (s *DirectionStatement) String() string {
 	var buf bytes.Buffer
-	_, _ = buf.WriteString(tokens[s.Token])
+	_, _ = buf.WriteString(Tokens[s.Token])
 
 	return buf.String()
 }

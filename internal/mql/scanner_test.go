@@ -82,7 +82,7 @@ func TestScanner(t *testing.T) {
 
 	for _, tt := range tests {
 		tok, _, lit := NewScanner(strings.NewReader(tt.s)).Scan()
-		assert.Equal(t, tokens[tt.tok], tokens[tok])
+		assert.Equal(t, Tokens[tt.tok], Tokens[tok])
 		assert.Equal(t, tt.lit, lit)
 	}
 }

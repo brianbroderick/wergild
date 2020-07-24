@@ -52,17 +52,6 @@ func (mob *Mob) sendPrompt() {
 	mob.myMessageToChannel(str)
 }
 
-func (mob *Mob) do(message string) {
-	stmt, err := NewParser(strings.NewReader(message)).ParseStatement()
-	if err != nil {
-		mob.conn.Write(fmt.Sprint(err) + "\n")
-		return
-	}
-
-	stmt.setMob(mob)
-	stmt.execute()
-}
-
 func (mob *Mob) pulseUpdate() {
 	currentRoom := WorldInstance.getRoom(mob.CurrentRoom)
 	currentRoom.showEnv(mob)
