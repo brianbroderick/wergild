@@ -13,16 +13,14 @@ import (
 
 // LookExpression represents a command for looking at a room or object.
 type LookExpression struct {
-	stmt  *mql.LookStatement
-	mob   *Mob
-	ident string    // object that is being looked at, ex: `chair` in `look at chair`
-	token mql.Token // usually a direction. i.e. `north` in `look north`
+	mob  *Mob
+	stmt *mql.LookStatement
 }
 
 func (s *LookExpression) Execute() {
 	currentRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
 
-	switch s.token {
+	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showTo(s.mob)
 		s.mob.conn.Write("\n")
@@ -30,8 +28,8 @@ func (s *LookExpression) Execute() {
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
 		for _, direction := range directions {
-			if s.token == direction {
-				s.mob.conn.Write(fmt.Sprintf("You look %s.\n", strings.ToLower(mql.Tokens[s.token])))
+			if s.stmt.Token == direction {
+				s.mob.conn.Write(fmt.Sprintf("You look %s.\n", strings.ToLower(mql.Tokens[s.stmt.Token])))
 				return
 			}
 		}
@@ -39,13 +37,13 @@ func (s *LookExpression) Execute() {
 		s.mob.conn.Write("Look AT or IN something, or what?\n")
 		return
 	default:
-		points, err := queryPointOfInterest(s.mob.CurrentRoom, s.ident)
+		points, err := queryPointOfInterest(s.mob.CurrentRoom, s.stmt.Ident)
 		if err != nil {
 			s.mob.conn.Write("There's nothing interesting about that.\n")
 		}
 
 		if len(points) == 0 {
-			s.mob.conn.Write(s.ident + " wasn't found.\n")
+			s.mob.conn.Write(s.stmt.Ident + " wasn't found.\n")
 			return
 		}
 
@@ -64,15 +62,14 @@ func (s *LookExpression) Execute() {
 
 // ListenExpression represents a command for listening to a room or object.
 type ListenExpression struct {
-	mob   *Mob
-	ident string    // object that is being listened to, ex: `clock` in `listen to clock`
-	token mql.Token // usually a direction. i.e. `north` in `listen north`
+	mob  *Mob
+	stmt *mql.ListenStatement
 }
 
-func (s *ListenExpression) execute() {
+func (s *ListenExpression) Execute() {
 	currentRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
 
-	switch s.token {
+	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showListenTo(s.mob)
 		s.mob.conn.Write("\n")
@@ -80,8 +77,8 @@ func (s *ListenExpression) execute() {
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
 		for _, direction := range directions {
-			if s.token == direction {
-				s.mob.conn.Write(fmt.Sprintf("You listen %s.\n", strings.ToLower(mql.Tokens[s.token])))
+			if s.stmt.Token == direction {
+				s.mob.conn.Write(fmt.Sprintf("You listen %s.\n", strings.ToLower(mql.Tokens[s.stmt.Token])))
 				return
 			}
 		}
@@ -89,14 +86,14 @@ func (s *ListenExpression) execute() {
 		s.mob.conn.Write("Listen TO something, or what?\n")
 		return
 	default:
-		points, err := queryPointOfInterestListen(s.mob.CurrentRoom, s.ident)
+		points, err := queryPointOfInterestListen(s.mob.CurrentRoom, s.stmt.Ident)
 		if err != nil {
 			s.mob.conn.Write("There's nothing interesting about that.\n")
 			return
 		}
 
 		if len(points) == 0 {
-			s.mob.conn.Write("You listened to " + s.ident + ", but there wasn't anything unusual about it.\n")
+			s.mob.conn.Write("You listened to " + s.stmt.Ident + ", but there wasn't anything unusual about it.\n")
 			return
 		}
 
@@ -112,15 +109,14 @@ func (s *ListenExpression) execute() {
 
 // SmellExpression represents a command for smelling a room or object.
 type SmellExpression struct {
-	mob   *Mob
-	ident string    // object that is being smelled, ex: `chair` in `smell chair`
-	token mql.Token // usually not used, but you might try to `smell north`
+	mob  *Mob
+	stmt *mql.SmellStatement
 }
 
-func (s *SmellExpression) execute() {
+func (s *SmellExpression) Execute() {
 	currentRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
 
-	switch s.token {
+	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showSmellTo(s.mob)
 		s.mob.conn.Write("\n")
@@ -128,8 +124,8 @@ func (s *SmellExpression) execute() {
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
 		for _, direction := range directions {
-			if s.token == direction {
-				s.mob.conn.Write(fmt.Sprintf("You smell %s. But what does that smell like?\n", strings.ToLower(mql.Tokens[s.token])))
+			if s.stmt.Token == direction {
+				s.mob.conn.Write(fmt.Sprintf("You smell %s. But what does that smell like?\n", strings.ToLower(mql.Tokens[s.stmt.Token])))
 				return
 			}
 		}
@@ -137,14 +133,14 @@ func (s *SmellExpression) execute() {
 		s.mob.conn.Write("Smelling in things is not recommended at this time. Who knows what might be in there?\n")
 		return
 	default:
-		points, err := queryPointOfInterestSmell(s.mob.CurrentRoom, s.ident)
+		points, err := queryPointOfInterestSmell(s.mob.CurrentRoom, s.stmt.Ident)
 		if err != nil {
 			s.mob.conn.Write("There's nothing interesting about that.\n")
 			return
 		}
 
 		if len(points) == 0 {
-			s.mob.conn.Write("After trying to smell " + s.ident + ", you don't notice anything interesting.\n")
+			s.mob.conn.Write("After trying to smell " + s.stmt.Ident + ", you don't notice anything interesting.\n")
 			return
 		}
 
@@ -160,21 +156,20 @@ func (s *SmellExpression) execute() {
 
 // TouchExpression represents a command for touching an object.
 type TouchExpression struct {
-	mob   *Mob
-	ident string    // object that is being touched, ex: `chair` in `touch chair`
-	token mql.Token // usually not used, but you might try to `touch north`
+	mob  *Mob
+	stmt *mql.TouchStatement
 }
 
-func (s *TouchExpression) execute() {
-	switch s.token {
+func (s *TouchExpression) Execute() {
+	switch s.stmt.Token {
 	case mql.EOF:
 		s.mob.conn.Write("Maybe you should keep your hands to yourself.\n")
 		return
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
 		for _, direction := range directions {
-			if s.token == direction {
-				s.mob.conn.Write(fmt.Sprintf("You touch %s. But what does that feel like?\n", strings.ToLower(mql.Tokens[s.token])))
+			if s.stmt.Token == direction {
+				s.mob.conn.Write(fmt.Sprintf("You touch %s. But what does that feel like?\n", strings.ToLower(mql.Tokens[s.stmt.Token])))
 				return
 			}
 		}
@@ -182,14 +177,14 @@ func (s *TouchExpression) execute() {
 		s.mob.conn.Write("Touching in things is not recommended at this time. Who knows what might be in there?\n")
 		return
 	default:
-		points, err := queryPointOfInterestTouch(s.mob.CurrentRoom, s.ident)
+		points, err := queryPointOfInterestTouch(s.mob.CurrentRoom, s.stmt.Ident)
 		if err != nil {
 			s.mob.conn.Write("There's nothing interesting about that.\n")
 			return
 		}
 
 		if len(points) == 0 {
-			s.mob.conn.Write("After trying to touch " + s.ident + ", you don't notice anything interesting.\n")
+			s.mob.conn.Write("After trying to touch " + s.stmt.Ident + ", you don't notice anything interesting.\n")
 			return
 		}
 

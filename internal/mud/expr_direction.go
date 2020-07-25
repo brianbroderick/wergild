@@ -6,16 +6,16 @@ import (
 
 // DirectionExpression represents a command for looking at a room or object.
 type DirectionExpression struct {
-	mob   *Mob
-	token mql.Token
+	mob  *Mob
+	stmt *mql.DirectionStatement
 }
 
 func (s *DirectionExpression) Execute() {
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
 
-	if val, ok := room.ExitMap[mql.Tokens[s.token]]; ok {
+	if val, ok := room.ExitMap[mql.Tokens[s.stmt.Token]]; ok {
 		s.mob.CurrentRoom = val
-		room.exitRoom(s.mob, s.token.String())
+		room.exitRoom(s.mob, s.stmt.Token.String())
 		newRoom := WorldInstance.getRoom(s.mob.CurrentRoom)
 		newRoom.showTo(s.mob)
 		newRoom.enterRoom(s.mob)

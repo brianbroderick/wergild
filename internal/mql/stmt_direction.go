@@ -2,6 +2,8 @@ package mql
 
 import (
 	"bytes"
+
+	"github.com/brianbroderick/logit"
 )
 
 // DirectionStatement represents a command for looking at a room or object.
@@ -15,6 +17,8 @@ func (p *Parser) parseDirectionStatement() (*DirectionStatement, error) {
 	p.Unscan()
 	stmt := &DirectionStatement{}
 	stmt.Token, _, _ = p.ScanIgnoreWhitespace()
+
+	logit.Info(Tokens[stmt.Token])
 
 	return stmt, nil
 }

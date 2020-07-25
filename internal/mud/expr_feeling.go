@@ -1,33 +1,36 @@
 package mud
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/brianbroderick/wergild/internal/mql"
+)
 
 // FeelingExpression represents a command for looking at a room or object.
 type FeelingExpression struct {
-	mob    *Mob
-	ident  string // feeling. If not found, respond with something like "what?"
-	object string
+	mob  *Mob
+	stmt *mql.FeelingStatement
 }
 
 func (s *FeelingExpression) Execute() {
 	me := ""
 	you := ""
-	switch s.ident {
+	switch s.stmt.Ident {
 	case "bow":
-		if s.object == "" {
+		if s.stmt.Object == "" {
 			me = "You bow.\n"
 			you = s.mob.Name + " bows.\n"
 		} else {
-			me = fmt.Sprintf("You bow to %s.\n", s.object)
-			you = fmt.Sprintf("%s bows to %s.\n", s.mob.Name, s.object)
+			me = fmt.Sprintf("You bow to %s.\n", s.stmt.Object)
+			you = fmt.Sprintf("%s bows to %s.\n", s.mob.Name, s.stmt.Object)
 		}
 	case "laugh":
-		if s.object == "" {
+		if s.stmt.Object == "" {
 			me = "You fall down laughing.\n"
 			you = s.mob.Name + " falls down laughing.\n"
 		} else {
-			me = fmt.Sprintf("You laugh at %s.\n", s.object)
-			you = fmt.Sprintf("%s laughs at %s.\n", s.mob.Name, s.object)
+			me = fmt.Sprintf("You laugh at %s.\n", s.stmt.Object)
+			you = fmt.Sprintf("%s laughs at %s.\n", s.mob.Name, s.stmt.Object)
 		}
 	default:
 		s.mob.myMessageToChannel("what?\n")
