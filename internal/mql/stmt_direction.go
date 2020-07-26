@@ -15,7 +15,6 @@ func (p *Parser) parseDirectionStatement() (*DirectionStatement, error) {
 	p.Unscan()
 	stmt := &DirectionStatement{}
 	stmt.Token, _, _ = p.ScanIgnoreWhitespace()
-
 	return stmt, nil
 }
 
@@ -25,7 +24,7 @@ func (s *DirectionStatement) KeyTok() Token {
 
 func (s *DirectionStatement) String() string {
 	var buf bytes.Buffer
-	_, _ = buf.WriteString(tokens[s.Token])
+	_, _ = buf.WriteString(Tokens[s.Token])
 
 	return buf.String()
 }

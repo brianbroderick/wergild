@@ -84,7 +84,7 @@ const (
 )
 
 // These are how a string is mapped to the token
-var tokens = [...]string{
+var Tokens = [...]string{
 	ILLEGAL: "ILLEGAL",
 	EOF:     "EOF",
 	WS:      "WS",
@@ -168,19 +168,19 @@ var globalAliases map[string]Token
 func init() {
 	keywords = make(map[string]Token)
 	for tok := keywordBeg + 1; tok < keywordEnd; tok++ {
-		keywords[strings.ToLower(tokens[tok])] = tok
+		keywords[strings.ToLower(Tokens[tok])] = tok
 	}
 
 	globalAliases = make(map[string]Token)
 	for tok := aliasBeg + 1; tok < aliasEnd; tok++ {
-		globalAliases[strings.ToLower(tokens[tok])] = tok
+		globalAliases[strings.ToLower(Tokens[tok])] = tok
 	}
 }
 
 // String returns the string representation of the token.
 func (tok Token) String() string {
-	if tok >= 0 && tok < Token(len(tokens)) {
-		return tokens[tok]
+	if tok >= 0 && tok < Token(len(Tokens)) {
+		return Tokens[tok]
 	}
 	return ""
 }

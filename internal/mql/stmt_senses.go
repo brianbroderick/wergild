@@ -60,13 +60,13 @@ func (s *LookStatement) String() string {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if s.Token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.Token])
+			_, _ = buf.WriteString(" " + Tokens[s.Token])
 		}
 	}
 
 	switch s.Token {
 	case AT, ON, IN:
-		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(" " + Tokens[s.Token] + " ")
 		_, _ = buf.WriteString(s.Ident)
 	case NIL:
 		_, _ = buf.WriteString(s.Ident)
@@ -131,13 +131,13 @@ func (s *ListenStatement) String() string {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if s.Token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.Token])
+			_, _ = buf.WriteString(" " + Tokens[s.Token])
 		}
 	}
 
 	switch s.Token {
 	case TO, IN:
-		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(" " + Tokens[s.Token] + " ")
 		_, _ = buf.WriteString(s.Ident)
 	case NIL:
 		_, _ = buf.WriteString(s.Ident)
@@ -203,13 +203,13 @@ func (s *SmellStatement) String() string {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if s.Token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.Token])
+			_, _ = buf.WriteString(" " + Tokens[s.Token])
 		}
 	}
 
 	switch s.Token {
 	case IN:
-		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(" " + Tokens[s.Token] + " ")
 		_, _ = buf.WriteString(s.Ident)
 	case IDENT:
 		_, _ = buf.WriteString(" " + s.Ident)
@@ -239,13 +239,13 @@ func (s *TouchStatement) String() string {
 	directions := [6]Token{NORTH, SOUTH, EAST, WEST, UP, DOWN}
 	for _, direction := range directions {
 		if s.Token == direction {
-			_, _ = buf.WriteString(" " + tokens[s.Token])
+			_, _ = buf.WriteString(" " + Tokens[s.Token])
 		}
 	}
 
 	switch s.Token {
 	case IN:
-		_, _ = buf.WriteString(" " + tokens[s.Token] + " ")
+		_, _ = buf.WriteString(" " + Tokens[s.Token] + " ")
 		_, _ = buf.WriteString(s.Ident)
 	case IDENT:
 		_, _ = buf.WriteString(" " + s.Ident)

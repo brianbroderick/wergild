@@ -120,3 +120,9 @@ func (t *ParseTree) Parse(p *Parser) (Statement, error) {
 		return nil, newParseError(tokstr(tok, lit), t.Keys, pos)
 	}
 }
+
+// Statement represents a single command
+type Statement interface {
+	String() string
+	KeyTok() Token
+}

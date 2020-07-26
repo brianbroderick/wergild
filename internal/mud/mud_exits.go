@@ -1,7 +1,9 @@
 package mud
 
+import "github.com/brianbroderick/wergild/internal/mql"
+
 func NewExit(uid string, dir string) Exit {
-	tok := Lookup(dir)
+	tok := mql.Lookup(dir)
 
 	return Exit{
 		Dest:      []Room{{UID: uid}},
