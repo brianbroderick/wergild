@@ -22,9 +22,9 @@ type Expr struct {
 }
 
 func init() {
-	// admin
-	Executor.Tokens[mql.QUIT] = func(x *Expr) {
-		l := &QuitExpression{mob: x.mob}
+	// Iterate INTEGER times over rest of the command
+	Executor.Tokens[mql.INTEGER] = func(x *Expr) {
+		l := &LoopExpression{mob: x.mob, stmt: x.stmt.(*mql.LoopStatement)}
 		l.Execute()
 	}
 
@@ -73,6 +73,17 @@ func init() {
 	// Directions
 	Executor.Tokens[mql.DIRECTION] = func(x *Expr) {
 		l := &DirectionExpression{mob: x.mob, stmt: x.stmt.(*mql.DirectionStatement)}
+		l.Execute()
+	}
+
+	// admin
+	Executor.Tokens[mql.SCORE] = func(x *Expr) {
+		l := &ScoreExpression{mob: x.mob}
+		l.Execute()
+	}
+
+	Executor.Tokens[mql.QUIT] = func(x *Expr) {
+		l := &QuitExpression{mob: x.mob}
 		l.Execute()
 	}
 }

@@ -1,11 +1,14 @@
 package mud
 
-// ScoreStatement represents a command for looking at a room or object.
-type ScoreStatement struct {
-	mob *Mob
+import "github.com/brianbroderick/wergild/internal/mql"
+
+// ScoreExpression represents a command for looking at a room or object.
+type ScoreExpression struct {
+	stmt *mql.ScoreStatement
+	mob  *Mob
 }
 
-func (s *ScoreStatement) Execute() {
+func (s *ScoreExpression) Execute() {
 	s.mob.conn.Write(`Hamanu the Brave Warrior of the Black Bear (neutral)
 
 Str: 16 (16)    Race : Dwarf (male)          Exp    : 4,314,431
