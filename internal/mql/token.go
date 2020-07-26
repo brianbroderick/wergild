@@ -54,12 +54,8 @@ const (
 	keywordBeg
 	// Sense Keywords
 	LOOK
-	AT
-	ON
-	IN
 	SMELL
 	LISTEN
-	TO
 	TOUCH
 	SAY
 	TELL
@@ -80,6 +76,13 @@ const (
 
 	// Player Keywords
 	SCORE
+
+	// Seconday Keywords
+	AT
+	ON
+	IN
+	WITH
+	TO
 	keywordEnd
 )
 
@@ -113,12 +116,8 @@ var Tokens = [...]string{
 	APOSTROPHE:  "'",
 
 	LOOK:   "LOOK",
-	AT:     "AT",
-	ON:     "ON",
-	IN:     "IN",
 	SMELL:  "SMELL",
 	LISTEN: "LISTEN",
-	TO:     "TO",
 	TOUCH:  "TOUCH",
 	SAY:    "SAY",
 	TELL:   "TELL",
@@ -148,6 +147,13 @@ var Tokens = [...]string{
 	EXIT: "EXIT",
 
 	SCORE: "SCORE",
+
+	// Seconday Keywords
+	AT:   "AT",
+	ON:   "ON",
+	IN:   "IN",
+	TO:   "TO",
+	WITH: "WITH",
 }
 
 // These are how globalAlias tokens are resolved

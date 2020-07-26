@@ -76,7 +76,7 @@ func init() {
 		l.Execute()
 	}
 
-	// admin
+	// Admin
 	Executor.Tokens[mql.SCORE] = func(x *Expr) {
 		l := &ScoreExpression{mob: x.mob}
 		l.Execute()
@@ -84,6 +84,12 @@ func init() {
 
 	Executor.Tokens[mql.QUIT] = func(x *Expr) {
 		l := &QuitExpression{mob: x.mob}
+		l.Execute()
+	}
+
+	// Feelings
+	Executor.Tokens[mql.IDENT] = func(x *Expr) {
+		l := &FeelingExpression{mob: x.mob, stmt: x.stmt.(*mql.FeelingStatement)}
 		l.Execute()
 	}
 }
