@@ -25,14 +25,16 @@ func (p *Parser) parseFeelingStatement() (*FeelingStatement, error) {
 		return nil, err
 	}
 
-	tok, _, _ := p.ScanIgnoreWhitespace()
+	tok, _, lit := p.ScanIgnoreWhitespace()
 	switch tok {
-	case AT, TO:
+	case AT, TO, WITH, ON:
 		obj, err := p.ParseIdent()
 		if err != nil {
 			return nil, err
 		}
 		stmt.Object = obj
+	case IDENT:
+		stmt.Object = lit
 	}
 	return stmt, nil
 }
