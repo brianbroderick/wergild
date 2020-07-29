@@ -2,8 +2,7 @@ package mql
 
 import (
 	"bytes"
-
-	"github.com/brianbroderick/logit"
+	"strings"
 )
 
 //******
@@ -55,15 +54,12 @@ func (s *ImagineStatement) KeyTok() Token {
 // parseImagineStatement parses an imagine command and returns a Statement AST object.
 // This function assumes the IMAGINE token has already been consumed.
 func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
-	logit.Info("dir: %v", directionKeywords)
-
 	stmt := &ImagineStatement{}
 
 	stmt.Object, _, _ = p.ScanIgnoreWhitespace()
 	if stmt.Object == ROOM {
-
 		dir, pos, lit := p.ScanIgnoreWhitespace()
-		if val, ok := directionKeywords[Tokens[dir]]; ok {
+		if val, ok := directionKeywords[strings.ToLower(Tokens[dir])]; ok {
 			stmt.Direction = val
 		} else {
 			return nil, newParseError(tokstr(dir, lit), []string{"direction"}, pos)
@@ -76,6 +72,5 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 		stmt.Name = name
 	}
 
-	logit.Info("stmt: %v", stmt)
 	return stmt, nil
 }
