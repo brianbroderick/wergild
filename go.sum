@@ -1,5 +1,7 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/brettallred/go-logit v0.0.0-20170224200004-2db7d458d4e4 h1:vuMFI2GFgVvxiXvWYgdB4j7BqztmIXTV035PbZyhzBs=
+github.com/brettallred/go-logit v0.0.0-20170224200004-2db7d458d4e4/go.mod h1:pkIz7nLJeAdXO3yRB4J92vq6dKJNRdFks6eJka/RpVw=
 github.com/brianbroderick/agora v0.1.3 h1:1fWw4ZaSAnTkdkVXw5iImTHtK+MheSl1S/hVoFc87Go=
 github.com/brianbroderick/agora v0.1.3/go.mod h1:4ZMq5UMV677rFPvnBcXEW2g9PMk2PTy7knjx0ziuqkE=
 github.com/brianbroderick/logit v0.1.2 h1:GKu4QCaTTBC21hb7H6alPr7aHILhAEKIYnwsMJ7y4F8=

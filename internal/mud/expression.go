@@ -88,7 +88,7 @@ func init() {
 	}
 
 	Executor.Tokens[mql.IMAGINE] = func(x *Expr) {
-		l := &ImagineExpression{mob: x.mob}
+		l := &ImagineExpression{mob: x.mob, stmt: x.stmt.(*mql.ImagineStatement)}
 		l.Execute()
 	}
 

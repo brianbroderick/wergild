@@ -38,6 +38,7 @@ type ImagineStatement struct {
 	Object    Token
 	Direction Token
 	Name      string
+	Location  string
 }
 
 func (s *ImagineStatement) String() string {
@@ -57,7 +58,8 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 	stmt := &ImagineStatement{}
 
 	stmt.Object, _, _ = p.ScanIgnoreWhitespace()
-	if stmt.Object == ROOM {
+	switch stmt.Object {
+	case ROOM:
 		dir, pos, lit := p.ScanIgnoreWhitespace()
 		if val, ok := directionKeywords[strings.ToLower(Tokens[dir])]; ok {
 			stmt.Direction = val
@@ -70,6 +72,9 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 			return nil, err
 		}
 		stmt.Name = name
+	case LOCATION:
+		_, _, lit := p.ScanSentence()
+		stmt.Location = lit
 	}
 
 	return stmt, nil

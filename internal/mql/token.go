@@ -67,6 +67,7 @@ const (
 	QUIT
 	IMAGINE
 	ROOM
+	LOCATION
 
 	// Player Keywords
 	SCORE
@@ -138,9 +139,10 @@ var Tokens = [...]string{
 
 	// Admin Keywords
 	// NICK: "NICK",
-	QUIT:    "QUIT",
-	IMAGINE: "IMAGINE",
-	ROOM:    "ROOM",
+	QUIT:     "QUIT",
+	IMAGINE:  "IMAGINE",
+	ROOM:     "ROOM",
+	LOCATION: "LOCATION",
 
 	// Aliases
 	N:    "N",

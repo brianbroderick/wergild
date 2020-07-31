@@ -1,6 +1,8 @@
 package mud
 
-import "github.com/brianbroderick/wergild/internal/mql"
+import (
+	"github.com/brianbroderick/wergild/internal/mql"
+)
 
 // QuitExpression represents a command for exiting the game.
 type QuitExpression struct {
@@ -14,9 +16,9 @@ func (s *QuitExpression) Execute() {
 	ServerInstance.onClientConnectionClosed(s.mob.conn, nil)
 }
 
-//******
+//********
 // IMAGINE
-//******
+//********
 
 // ImagineExpression allows you to create rooms, objects, and mobs
 type ImagineExpression struct {
@@ -27,4 +29,9 @@ type ImagineExpression struct {
 func (s *ImagineExpression) Execute() {
 	myStr := "You start to concentrate really hard.\n"
 	s.mob.myMessageToChannel(myStr)
+
+	if s.stmt.Location != "" {
+		s.mob.myMessageToChannel("The world begins to shift.\n")
+		s.mob.myMessageToChannel(s.stmt.Location + "\n")
+	}
 }
