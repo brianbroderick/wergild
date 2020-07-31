@@ -77,6 +77,11 @@ func (world *worldSeed) setTerrain() {
 			Type: "Terrain",
 		},
 		{
+			UID:  "_:t_void",
+			Name: "Void",
+			Type: "Terrain",
+		},
+		{
 			UID:  "_:t_water",
 			Name: "Water",
 			Type: "Terrain",
