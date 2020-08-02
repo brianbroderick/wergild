@@ -31,7 +31,9 @@ func (s *ImagineExpression) Execute() {
 	s.mob.myMessageToChannel(myStr)
 
 	if s.stmt.Location != "" {
-		s.mob.myMessageToChannel("The world begins to shift.\n")
-		s.mob.myMessageToChannel(s.stmt.Location + "\n")
+		room := WorldInstance.getRoom(s.mob.CurrentRoom)
+		room.updateRoom(s.stmt.Location)
+		s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
+		s.mob.myMessageToChannel(room.Desc + "\n")
 	}
 }
