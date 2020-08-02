@@ -1,6 +1,13 @@
 package mql
 
-import "bytes"
+import (
+	"bytes"
+	"strings"
+)
+
+//******
+// QUIT
+//******
 
 // QuitStatement represents a command for exiting the game.
 type QuitStatement struct{}
@@ -20,4 +27,55 @@ func (s *QuitStatement) KeyTok() Token {
 // This function assumes the QUIT token has already been consumed.
 func (p *Parser) parseQuitStatement() (*QuitStatement, error) {
 	return &QuitStatement{}, nil
+}
+
+//********
+// IMAGINE
+//********
+
+// ImagineStatement is the admin command to create an object such as a room
+type ImagineStatement struct {
+	Object    Token
+	Direction Token
+	Name      string
+	Location  string
+}
+
+func (s *ImagineStatement) String() string {
+	var buf bytes.Buffer
+	_, _ = buf.WriteString("IMAGINE")
+
+	return buf.String()
+}
+
+func (s *ImagineStatement) KeyTok() Token {
+	return IMAGINE
+}
+
+// parseImagineStatement parses an imagine command and returns a Statement AST object.
+// This function assumes the IMAGINE token has already been consumed.
+func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
+	stmt := &ImagineStatement{}
+
+	stmt.Object, _, _ = p.ScanIgnoreWhitespace()
+	switch stmt.Object {
+	case ROOM:
+		dir, pos, lit := p.ScanIgnoreWhitespace()
+		if val, ok := directionKeywords[strings.ToLower(Tokens[dir])]; ok {
+			stmt.Direction = val
+		} else {
+			return nil, newParseError(tokstr(dir, lit), []string{"direction"}, pos)
+		}
+
+		name, err := p.ParseIdent()
+		if err != nil {
+			return nil, err
+		}
+		stmt.Name = name
+	case LOCATION:
+		_, _, lit := p.ScanSentence()
+		stmt.Location = lit
+	}
+
+	return stmt, nil
 }

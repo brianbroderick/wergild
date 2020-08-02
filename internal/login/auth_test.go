@@ -22,7 +22,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestAuth(t *testing.T) {
-	auth, err := Auth("azkul", "123456")
+	auth, err := Auth("azkul", "password")
 	assert.NoError(t, err)
 	assert.Equal(t, true, auth)
 }

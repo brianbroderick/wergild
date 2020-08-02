@@ -242,6 +242,12 @@ func TestParserParseStatement(t *testing.T) {
 			p:   "QUIT",
 		},
 
+		{
+			s:   "imagine room north forest",
+			obj: &ImagineStatement{Object: ROOM, Direction: NORTH, Name: "forest"},
+			p:   "IMAGINE",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,

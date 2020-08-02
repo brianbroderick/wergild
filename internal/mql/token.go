@@ -62,17 +62,12 @@ const (
 	SHOUT
 	EMOTE
 
-	// Movement Keywords
-	NORTH
-	SOUTH
-	EAST
-	WEST
-	UP
-	DOWN
-
 	// Admin Keywords
-	NICK // nickname i.e. alias mapping
+	// NICK // nickname i.e. alias mapping
 	QUIT
+	IMAGINE
+	ROOM
+	LOCATION
 
 	// Player Keywords
 	SCORE
@@ -84,6 +79,16 @@ const (
 	WITH
 	TO
 	keywordEnd
+
+	directionBeg
+	// Movement Keywords
+	NORTH
+	SOUTH
+	EAST
+	WEST
+	UP
+	DOWN
+	directionEnd
 )
 
 // These are how a string is mapped to the token
@@ -133,8 +138,11 @@ var Tokens = [...]string{
 	DOWN:  "DOWN",
 
 	// Admin Keywords
-	NICK: "NICK",
-	QUIT: "QUIT",
+	// NICK: "NICK",
+	QUIT:     "QUIT",
+	IMAGINE:  "IMAGINE",
+	ROOM:     "ROOM",
+	LOCATION: "LOCATION",
 
 	// Aliases
 	N:    "N",
@@ -170,16 +178,25 @@ var convertToTokens = [...]Token{
 
 var keywords map[string]Token
 var globalAliases map[string]Token
+var directionKeywords map[string]Token
 
 func init() {
 	keywords = make(map[string]Token)
 	for tok := keywordBeg + 1; tok < keywordEnd; tok++ {
 		keywords[strings.ToLower(Tokens[tok])] = tok
 	}
+	for tok := directionBeg + 1; tok < directionEnd; tok++ {
+		keywords[strings.ToLower(Tokens[tok])] = tok
+	}
 
 	globalAliases = make(map[string]Token)
 	for tok := aliasBeg + 1; tok < aliasEnd; tok++ {
 		globalAliases[strings.ToLower(Tokens[tok])] = tok
+	}
+
+	directionKeywords = make(map[string]Token)
+	for tok := directionBeg + 1; tok < directionEnd; tok++ {
+		directionKeywords[strings.ToLower(Tokens[tok])] = tok
 	}
 }
 

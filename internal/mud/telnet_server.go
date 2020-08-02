@@ -22,7 +22,7 @@ func (server *Server) AddConnection(connection net.Conn) {
 }
 
 func (server *Server) onPlayerAuthenticated(connection *Connection) {
-	roomUID, err := queryRoomUID("forwell_inn_common_room")
+	roomUID, err := queryRoomUID("beginning")
 	if err != nil {
 		connection.hasError(err)
 		return

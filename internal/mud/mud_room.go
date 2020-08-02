@@ -1,6 +1,7 @@
 package mud
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -27,6 +28,18 @@ func loadRooms() map[string]*Room {
 	}
 
 	return roomMap
+}
+
+func (room *Room) updateRoom(desc string) error {
+	room.Desc = desc
+
+	j, err := json.Marshal(room)
+	if err != nil {
+		return err
+	}
+
+	agora.MutateDgraph(j)
+	return nil
 }
 
 func (room *Room) exitRoom(mob *Mob, direction string) {

@@ -87,6 +87,10 @@ func init() {
 		return p.parseQuitStatement()
 	})
 
+	Language.Handle(IMAGINE, func(p *Parser) (Statement, error) {
+		return p.parseImagineStatement()
+	})
+
 	// Catch all - usually represents feelings
 	Language.Handle(IDENT, func(p *Parser) (Statement, error) {
 		return p.parseFeelingStatement()
