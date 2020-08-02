@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/wergild/internal/mql"
 )
 
 /**
@@ -30,8 +31,16 @@ func loadRooms() map[string]*Room {
 	return roomMap
 }
 
-func (room *Room) updateRoom(desc string) error {
-	room.Desc = desc
+func (room *Room) updateRoom(stmt *mql.ImagineStatement) error {
+	if stmt.Location != "" {
+		room.Desc = stmt.Location
+	}
+	if stmt.Listen != "" {
+		room.Listen = stmt.Listen
+	}
+	if stmt.Smell != "" {
+		room.Smell = stmt.Smell
+	}
 
 	j, err := json.Marshal(room)
 	if err != nil {
@@ -76,11 +85,19 @@ func (room *Room) showTo(mob *Mob) {
 }
 
 func (room *Room) showSmellTo(mob *Mob) {
-	mob.myMessageToChannel(room.Smell)
+	if room.Smell != "" {
+		mob.myMessageToChannel(room.Smell + "\n")
+	} else {
+		mob.myMessageToChannel("You don't smell anything unusual.\n")
+	}
 }
 
 func (room *Room) showListenTo(mob *Mob) {
-	mob.myMessageToChannel(room.Listen)
+	if room.Listen != "" {
+		mob.myMessageToChannel(room.Listen + "\n")
+	} else {
+		mob.myMessageToChannel("You don't hear anything unusual.\n")
+	}
 }
 
 func (room *Room) showEnv(mob *Mob) {

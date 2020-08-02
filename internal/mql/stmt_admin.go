@@ -39,6 +39,8 @@ type ImagineStatement struct {
 	Direction Token
 	Name      string
 	Location  string
+	Smell     string
+	Listen    string
 }
 
 func (s *ImagineStatement) String() string {
@@ -75,6 +77,12 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 	case LOCATION:
 		_, _, lit := p.ScanSentence()
 		stmt.Location = lit
+	case SMELL:
+		_, _, lit := p.ScanSentence()
+		stmt.Smell = lit
+	case LISTEN:
+		_, _, lit := p.ScanSentence()
+		stmt.Listen = lit
 	}
 
 	return stmt, nil

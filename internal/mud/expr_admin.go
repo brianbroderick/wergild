@@ -30,10 +30,17 @@ func (s *ImagineExpression) Execute() {
 	myStr := "You start to concentrate really hard.\n"
 	s.mob.myMessageToChannel(myStr)
 
+	room := WorldInstance.getRoom(s.mob.CurrentRoom)
+	room.updateRoom(s.stmt)
+
 	if s.stmt.Location != "" {
-		room := WorldInstance.getRoom(s.mob.CurrentRoom)
-		room.updateRoom(s.stmt.Location)
 		s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
-		s.mob.myMessageToChannel(room.Desc + "\n")
+		room.showTo(s.mob)
+	} else if s.stmt.Listen != "" {
+		s.mob.myMessageToChannel("The sound around you begins to shift...\n\n")
+		room.showListenTo(s.mob)
+	} else if s.stmt.Smell != "" {
+		s.mob.myMessageToChannel("The smell around you begins to shift...\n\n")
+		room.showSmellTo(s.mob)
 	}
 }

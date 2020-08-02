@@ -23,7 +23,6 @@ func (s *LookExpression) Execute() {
 	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showTo(s.mob)
-		s.mob.conn.Write("\n")
 		return
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
@@ -72,7 +71,6 @@ func (s *ListenExpression) Execute() {
 	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showListenTo(s.mob)
-		s.mob.conn.Write("\n")
 		return
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
@@ -119,7 +117,6 @@ func (s *SmellExpression) Execute() {
 	switch s.stmt.Token {
 	case mql.EOF:
 		currentRoom.showSmellTo(s.mob)
-		s.mob.conn.Write("\n")
 		return
 	case mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN:
 		directions := [6]mql.Token{mql.NORTH, mql.SOUTH, mql.EAST, mql.WEST, mql.UP, mql.DOWN}
