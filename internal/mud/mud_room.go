@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/brianbroderick/agora"
-	"github.com/brianbroderick/logit"
 	"github.com/brianbroderick/wergild/internal/mql"
 )
 
@@ -15,11 +14,24 @@ import (
  * Load rooms from database
  */
 func loadRooms() map[string]*Room {
+	rooms := queryAllRooms()
+	return buildRoomMap(rooms)
+}
+
+func buildRoomMap(rooms []Room) map[string]*Room {
 	roomMap := make(map[string]*Room)
 
-	rooms := queryAllRooms()
-
 	for i, room := range rooms {
+		if rooms[i].ExitMap == nil {
+			rooms[i].ExitMap = make(map[string]string)
+		}
+
+		for _, e := range room.Exits {
+			if len(e.Dest) > 0 {
+				rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
+			}
+		}
+
 		roomMap[room.UID] = &rooms[i]
 		roomMap[room.UID].Desc = formatToWidth(roomMap[room.UID].Desc, 80)
 		roomMap[room.UID].MobMap = make(map[string]*Mob)
@@ -80,10 +92,20 @@ func (room *Room) newRoom(stmt *mql.ImagineStatement) error {
 	}
 
 	res := agora.MutateDgraph(j)
-	logit.Info("%v", res.Uids[slug])
 
-	WorldInstance.roomList[res.Uids[slug]] = &nRoom
+	updateRoomInWorldInstance(room.UID)
+	updateRoomInWorldInstance(res.Uids[slug])
+
 	return nil
+}
+
+func updateRoomInWorldInstance(uid string) {
+	rooms, _ := queryRoomByUID(uid)
+	roomMap := buildRoomMap(rooms)
+
+	for _, curr := range roomMap {
+		WorldInstance.roomList[uid] = curr
+	}
 }
 
 func (room *Room) exitRoom(mob *Mob, direction string) {
@@ -223,19 +245,18 @@ func queryAllRooms() []Room {
 	if len(r.Rooms) == 0 {
 		return []Room{}
 	}
-	// Populate ExitMap
-	for i, room := range rooms {
-		if rooms[i].ExitMap == nil {
-			rooms[i].ExitMap = make(map[string]string)
-		}
+	// // Populate ExitMap
+	// for i, room := range rooms {
+	// 	if rooms[i].ExitMap == nil {
+	// 		rooms[i].ExitMap = make(map[string]string)
+	// 	}
 
-		for _, e := range room.Exits {
-			if len(e.Dest) > 0 {
-				rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
-			}
-		}
-
-	}
+	// 	for _, e := range room.Exits {
+	// 		if len(e.Dest) > 0 {
+	// 			rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
+	// 		}
+	// 	}
+	// }
 	return rooms
 }
 
@@ -270,14 +291,60 @@ func queryRoom(slug string) ([]Room, error) {
 			roomDesc
 			roomSmell
 			roomListen
-			items {
-				itemName
-		        itemDesc 
+			roomEnv
+			exits {
+				direction
+				dest {
+					uid
+				}
+			} 
+			mobs {
+				uid
+				mobName
+				mobTitle
+				mobSlug
 			}
+		}
 	}`
 
 	variables := make(map[string]string)
 	variables["$slug"] = slug
+
+	var r DgraphResponse
+	err := agora.ResolveQueryWithVars(&r, query, variables)
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Rooms, nil
+}
+
+func queryRoomByUID(uid string) ([]Room, error) {
+	query := `query Room($uid: string){
+		room(first:1, func: uid($uid)) {
+			uid
+			roomName 
+			roomDesc
+			roomSmell
+			roomListen
+			roomEnv
+			exits {
+				direction
+				dest {
+					uid
+				}
+			} 
+			mobs {
+				uid
+				mobName
+				mobTitle
+				mobSlug
+			}
+		}
+	}`
+
+	variables := make(map[string]string)
+	variables["$uid"] = uid
 
 	var r DgraphResponse
 	err := agora.ResolveQueryWithVars(&r, query, variables)

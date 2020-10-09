@@ -36,6 +36,9 @@ func (s *ImagineExpression) Execute() {
 		room.newRoom(s.stmt)
 
 		s.mob.myMessageToChannel("The area around you expands...\n\n")
+
+		// Reload room
+		room = WorldInstance.getRoom(s.mob.CurrentRoom)
 		room.showTo(s.mob)
 	}
 
