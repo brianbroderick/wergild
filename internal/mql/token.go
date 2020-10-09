@@ -164,6 +164,16 @@ var Tokens = [...]string{
 	WITH: "WITH",
 }
 
+// Used when creating exits
+var OppositeDirection = [...]string{
+	NORTH: "SOUTH",
+	SOUTH: "NORTH",
+	EAST:  "WEST",
+	WEST:  "EAST",
+	UP:    "DOWN",
+	DOWN:  "UP",
+}
+
 // These are how globalAlias tokens are resolved
 var convertToTokens = [...]Token{
 	N:    NORTH,

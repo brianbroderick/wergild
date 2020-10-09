@@ -31,16 +31,27 @@ func (s *ImagineExpression) Execute() {
 	s.mob.myMessageToChannel(myStr)
 
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
-	room.updateRoom(s.stmt)
+	if s.stmt.Name != "" {
 
-	if s.stmt.Location != "" {
-		s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
+		room.newRoom(s.stmt)
+
+		s.mob.myMessageToChannel("The area around you expands...\n\n")
 		room.showTo(s.mob)
-	} else if s.stmt.Listen != "" {
-		s.mob.myMessageToChannel("The sound around you begins to shift...\n\n")
-		room.showListenTo(s.mob)
-	} else if s.stmt.Smell != "" {
-		s.mob.myMessageToChannel("The smell around you begins to shift...\n\n")
-		room.showSmellTo(s.mob)
+	}
+
+	if s.stmt.Name == "" {
+		room.updateRoom(s.stmt)
+
+		if s.stmt.Location != "" {
+			s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
+			room.showTo(s.mob)
+		} else if s.stmt.Listen != "" {
+			s.mob.myMessageToChannel("The sound around you begins to shift...\n\n")
+			room.showListenTo(s.mob)
+		} else if s.stmt.Smell != "" {
+			s.mob.myMessageToChannel("The smell around you begins to shift...\n\n")
+			room.showSmellTo(s.mob)
+		}
+		return
 	}
 }

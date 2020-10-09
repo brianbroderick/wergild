@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/brianbroderick/agora"
+	"github.com/brianbroderick/logit"
 	"github.com/brianbroderick/wergild/internal/mql"
 )
 
@@ -48,6 +49,40 @@ func (room *Room) updateRoom(stmt *mql.ImagineStatement) error {
 	}
 
 	agora.MutateDgraph(j)
+	return nil
+}
+
+func (room *Room) newRoom(stmt *mql.ImagineStatement) error {
+	slug := ToSlug(stmt.Name)
+	nRoom := Room{
+		UID:  "_:" + slug,
+		Type: "Room",
+		Slug: slug,
+		Name: stmt.Name,
+		Desc: "A formless void.",
+		Exits: []Exit{
+			NewExit(room.UID, mql.OppositeDirection[stmt.Direction]),
+		},
+	}
+
+	r := []Room{
+		{UID: room.UID,
+			Exits: []Exit{
+				NewExit("_:"+slug, mql.Tokens[stmt.Direction]),
+			},
+		},
+		nRoom,
+	}
+
+	j, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+
+	res := agora.MutateDgraph(j)
+	logit.Info("%v", res.Uids[slug])
+
+	WorldInstance.roomList[res.Uids[slug]] = &nRoom
 	return nil
 }
 
