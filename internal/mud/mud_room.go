@@ -2,6 +2,7 @@ package mud
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -65,13 +66,17 @@ func (room *Room) updateRoom(stmt *mql.ImagineStatement) error {
 }
 
 func (room *Room) newRoom(stmt *mql.ImagineStatement) error {
+	if _, ok := room.ExitMap[mql.Tokens[stmt.Direction]]; ok {
+		return errors.New(fmt.Sprintf("An exit already exists %s.", strings.ToLower(mql.Tokens[stmt.Direction])))
+	}
+
 	slug := ToSlug(stmt.Name)
 	nRoom := Room{
 		UID:  "_:" + slug,
 		Type: "Room",
 		Slug: slug,
 		Name: stmt.Name,
-		Desc: "A formless void.",
+		Desc: stmt.Name,
 		Exits: []Exit{
 			NewExit(room.UID, mql.OppositeDirection[stmt.Direction]),
 		},

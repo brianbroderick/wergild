@@ -33,13 +33,17 @@ func (s *ImagineExpression) Execute() {
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
 	if s.stmt.Name != "" {
 
-		room.newRoom(s.stmt)
+		err := room.newRoom(s.stmt)
+		if err != nil {
+			s.mob.myMessageToChannel(err.Error() + "\n\n")
+		} else {
 
-		s.mob.myMessageToChannel("The area around you expands...\n\n")
+			s.mob.myMessageToChannel("The area around you expands...\n\n")
 
-		// Reload room
-		room = WorldInstance.getRoom(s.mob.CurrentRoom)
-		room.showTo(s.mob)
+			// Reload room
+			room = WorldInstance.getRoom(s.mob.CurrentRoom)
+			room.showTo(s.mob)
+		}
 	}
 
 	if s.stmt.Name == "" {
