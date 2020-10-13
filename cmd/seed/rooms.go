@@ -13,6 +13,7 @@ func (world *worldSeed) inn() {
 		region: "_:region_wergild",
 		x:      0,
 		y:      0,
+		z:      0,
 	}))
 }
 
@@ -23,6 +24,7 @@ type quickRoom struct {
 	terrain string
 	x       int
 	y       int
+	z       int
 	exits   []mud.Exit
 	env     []string
 	mobs    []mud.Mob
@@ -56,6 +58,7 @@ func newRoom(quick quickRoom) mud.Room {
 		Desc:             quick.desc,
 		CoorX:            quick.x,
 		CoorY:            quick.y,
+		CoorZ:            quick.z,
 		Exits:            quick.exits,
 		PointsOfInterest: quick.poi,
 		Smell:            quick.smell,

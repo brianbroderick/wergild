@@ -65,18 +65,45 @@ func (room *Room) updateRoom(stmt *mql.ImagineStatement) error {
 	return nil
 }
 
+func (room *Room) newRoomCoordinates(tok mql.Token) (int, int, int) {
+	x := room.CoorX
+	y := room.CoorY
+	z := room.CoorZ
+
+	switch d := tok; d {
+	case mql.NORTH:
+		y++
+	case mql.SOUTH:
+		y--
+	case mql.EAST:
+		x++
+	case mql.WEST:
+		x--
+	case mql.UP:
+		z++
+	case mql.DOWN:
+		z--
+	}
+	return x, y, z
+}
+
 func (room *Room) newRoom(stmt *mql.ImagineStatement) error {
 	if _, ok := room.ExitMap[mql.Tokens[stmt.Direction]]; ok {
 		return errors.New(fmt.Sprintf("An exit already exists %s.", strings.ToLower(mql.Tokens[stmt.Direction])))
 	}
 
+	x, y, z := room.newRoomCoordinates(stmt.Direction)
+
 	slug := ToSlug(stmt.Name)
 	nRoom := Room{
-		UID:  "_:" + slug,
-		Type: "Room",
-		Slug: slug,
-		Name: stmt.Name,
-		Desc: stmt.Name,
+		UID:   "_:" + slug,
+		Type:  "Room",
+		Slug:  slug,
+		Name:  stmt.Name,
+		Desc:  stmt.Name,
+		CoorX: x,
+		CoorY: y,
+		CoorZ: z,
 		Exits: []Exit{
 			NewExit(room.UID, mql.OppositeDirection[stmt.Direction]),
 		},
@@ -225,6 +252,9 @@ func queryAllRooms() []Room {
 			roomSmell
 			roomListen
 			roomEnv
+			coorX
+			coorY
+			coorZ
 			exits {
 				direction
 				dest {
@@ -250,18 +280,7 @@ func queryAllRooms() []Room {
 	if len(r.Rooms) == 0 {
 		return []Room{}
 	}
-	// // Populate ExitMap
-	// for i, room := range rooms {
-	// 	if rooms[i].ExitMap == nil {
-	// 		rooms[i].ExitMap = make(map[string]string)
-	// 	}
 
-	// 	for _, e := range room.Exits {
-	// 		if len(e.Dest) > 0 {
-	// 			rooms[i].ExitMap[e.Direction] = e.Dest[0].UID
-	// 		}
-	// 	}
-	// }
 	return rooms
 }
 
@@ -297,6 +316,9 @@ func queryRoom(slug string) ([]Room, error) {
 			roomSmell
 			roomListen
 			roomEnv
+			coorX
+			coorY
+			coorZ
 			exits {
 				direction
 				dest {
@@ -333,6 +355,9 @@ func queryRoomByUID(uid string) ([]Room, error) {
 			roomSmell
 			roomListen
 			roomEnv
+			coorX
+			coorY
+			coorZ
 			exits {
 				direction
 				dest {
