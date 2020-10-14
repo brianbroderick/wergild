@@ -46,17 +46,25 @@ func buildRoomMap(rooms []Room) map[string]*Room {
 }
 
 func (room *Room) updateRoom(stmt *mql.ImagineStatement) error {
+	// Create a new struct to update. We do this so it doesn't
+	// recreate all the other stuff like Exits.
+	// Also change the existing room values to update the info in place.
+	cRoom := Room{UID: room.UID}
+
 	if stmt.Location != "" {
+		cRoom.Desc = stmt.Location
 		room.Desc = stmt.Location
 	}
 	if stmt.Listen != "" {
+		cRoom.Listen = stmt.Listen
 		room.Listen = stmt.Listen
 	}
 	if stmt.Smell != "" {
+		cRoom.Smell = stmt.Smell
 		room.Smell = stmt.Smell
 	}
 
-	j, err := json.Marshal(room)
+	j, err := json.Marshal(cRoom)
 	if err != nil {
 		return err
 	}
