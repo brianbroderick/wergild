@@ -1,6 +1,7 @@
 package mud
 
 import (
+	"github.com/brianbroderick/logit"
 	"github.com/brianbroderick/wergild/internal/mql"
 )
 
@@ -31,34 +32,55 @@ func (s *ImagineExpression) Execute() {
 	s.mob.myMessageToChannel(myStr)
 
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
-	if s.stmt.Name != "" {
 
-		err := room.newRoom(s.stmt)
-		if err != nil {
-			s.mob.myMessageToChannel(err.Error() + "\n\n")
-		} else {
-
-			s.mob.myMessageToChannel("The area around you expands...\n\n")
-
-			// Reload room
-			room = WorldInstance.getRoom(s.mob.CurrentRoom)
-			room.showTo(s.mob)
-		}
-	}
-
-	if s.stmt.Name == "" {
-		room.updateRoom(s.stmt)
-
-		if s.stmt.Location != "" {
-			s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
-			room.showTo(s.mob)
-		} else if s.stmt.Listen != "" {
-			s.mob.myMessageToChannel("The sound around you begins to shift...\n\n")
-			room.showListenTo(s.mob)
-		} else if s.stmt.Smell != "" {
-			s.mob.myMessageToChannel("The smell around you begins to shift...\n\n")
-			room.showSmellTo(s.mob)
-		}
+	if s.stmt.Mob != "" {
+		logit.Info("in MOB")
+		s.NewMob(room)
 		return
 	}
+
+	if s.stmt.Name != "" {
+		s.NewRoom(room)
+		return
+	} else {
+		s.UpdateRoom(room)
+		return
+	}
+
+}
+
+func (s *ImagineExpression) NewRoom(room *Room) {
+	err := room.newRoom(s.stmt)
+	if err != nil {
+		s.mob.myMessageToChannel(err.Error() + "\n\n")
+	} else {
+
+		s.mob.myMessageToChannel("The area around you expands...\n\n")
+
+		// Reload room
+		room = WorldInstance.getRoom(s.mob.CurrentRoom)
+		room.showTo(s.mob)
+	}
+}
+
+func (s *ImagineExpression) UpdateRoom(room *Room) {
+	room.updateRoom(s.stmt)
+
+	if s.stmt.Location != "" {
+		s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
+		room.showTo(s.mob)
+	} else if s.stmt.Listen != "" {
+		s.mob.myMessageToChannel("The sound around you begins to shift...\n\n")
+		room.showListenTo(s.mob)
+	} else if s.stmt.Smell != "" {
+		s.mob.myMessageToChannel("The smell around you begins to shift...\n\n")
+		room.showSmellTo(s.mob)
+	}
+}
+
+func (s *ImagineExpression) NewMob(room *Room) {
+	CreateNPCMob(room, s.stmt)
+
+	s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
+	room.showTo(s.mob)
 }

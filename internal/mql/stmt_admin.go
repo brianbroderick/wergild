@@ -3,6 +3,8 @@ package mql
 import (
 	"bytes"
 	"strings"
+
+	"github.com/brianbroderick/logit"
 )
 
 //******
@@ -41,6 +43,7 @@ type ImagineStatement struct {
 	Location  string
 	Smell     string
 	Listen    string
+	Mob       string
 }
 
 func (s *ImagineStatement) String() string {
@@ -83,6 +86,13 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 	case LISTEN:
 		_, _, lit := p.ScanSentence()
 		stmt.Listen = lit
+	case MOB:
+		name, err := p.ParseIdent()
+		if err != nil {
+			return nil, err
+		}
+		stmt.Mob = name
+		logit.Info("STMT %s", stmt.Mob)
 	}
 
 	return stmt, nil

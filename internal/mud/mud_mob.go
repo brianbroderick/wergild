@@ -7,6 +7,7 @@ import (
 
 	"github.com/brianbroderick/agora"
 	"github.com/brianbroderick/wergild/internal/login"
+	"github.com/brianbroderick/wergild/internal/mql"
 )
 
 func queryMob(slug string) (Mob, error) {
@@ -131,4 +132,24 @@ func NewMob() Mob {
 		Tgh:   1,
 		Per:   1,
 	}
+}
+
+func CreateNPCMob(room *Room, stmt *mql.ImagineStatement) error {
+	r := Room{UID: room.UID}
+
+	slug := ToSlug(stmt.Mob)
+	m := NewMob()
+	m.Name = stmt.Mob
+	m.Slug = slug
+
+	r.Mobs = append(r.Mobs, m)
+
+	j, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+
+	agora.MutateDgraph(j)
+	updateRoomInWorldInstance(room.UID)
+	return nil
 }

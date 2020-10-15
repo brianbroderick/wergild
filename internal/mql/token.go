@@ -68,6 +68,7 @@ const (
 	IMAGINE
 	ROOM
 	LOCATION
+	MOB
 
 	// Player Keywords
 	SCORE
@@ -143,6 +144,7 @@ var Tokens = [...]string{
 	IMAGINE:  "IMAGINE",
 	ROOM:     "ROOM",
 	LOCATION: "LOCATION",
+	MOB:      "MOB",
 
 	// Aliases
 	N:    "N",
