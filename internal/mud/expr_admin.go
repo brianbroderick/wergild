@@ -1,7 +1,8 @@
 package mud
 
 import (
-	"github.com/brianbroderick/logit"
+	"fmt"
+
 	"github.com/brianbroderick/wergild/internal/mql"
 )
 
@@ -34,7 +35,6 @@ func (s *ImagineExpression) Execute() {
 	room := WorldInstance.getRoom(s.mob.CurrentRoom)
 
 	if s.stmt.Mob != "" {
-		logit.Info("in MOB")
 		s.NewMob(room)
 		return
 	}
@@ -81,6 +81,5 @@ func (s *ImagineExpression) UpdateRoom(room *Room) {
 func (s *ImagineExpression) NewMob(room *Room) {
 	CreateNPCMob(room, s.stmt)
 
-	s.mob.myMessageToChannel("The area around you begins to shift...\n\n")
-	room.showTo(s.mob)
+	s.mob.myMessageToChannel(fmt.Sprintf("The area in front of you begins to shift...\n\n Before your eyes something springs to existence...\n\n It's %s!\n\n", s.stmt.Mob))
 }
