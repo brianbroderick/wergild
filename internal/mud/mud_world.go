@@ -45,6 +45,10 @@ func (world *World) getRoom(roomId string) *Room {
 }
 
 func motd() string {
-	motdBytes, _ := ioutil.ReadFile("welcome/1.txt")
-	return string(motdBytes) + "\n"
+	motdBytes, err := ioutil.ReadFile("welcome/1.txt")
+	if err != nil {
+		return ""
+	} else {
+		return string(motdBytes) + "\n"
+	}
 }

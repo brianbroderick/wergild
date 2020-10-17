@@ -1,8 +1,10 @@
 package mud
 
 import (
+	"fmt"
 	"net"
 	"os"
+	"strings"
 	"sync"
 	"testing"
 
@@ -38,19 +40,13 @@ func TestConn(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		logit.Info(string(rb))
+		str := string(rb)
+		if strings.Contains(str, "What is your name:") {
+			logit.Info("Hell ya")
+		} else {
+			logit.Info(fmt.Sprintf("|%s|", str))
+		}
 
-		// reader := bufio.NewReader(conn)
-		// _, err = reader.ReadString('\n')
-		// checkError(err)
-
-		// for {
-		// reader := bufio.NewReader(conn)
-		// message, err := reader.ReadString('\n')
-		// checkError(err)
-		// logit.Info(message)
-		logit.Info("HERE Me")
-		// }
 		wg.Done()
 	}()
 
