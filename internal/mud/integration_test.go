@@ -20,9 +20,13 @@ func TestConn(t *testing.T) {
 
 	wg.Add(1)
 	go func() {
-		conn, err := net.Dial("tcp", ":2223")
-		if err != nil {
-			t.Error("could not connect to server: ", err)
+		var conn net.Conn
+		var err error
+		for {
+			conn, err = net.Dial("tcp", ":2223")
+			if err == nil {
+				break
+			}
 		}
 
 		// if _, err := c.Write([]byte("CONN AND LISTENER TEST")); err != nil {
