@@ -81,5 +81,5 @@ func (s *ImagineExpression) UpdateRoom(room *Room) {
 func (s *ImagineExpression) NewMob(room *Room) {
 	CreateNPCMob(room, s.stmt)
 
-	s.mob.myMessageToChannel(fmt.Sprintf("The area in front of you begins to shift...\n\n Before your eyes something springs to existence...\n\n It's %s!\n\n", s.stmt.Mob))
+	s.mob.myMessageToChannel(fmt.Sprintf("The area in front of you begins to shift...\n\nBefore your eyes something springs to existence...\n\nIt's %s!\n\n", s.stmt.Mob))
 }

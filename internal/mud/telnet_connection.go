@@ -43,8 +43,9 @@ func (connection *Connection) Write(message string) {
 // once logged in, it passes messages to ServerInstance.onCommandReceived
 func (connection *Connection) listen() {
 	reader := bufio.NewReader(connection.conn)
+	// connection.Write("bobby")
 
-	connection.Write(motd())
+	// connection.Write(motd())
 	connection.Write("What is your name: ")
 	connection.state = STATE_LOGIN_USERNAME
 

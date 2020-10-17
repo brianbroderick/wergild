@@ -1,6 +1,7 @@
 package mud
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/brianbroderick/logit"
@@ -102,6 +103,7 @@ func init() {
 func (mob *Mob) Do(message string) {
 	stmt, err := mql.NewParser(strings.NewReader(message)).ParseStatement()
 	if err != nil {
+		mob.myMessageToChannel(fmt.Sprintf("Invalid command: %s\n", err.Error()))
 		return
 	}
 
