@@ -4,20 +4,19 @@
 # It mounts /tmp/data on the host machine to /dgraph within the
 # container. You can change /tmp/data to a more appropriate location.
 # Run `docker-compose up` to start Dgraph.
+# NOTE: whitelisting is set to private address ranges, this is ONLY for a local setup
+#       please change it accordingly for your production setup
+#       more here https://dgraph.io/docs/deploy/dgraph-administration/#whitelisting-admin-operations
+
+# To start, run docker-compose up -d
+# For Ratel, go to: https://play.dgraph.io/?latest and connect to http://localhost:8080
 
 version: "3.2"
-services:   
-  wergild:
-    build: .
-    environment:
-      DGRAPH_HOST: alpha:9080
-    ports: 
-      - 2222:2222 
-    command: ./wergild   
+services:
   zero:
     image: dgraph/dgraph:latest
     volumes:
-      - /tmp/data:/dgraph
+      - ~/dgraph:/dgraph
     ports:
       - 5080:5080
       - 6080:6080
@@ -26,14 +25,10 @@ services:
   alpha:
     image: dgraph/dgraph:latest
     volumes:
-      - /tmp/data:/dgraph
+      - ~/dgraph:/dgraph
     ports:
       - 8080:8080
       - 9080:9080
     restart: on-failure
-    command: dgraph alpha --my=alpha:7080 --whitelist 172.0.0.0:172.254.0.0 --lru_mb=2048 --zero=zero:5080
-  ratel:
-    image: dgraph/dgraph:latest
-    ports:
-      - 8000:8000
-    command: dgraph-ratel
+    command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --security whitelist=10.0.0.0/8,172.0.0.0/8,192.168.0.0/16,127.0.0.1
+

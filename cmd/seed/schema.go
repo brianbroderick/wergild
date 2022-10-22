@@ -122,7 +122,6 @@ func schemaString() string {
 
 	mobName: string .
 	mobDesc: string .
-	mobSlug: string .
 	mobTitle: string .
 	mobRank: string .
 	hp: int .
