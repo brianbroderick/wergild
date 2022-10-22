@@ -69,6 +69,7 @@ const (
 	ROOM
 	LOCATION
 	MOB
+	HELP
 
 	// Player Keywords
 	SCORE
@@ -145,6 +146,7 @@ var Tokens = [...]string{
 	ROOM:     "ROOM",
 	LOCATION: "LOCATION",
 	MOB:      "MOB",
+	HELP:     "HELP",
 
 	// Aliases
 	N:    "N",

@@ -248,6 +248,18 @@ func TestParserParseStatement(t *testing.T) {
 			p:   "IMAGINE",
 		},
 
+		{
+			s:   "help",
+			obj: &HelpStatement{Token: EOF, Ident: ""},
+			p:   "HELP",
+		},
+
+		{
+			s:   "help newbie",
+			obj: &HelpStatement{Token: HELP, Ident: "newbie"},
+			p:   "HELP",
+		},
+
 		// // check alias
 		// {
 		// 	s:   `l n`,

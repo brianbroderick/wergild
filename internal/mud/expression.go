@@ -93,6 +93,11 @@ func init() {
 		l.Execute()
 	}
 
+	Executor.Tokens[mql.HELP] = func(x *Expr) {
+		l := &HelpExpression{mob: x.mob, stmt: x.stmt.(*mql.HelpStatement)}
+		l.Execute()
+	}
+
 	// Feelings
 	Executor.Tokens[mql.IDENT] = func(x *Expr) {
 		l := &FeelingExpression{mob: x.mob, stmt: x.stmt.(*mql.FeelingStatement)}

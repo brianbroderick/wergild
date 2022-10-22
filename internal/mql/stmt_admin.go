@@ -97,3 +97,49 @@ func (p *Parser) parseImagineStatement() (*ImagineStatement, error) {
 
 	return stmt, nil
 }
+
+//********
+// HELP
+//********
+
+// HelpStatement is the admin command to display help
+type HelpStatement struct {
+	Token Token
+	Ident string
+}
+
+func (s *HelpStatement) String() string {
+	var buf bytes.Buffer
+	_, _ = buf.WriteString("HELP")
+
+	return buf.String()
+}
+
+func (s *HelpStatement) KeyTok() Token {
+	return HELP
+}
+
+// parseHelpStatement parses a help command and returns a Statement AST object.
+// This function assumes the HELP token has already been consumed.
+func (p *Parser) parseHelpStatement() (*HelpStatement, error) {
+	stmt := &HelpStatement{}
+	var err error
+
+	tok, _, _ := p.ScanIgnoreWhitespace()
+
+	switch tok {
+	case EOF:
+		stmt.Token = EOF
+		return stmt, nil
+	default:
+		stmt.Token = HELP
+		p.Unscan()
+	}
+
+	stmt.Ident, err = p.ParseIdent()
+	if err != nil {
+		return nil, err
+	}
+
+	return stmt, nil
+}
