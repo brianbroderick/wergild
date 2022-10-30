@@ -1,8 +1,0 @@
-curl "147.182.201.32:8080/query" --request POST \
-  --header "Content-Type: application/dql" \
-  --data $'
-query {
-  triggers(func: type(Trigger)) {
-                count(uid)
-  }
-}'
