@@ -11,6 +11,7 @@ func TestCodeScan(t *testing.T) {
 	input := `
 	let five = 5;
 	let ten = 10;
+	let my_var = 42;
 	
 	let add = fn(x, y) {
 		x + y;
@@ -35,6 +36,11 @@ func TestCodeScan(t *testing.T) {
 		{Type: token.IDENT, Lit: "ten"},
 		{Type: token.ASSIGN, Lit: "="},
 		{Type: token.INT, Lit: "10"},
+		{Type: token.SEMICOLON, Lit: ";"},
+		{Type: token.LET, Lit: "let"},
+		{Type: token.IDENT, Lit: "my_var"},
+		{Type: token.ASSIGN, Lit: "="},
+		{Type: token.INT, Lit: "42"},
 		{Type: token.SEMICOLON, Lit: ";"},
 		{Type: token.LET, Lit: "let"},
 		{Type: token.IDENT, Lit: "add"},
