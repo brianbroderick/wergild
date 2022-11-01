@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"bytes"
 	"io"
 	"strings"
 
@@ -33,20 +34,74 @@ func New(input string) *Lexer {
 
 func (l *Lexer) Scan() (tok token.Token, pos Pos) {
 	l.skipWhitespace()
+	l.read()
 
 	switch l.ch {
 	case '+':
 		tok = newToken(token.PLUS, l.ch)
+	case '-':
+		tok = newToken(token.MINUS, l.ch)
+	case '*':
+		tok = newToken(token.ASTERISK, l.ch)
+	case '<':
+		tok = newToken(token.LT, l.ch)
+	case '>':
+		tok = newToken(token.GT, l.ch)
+	case ';':
+		tok = newToken(token.SEMICOLON, l.ch)
+	case ',':
+		tok = newToken(token.COMMA, l.ch)
+	case '{':
+		tok = newToken(token.LBRACE, l.ch)
+	case '}':
+		tok = newToken(token.RBRACE, l.ch)
+	case '(':
+		tok = newToken(token.LPAREN, l.ch)
+	case ')':
+		tok = newToken(token.RPAREN, l.ch)
+	case '=':
+		if l.peek() == '=' {
+			ch := l.ch
+			l.read()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.EQ, Lit: literal}
+		} else {
+			tok = newToken(token.ASSIGN, l.ch)
+		}
+	case '!':
+		if l.peek() == '=' {
+			ch := l.ch
+			l.read()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.NOT_EQ, Lit: literal}
+		} else {
+			tok = newToken(token.BANG, l.ch)
+		}
+	// TODO: Support comments /* and //
+	case '/':
+		tok = newToken(token.SLASH, l.ch)
+	case 0:
+		tok = token.Token{Type: token.EOF, Lit: ""}
+	default:
+		if isLetter(l.ch) {
+			l.unread()
+			// get position before we scan the identity
+			pos = l.pos
+			tok = l.scanIdent()
+			return tok, pos
+		} else if isDigit(l.ch) {
+			l.unread()
+			// get position before we scan the number
+			pos = l.pos
+			tok = l.scanNumber()
+			return tok, pos
+		} else {
+			tok = newToken(token.ILLEGAL, l.ch)
+		}
 	}
 
-	return tok, l.pos
+	return tok, pos
 }
-
-// func (l *Lexer) Scan() (tok token.Token, pos Pos) {
-// 	// l.scanWhitespace()
-
-// 	// ch0, pos := l.read()
-// }
 
 func newToken(tokenType token.TokenType, ch rune) token.Token {
 	return token.Token{Type: tokenType, Lit: string(ch)}
@@ -103,14 +158,34 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
-// func (l *Lexer) scanIdent() {
-// 	// Save the starting position of the identifier
-// 	pos := l.pos
+func (l *Lexer) scanIdent() token.Token {
+	var buf bytes.Buffer
+	for {
+		l.read()
+		if !isIdentChar(l.ch) {
+			l.unread()
+			break
+		} else {
+			_, _ = buf.WriteRune(l.ch)
+		}
+	}
+	lit := buf.String()
+	return token.Token{Type: token.Lookup(lit), Lit: lit}
+}
 
-// 	for isIdentChar(l.ch) {
-
-// 	}
-// }
+func (l *Lexer) scanNumber() token.Token {
+	var buf bytes.Buffer
+	for {
+		l.read()
+		if !isDigit(l.ch) {
+			l.unread()
+			break
+		} else {
+			_, _ = buf.WriteRune(l.ch)
+		}
+	}
+	return token.Token{Type: token.INT, Lit: buf.String()}
+}
 
 // isWhitespace returns true if the rune is a space, tab, or newline.
 func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == eol || ch == '\r' }

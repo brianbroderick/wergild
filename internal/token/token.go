@@ -88,7 +88,7 @@ var Tokens = [...]string{
 	RBRACE: "}",
 
 	// Keywords
-	FUNCTION: "FUNCTION",
+	FUNCTION: "FN",
 	LET:      "LET",
 	TRUE:     "TRUE",
 	FALSE:    "FALSE",
