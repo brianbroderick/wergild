@@ -65,27 +65,27 @@ var Tokens = [...]string{
 	IDENT: "IDENT",
 	INT:   "INTEGER",
 
-	ASSIGN:   "=",
-	PLUS:     "+",
-	MINUS:    "-",
-	BANG:     "!",
-	ASTERISK: "*",
-	SLASH:    "/",
+	ASSIGN:   "ASSIGN '='",
+	PLUS:     "PLUS '+'",
+	MINUS:    "MINUS '-'",
+	BANG:     "BANG '!'",
+	ASTERISK: "ASTERISK '*'",
+	SLASH:    "SLASH '/'",
 
-	LT: "<",
-	GT: ">",
+	LT: "LT '<'",
+	GT: "GT '>'",
 
-	EQ:     "==",
-	NOT_EQ: "!=",
+	EQ:     "EQ '=='",
+	NOT_EQ: "NOT_EQ '!='",
 
 	// Delimiters
-	COMMA:     ",",
-	SEMICOLON: ";",
+	COMMA:     "COMMA ','",
+	SEMICOLON: "SEMICOLON ';'",
 
-	LPAREN: "(",
-	RPAREN: ")",
-	LBRACE: "{",
-	RBRACE: "}",
+	LPAREN: "LPAREN '('",
+	RPAREN: "RPAREN ')'",
+	LBRACE: "LBRACE '{'",
+	RBRACE: "RBRACE '}'",
 
 	// Keywords
 	FUNCTION: "FN",
