@@ -49,6 +49,8 @@ func (l *Lexer) Scan() (tok token.Token, pos Pos) {
 		tok = newToken(token.GT, l.ch)
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
+	case ':':
+		tok = newToken(token.COLON, l.ch)
 	case ',':
 		tok = newToken(token.COMMA, l.ch)
 	case '{':
@@ -59,6 +61,10 @@ func (l *Lexer) Scan() (tok token.Token, pos Pos) {
 		tok = newToken(token.LPAREN, l.ch)
 	case ')':
 		tok = newToken(token.RPAREN, l.ch)
+	case '[':
+		tok = newToken(token.LBRACKET, l.ch)
+	case ']':
+		tok = newToken(token.RBRACKET, l.ch)
 	case '=':
 		if l.peek() == '=' {
 			ch := l.ch
@@ -80,6 +86,10 @@ func (l *Lexer) Scan() (tok token.Token, pos Pos) {
 	// TODO: Support comments /* and //
 	case '/':
 		tok = newToken(token.SLASH, l.ch)
+	case '"':
+		pos = l.pos
+		tok = l.scanString()
+		return tok, pos
 	case 0:
 		tok = token.Token{Type: token.EOF, Lit: ""}
 	default:
@@ -171,6 +181,20 @@ func (l *Lexer) scanIdent() token.Token {
 	}
 	lit := buf.String()
 	return token.Token{Type: token.Lookup(lit), Lit: lit}
+}
+
+func (l *Lexer) scanString() token.Token {
+	var buf bytes.Buffer
+	for {
+		l.read()
+		if l.ch == '"' {
+			break
+		} else {
+			_, _ = buf.WriteRune(l.ch)
+		}
+	}
+	lit := buf.String()
+	return token.Token{Type: token.STRING, Lit: lit}
 }
 
 func (l *Lexer) scanNumber() token.Token {

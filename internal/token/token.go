@@ -18,6 +18,7 @@ const (
 	literalBeg // Literals
 	IDENT      // identity: add, foobar, x, y, my_var, ...
 	INT        // 12345
+	STRING     // "foobar"
 	literalEnd
 
 	// Operators
@@ -37,11 +38,14 @@ const (
 	// Delimiters
 	COMMA     // ,
 	SEMICOLON // ;
+	COLON     // :
 
-	LPAREN // (
-	RPAREN // )
-	LBRACE // {
-	RBRACE // }
+	LPAREN   // (
+	RPAREN   // )
+	LBRACE   // {
+	RBRACE   // }
+	LBRACKET // [
+	RBRACKET // ]
 
 	// Keywords
 	keywordBeg
@@ -62,8 +66,9 @@ var Tokens = [...]string{
 	WS:      "WS",
 	NIL:     "NIL",
 
-	IDENT: "IDENT",
-	INT:   "INTEGER",
+	IDENT:  "IDENT",
+	INT:    "INTEGER",
+	STRING: "STRING",
 
 	ASSIGN:   "ASSIGN '='",
 	PLUS:     "PLUS '+'",
@@ -81,11 +86,14 @@ var Tokens = [...]string{
 	// Delimiters
 	COMMA:     "COMMA ','",
 	SEMICOLON: "SEMICOLON ';'",
+	COLON:     "COLON ':'",
 
-	LPAREN: "LPAREN '('",
-	RPAREN: "RPAREN ')'",
-	LBRACE: "LBRACE '{'",
-	RBRACE: "RBRACE '}'",
+	LPAREN:   "LPAREN '('",
+	RPAREN:   "RPAREN ')'",
+	LBRACE:   "LBRACE '{'",
+	RBRACE:   "RBRACE '}'",
+	LBRACKET: "LBRACKET '['",
+	RBRACKET: "RBRACKET ']'",
 
 	// Keywords
 	FUNCTION: "FN",

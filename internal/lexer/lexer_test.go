@@ -24,6 +24,11 @@ func TestCodeScan(t *testing.T) {
 	} else {
 		return false;
 	}	
+	
+	"foobar"
+	"foo bar"
+	[1, 2];
+  {"foo": "bar"}
 	`
 
 	tests := []token.Token{
@@ -84,6 +89,19 @@ func TestCodeScan(t *testing.T) {
 		{Type: token.RETURN, Lit: "return"},
 		{Type: token.FALSE, Lit: "false"},
 		{Type: token.SEMICOLON, Lit: ";"},
+		{Type: token.RBRACE, Lit: "}"},
+		{Type: token.STRING, Lit: "foobar"},
+		{Type: token.STRING, Lit: "foo bar"},
+		{Type: token.LBRACKET, Lit: "["},
+		{Type: token.INT, Lit: "1"},
+		{Type: token.COMMA, Lit: ","},
+		{Type: token.INT, Lit: "2"},
+		{Type: token.RBRACKET, Lit: "]"},
+		{Type: token.SEMICOLON, Lit: ";"},
+		{Type: token.LBRACE, Lit: "{"},
+		{Type: token.STRING, Lit: "foo"},
+		{Type: token.COLON, Lit: ":"},
+		{Type: token.STRING, Lit: "bar"},
 		{Type: token.RBRACE, Lit: "}"},
 		{Type: token.EOF, Lit: ""},
 	}
